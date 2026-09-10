@@ -22,20 +22,20 @@
       line-height: 1.6;
     }
 
-  .container {
+   .container {
       padding: 0 16px;
       max-width: 900px;
       margin: 0 auto;
     }
 
     /* HEADER */
-  .header {
+   .header {
       background-color: var(--green);
       padding: 25px 15px;
       text-align: center;
       color: white;
     }
-  .logo {
+   .logo {
       width: 100px;
       height: 100px;
       background-color: white;
@@ -44,12 +44,12 @@
       border: 3px solid var(--blue);
       overflow: hidden;
     }
-  .logo img { width: 100%; height: 100%; object-fit: cover; }
-  .header h1 { margin: 0; font-size: 20px; font-family: 'Times New Roman', serif; }
-  .header h4 { font-style: italic; font-family: 'Times New Roman', serif; font-weight: 400; }
+   .logo img { width: 100%; height: 100%; object-fit: cover; }
+   .header h1 { margin: 0; font-size: 20px; font-family: 'Times New Roman', serif; }
+   .header h4 { font-style: italic; font-family: 'Times New Roman', serif; font-weight: 400; }
 
     /* NAV MENU */
-  .navbar {
+   .navbar {
       background-color: var(--blue);
       padding: 10px;
       text-align: left;
@@ -57,7 +57,7 @@
       top: 0;
       z-index: 999;
     }
-  .menu-toggle {
+   .menu-toggle {
       background: none;
       border: 2px solid white;
       color: white;
@@ -66,14 +66,14 @@
       border-radius: 5px;
       cursor: pointer;
     }
-  .menu {
+   .menu {
       list-style: none;
       display: none;
       margin-top: 10px;
     }
-  .menu.active { display: block; }
-  .menu li { margin: 8px 0; }
-  .menu a {
+   .menu.active { display: block; }
+   .menu li { margin: 8px 0; }
+   .menu a {
       color: white;
       text-decoration: none;
       font-weight: 600;
@@ -81,8 +81,8 @@
       padding: 8px 15px;
       display: inline-block;
     }
-  .menu a:hover { background: rgba(255,255,255,0.1); border-radius: 5px; }
-  .logout-btn {
+   .menu a:hover { background: rgba(255,255,255,0.1); border-radius: 5px; }
+   .logout-btn {
       background: var(--orange);
       border: none;
       color: white;
@@ -100,7 +100,7 @@
     h5 { font-weight: 400; margin-bottom: 20px; }
 
     /* BUTTONS */
-  .btn {
+   .btn {
       display: inline-block;
       padding: 12px 24px;
       border-radius: 8px;
@@ -112,16 +112,16 @@
       transition: all 0.3s ease;
       margin: 8px 5px;
     }
-  .btn-primary { background: var(--orange); color: white; }
-  .btn-primary:hover { transform: scale(1.05); }
-  .btn-whatsapp { background: var(--whatsapp); color: white; box-shadow: 0 4px 8px rgba(37,211,102,0.3); }
-  .btn-whatsapp:hover { transform: scale(1.05); }
-  .btn-green { background: var(--green); color: white; }
-  .btn-blue { background: var(--blue); color: white; }
+   .btn-primary { background: var(--orange); color: white; }
+   .btn-primary:hover { transform: scale(1.05); }
+   .btn-whatsapp { background: var(--whatsapp); color: white; box-shadow: 0 4px 8px rgba(37,211,102,0.3); }
+   .btn-whatsapp:hover { transform: scale(1.05); }
+   .btn-green { background: var(--green); color: white; }
+   .btn-blue { background: var(--blue); color: white; }
 
     /* COLLAPSIBLE FORMS */
-  .collapsible { display: none; margin-top: 15px; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-  .collapsible.active { display: block; }
+   .collapsible { display: none; margin-top: 15px; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+   .collapsible.active { display: block; }
     form label { display: block; font-weight: 600; margin-top: 12px; margin-bottom: 5px; }
     form input, form select, form textarea {
       width: 100%;
@@ -133,7 +133,7 @@
     form button[type="submit"] { background: var(--green); color: white; width: 100%; margin-top: 15px; }
 
     /* EXECUTIVE CARDS */
-  .executive {
+   .executive {
       background: white;
       padding: 15px;
       border-radius: 10px;
@@ -141,7 +141,7 @@
       margin: 15px 0;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
-  .executive img {
+   .executive img {
       width: 100px; height: 100px;
       border-radius: 50%;
       object-fit: cover;
@@ -150,7 +150,7 @@
     }
 
     /* GALLERY */
-  .gallery img { width: 100%; border-radius: 10px; margin: 10px 0; }
+   .gallery img { width: 100%; border-radius: 10px; margin: 10px 0; }
 
     /* FOOTER - FIXED */
     footer {
@@ -161,14 +161,14 @@
       margin-top: 40px;
     }
     footer p { margin: 10px 0; }
-  .footer-social {
+   .footer-social {
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 10px;
       flex-wrap: wrap;
     }
-  .footer-social a {
+   .footer-social a {
       display: flex;
       align-items: center;
       gap: 8px;
@@ -176,29 +176,28 @@
       text-decoration: none;
       font-weight: 600;
     }
-  .footer-social img {
+   .footer-social img {
       width: 28px;
       height: 28px;
       object-fit: contain;
     }
-  .footer-social a:hover { color: #1877F2; }
+   .footer-social a:hover { color: #1877F2; }
 
     /* ADMIN DASHBOARD */
-  .admin-tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-  .admin-tab { background: var(--blue); color: white; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-weight: 600; }
-  .admin-tab.active { background: var(--green); }
-  .admin-content { display: none; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-  .admin-content.active { display: block; }
-  .admin-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
-  .admin-table th,.admin-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-  .admin-table th { background: var(--bg); color: var(--blue); }
-   #admin-section { display: none; } /* HIDDEN BY DEFAULT */
+   .admin-tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+   .admin-tab { background: var(--blue); color: white; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-weight: 600; }
+   .admin-tab.active { background: var(--green); }
+   .admin-content { display: none; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+   .admin-content.active { display: block; }
+   .admin-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
+   .admin-table th,.admin-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+   .admin-table th { background: var(--bg); color: var(--blue); }
 
     /* DESKTOP MENU */
     @media (min-width: 768px) {
-    .menu-toggle { display: none; }
-    .menu { display: block; }
-    .menu li { display: inline-block; margin: 0 10px; }
+     .menu-toggle { display: none; }
+     .menu { display: block; }
+     .menu li { display: inline-block; margin: 0 10px; }
     }
   </style>
 </head>
@@ -221,7 +220,7 @@
       <li><a href="downloads.html">Downloads</a></li>
       <li><a href="find-classmate.html">Find Classmate</a></li>
       <li><a href="vacancies.html">Vacancies/Blog</a></li>
-      <li id="adminMenuLi" style="display:none;"><a href="#admin">Admin Login</a></li>
+      <li><a href="#" onclick="toggleForm('adminLoginForm'); toggleMenu();">Admin Login</a></li>
       <li id="adminLogoutLi" style="display:none;"><button class="logout-btn" onclick="adminLogout()">Logout</button></li>
     </ul>
   </nav>
@@ -234,53 +233,51 @@
     This is a non-profit association aimed to Reconnect, Give Back and Grow Together.
     You can know more about us on the <strong>about</strong> section.</h5>
 
-    <!-- ADMIN LOGIN SECTION - HIDDEN -->
-    <div id="admin-section">
-      <h3>Admin Portal</h3>
-      <button class="btn btn-green" onclick="toggleForm('adminLoginForm')">Admin Login</button>
-      <div id="adminLoginForm" class="collapsible">
-        <form onsubmit="adminLogin(event)">
-          <label>Username *</label>
-          <input type="text" id="adminUser" value="admin" required>
-          <label>Password *</label>
-          <input type="password" id="adminPass" placeholder="Enter password" required>
-          <button type="submit" class="btn btn-green">Login to Dashboard</button>
-          <p style="font-size:12px; margin-top:10px; color:#555;">Demo: username: admin | password: admin123</p>
-        </form>
+    <!-- ADMIN LOGIN SECTION -->
+    <h3>Admin Portal</h3>
+    <button class="btn btn-green" onclick="toggleForm('adminLoginForm')">Admin Login</button>
+    <div id="adminLoginForm" class="collapsible">
+      <form onsubmit="adminLogin(event)">
+        <label>Username *</label>
+        <input type="text" id="adminUser" value="admin" required>
+        <label>Password *</label>
+        <input type="password" id="adminPass" placeholder="Enter password" required>
+        <button type="submit" class="btn btn-green">Login to Dashboard</button>
+        <p style="font-size:12px; margin-top:10px; color:#555;">Demo: username: admin | password: admin123</p>
+      </form>
+    </div>
+
+    <!-- ADMIN DASHBOARD -->
+    <div id="adminDashboard" style="display:none;">
+      <h2>Admin Dashboard</h2>
+      <div class="admin-tabs">
+        <div class="admin-tab active" onclick="showAdminTab('donations', event)">Donations</div>
+        <div class="admin-tab" onclick="showAdminTab('alumni', event)">Alumni Members</div>
+        <div class="admin-tab" onclick="showAdminTab('messages', event)">Messages</div>
       </div>
 
-      <!-- ADMIN DASHBOARD -->
-      <div id="adminDashboard" style="display:none;">
-        <h2>Admin Dashboard</h2>
-        <div class="admin-tabs">
-          <div class="admin-tab active" onclick="showAdminTab('donations', event)">Donations</div>
-          <div class="admin-tab" onclick="showAdminTab('alumni', event)">Alumni Members</div>
-          <div class="admin-tab" onclick="showAdminTab('messages', event)">Messages</div>
-        </div>
+      <div id="donations" class="admin-content active">
+        <h3>Donation Submissions</h3>
+        <button class="btn btn-blue" onclick="exportCSV('donations')">📥 Export to CSV</button>
+        <table class="admin-table" id="donationTable">
+          <tr><th>Name</th><th>Donation</th><th>Period</th><th>Phone</th><th>Location</th></tr>
+        </table>
+      </div>
 
-        <div id="donations" class="admin-content active">
-          <h3>Donation Submissions</h3>
-          <button class="btn btn-blue" onclick="exportCSV('donations')">📥 Export to CSV</button>
-          <table class="admin-table" id="donationTable">
-            <tr><th>Name</th><th>Donation</th><th>Period</th><th>Phone</th><th>Location</th></tr>
-          </table>
-        </div>
+      <div id="alumni" class="admin-content">
+        <h3>Alumni Registrations</h3>
+        <button class="btn btn-blue" onclick="exportCSV('alumni')">📥 Export to CSV</button>
+        <table class="admin-table" id="alumniTable">
+          <tr><th>Name</th><th>Grad Year</th><th>Profession</th><th>Phone</th><th>Interest</th></tr>
+        </table>
+      </div>
 
-        <div id="alumni" class="admin-content">
-          <h3>Alumni Registrations</h3>
-          <button class="btn btn-blue" onclick="exportCSV('alumni')">📥 Export to CSV</button>
-          <table class="admin-table" id="alumniTable">
-            <tr><th>Name</th><th>Grad Year</th><th>Profession</th><th>Phone</th><th>Interest</th></tr>
-          </table>
-        </div>
-
-        <div id="messages" class="admin-content">
-          <h3>Contact Messages</h3>
-          <table class="admin-table">
-            <tr><th>Name</th><th>Email</th><th>Message</th></tr>
-            <tr><td>Demo: Mary Banda</td><td>mary@email.com</td><td>Looking for class of 2019</td></tr>
-          </table>
-        </div>
+      <div id="messages" class="admin-content">
+        <h3>Contact Messages</h3>
+        <table class="admin-table">
+          <tr><th>Name</th><th>Email</th><th>Message</th></tr>
+          <tr><td>Demo: Mary Banda</td><td>mary@email.com</td><td>Looking for class of 2019</td></tr>
+        </table>
       </div>
     </div>
 
@@ -525,7 +522,11 @@
       const pass = document.getElementById('adminPass').value;
       if(user === 'admin' && pass === 'admin123'){
         localStorage.setItem('chitekesaAdmin', 'loggedIn');
-        showAdminDashboard();
+        document.getElementById('adminDashboard').style.display = 'block';
+        document.getElementById('adminLoginForm').classList.remove('active');
+        document.getElementById('adminLogoutLi').style.display = 'inline-block';
+        loadDonations();
+        loadAlumni();
         alert('Login Successful! Welcome Admin');
       } else {
         alert('Invalid Username or Password');
@@ -535,19 +536,7 @@
       localStorage.removeItem('chitekesaAdmin');
       document.getElementById('adminDashboard').style.display = 'none';
       document.getElementById('adminLogoutLi').style.display = 'none';
-      document.getElementById('adminMenuLi').style.display = 'none';
-      document.getElementById('admin-section').style.display = 'none';
       alert('Logged out successfully');
-    }
-    function showAdminDashboard(){
-      document.getElementById('admin-section').style.display = 'block';
-      document.getElementById('adminDashboard').style.display = 'block';
-      document.getElementById('adminLoginForm').classList.remove('active');
-      document.getElementById('adminLogoutLi').style.display = 'inline-block';
-      document.getElementById('adminMenuLi').style.display = 'inline-block';
-      loadDonations();
-      loadAlumni();
-      document.getElementById('admin-section').scrollIntoView({behavior: "smooth"});
     }
     function showAdminTab(tabId, event){
       document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
@@ -556,21 +545,15 @@
       document.getElementById(tabId).classList.add('active');
     }
 
-    // Auto-login check on page load + Secret URL check
+    // Auto-login if already logged in
     window.onload = function(){
-      document.getElementById('admin-section').style.display = 'none'; // Force hide for visitors
-
-      // If URL has #admin, show login
-      if(window.location.hash === '#admin'){
-        document.getElementById('admin-section').style.display = 'block';
-        document.getElementById('adminLoginForm').classList.add('active');
-      }
-
-      // If already logged in
       if(localStorage.getItem('chitekesaAdmin') === 'loggedIn'){
-        showAdminDashboard();
+        document.getElementById('adminDashboard').style.display = 'block';
+        document.getElementById('adminLogoutLi').style.display = 'inline-block';
+        loadDonations();
+        loadAlumni();
       }
     }
   </script>
 </body>
-</html>
+  </html>
