@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Downloads - Chitekesa CDSS Alumni</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green: #123d21;
+      --blue: #004080;
+      --orange: #FF8C00;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      background: linear-gradient(135deg, #f0f8ff 0%, #e6f2ff 100%);
+      font-family: 'Poppins', Arial, sans-serif;
+      color: #333;
+      line-height: 1.6;
+    }
+    .container { padding: 0 16px; max-width: 900px; margin: 0 auto; }
+
+    .header {
+      background-color: var(--green);
+      padding: 25px 15px;
+      text-align: center;
+      color: white;
+    }
+    .logo {
+      width: 100px; height: 100px;
+      background-color: white;
+      border-radius: 50%;
+      margin: 0 auto 10px;
+      border: 3px solid var(--blue);
+      overflow: hidden;
+    }
+    .logo img { width: 100%; height: 100%; object-fit: cover; }
+    .header h1 { margin: 0; font-size: 20px; font-family: 'Times New Roman', serif; }
+    .header h4 { font-style: italic; font-family: 'Times New Roman', serif; font-weight: 400; }
+
+    .navbar {
+      background-color: var(--blue);
+      padding: 10px;
+      text-align: left;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+    .menu-toggle {
+      background: none;
+      border: 2px solid white;
+      color: white;
+      font-size: 22px;
+      padding: 5px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .menu { list-style: none; display: none; margin-top: 10px; }
+    .menu.active { display: block; }
+    .menu li { margin: 8px 0; }
+    .menu a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+      padding: 8px 15px;
+      display: inline-block;
+    }
+    .menu a:hover { background: rgba(255,255,255,0.1); border-radius: 5px; }
+
+    main { padding: 30px 0; }
+    .page-title { text-align: center; color: var(--blue); margin-bottom: 25px; }
+    
+    .download-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .download-card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      transition: transform 0.3s;
+    }
+    .download-card:hover { transform: translateY(-3px); }
+    .download-icon { font-size: 40px; }
+    .download-info { flex: 1; }
+    .download-info h3 { color: var(--green); margin-bottom: 5px; }
+    .download-info p { font-size: 14px; color: #666; }
+    .btn-download {
+      background: var(--orange);
+      color: white;
+      padding: 10px 18px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .btn-download:hover { background: #e67e00; }
+
+    footer {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+      margin-top: 40px;
+    }
+    footer p { margin: 10px 0; }
+    .footer-social {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .footer-social a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .footer-social img { width: 28px; height: 28px; object-fit: contain; }
+
+    @media (min-width: 768px) {
+      .menu-toggle { display: none; }
+      .menu { display: block; }
+      .menu li { display: inline-block; margin: 0 10px; }
+      .download-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo"><img src="Alumni logo.png" alt="Chitekesa Alumni Logo"></div>
+    <h1>CHITEKESA CDSS ALUMNI GROUP</h1>
+    <h4>Together We Make The Difference</h4>
+  </header>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <button class="menu-toggle" onclick="document.getElementById('menu').classList.toggle('active')">☰ Menu</button>
+    <ul id="menu" class="menu">
+       <li><a href="index.html">Home</a></li>
+      <li><a href="Chitekesa about.html">About</a></li>
+      <li><a href="Chitekesa contact.html">Contact Us</a></li>
+      <li><a href="downloads.html">Downloads</a></li>
+      <li><a href="find-classmate.html">Find Classmate</a></li>
+      <li><a href="vacancies.html">Vacancies/Blog</a></li>
+    </ul>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="container">
+    <h2 class="page-title">Members Downloads</h2>
+    <p style="text-align:center; margin-bottom: 25px;">Access important documents, photos, and resources.</p>
+
+    <div class="download-grid">
+      <div class="download-card">
+        <div class="download-icon">📄</div>
+        <div class="download-info">
+          <h3>Alumni Constitution</h3>
+          <p>PDF - 590KB</p>
+        </div>
+        <a href="CHITEKESA CDSS ALUMNI CONSTITUTION.pdf" download class="btn-download">Download</a>
+      </div>
+
+      <div class="download-card">
+        <div class="download-icon">📊</div>
+        <div class="download-info">
+          <h3>Meeting Minutes</h3>
+          <p>PDF - 158KB</p>
+        </div>
+        <a href="Chitekesa_CDSS_Alumni_Meeting_Minutes.pdf" download class="btn-download">Download</a>
+      </div>
+
+      <div class="download-card">
+        <div class="download-icon">🖼️</div>
+        <div class="download-info">
+          <h3>Reunion Photos 2025</h3>
+          <p>ZIP - 45MB - 120 Photos</p>
+        </div>
+        <a href="files/photos.zip" download class="btn-download">Download</a>
+      </div>
+
+      <div class="download-card">
+        <div class="download-icon">📝</div>
+        <div class="download-info">
+          <h3>Membership Form</h3>
+          <p>DOCX - 120KB - Fill and submit</p>
+        </div>
+        <a href="files/membership.docx" download class="btn-download">Download</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p><strong>Location:</strong> Along Mwanga to Maliro Road, Near Chitekesa Police Unit, Phalombe</p>
+    
+    <div class="footer-social">
+      <span><strong>Facebook:</strong></span>
+      <a href="https://www.facebook.com/share/19DZppzrht/" target="_blank">
+        <img src="Facebook icon.png" alt="Facebook">
+        CHITEKESA CDSS ALUMNI
+      </a>
+    </div>
+    
+    <p>&copy; 2026 CHITEKESA ALUMNI ASSOCIATION. All Rights Reserved.</p>
+  </footer>
+
+</body>
+</html>

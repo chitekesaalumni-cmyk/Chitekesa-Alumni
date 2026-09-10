@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chitekesa CDSS Alumni Association</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green: #123d21;
+      --blue: #004080;
+      --whatsapp: #25D366;
+      --orange: #FF8C00;
+      --bg: #f0f8ff;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      background: linear-gradient(135deg, #f0f8ff 0%, #e6f2ff 100%);
+      font-family: 'Poppins', Arial, sans-serif;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .container {
+      padding: 0 16px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* HEADER */
+    .header {
+      background-color: var(--green);
+      padding: 25px 15px;
+      text-align: center;
+      color: white;
+    }
+    .logo {
+      width: 100px;
+      height: 100px;
+      background-color: white;
+      border-radius: 50%;
+      margin: 0 auto 10px;
+      border: 3px solid var(--blue);
+      overflow: hidden;
+    }
+    .logo img { width: 100%; height: 100%; object-fit: cover; }
+    .header h1 { margin: 0; font-size: 20px; font-family: 'Times New Roman', serif; }
+    .header h4 { font-style: italic; font-family: 'Times New Roman', serif; font-weight: 400; }
+
+    /* NAV MENU */
+    .navbar {
+      background-color: var(--blue);
+      padding: 10px;
+      text-align: left;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+    .menu-toggle {
+      background: none;
+      border: 2px solid white;
+      color: white;
+      font-size: 22px;
+      padding: 5px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .menu {
+      list-style: none;
+      display: none;
+      margin-top: 10px;
+    }
+    .menu.active { display: block; }
+    .menu li { margin: 8px 0; }
+    .menu a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+      padding: 8px 15px;
+      display: inline-block;
+    }
+    .menu a:hover { background: rgba(255,255,255,0.1); border-radius: 5px; }
+    .logout-btn {
+      background: var(--orange);
+      border: none;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 5px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+
+    /* MAIN CONTENT */
+    main { padding: 30px 0; }
+    h2 { color: var(--blue); font-size: 22px; margin-bottom: 10px; }
+    h3 { color: var(--green); font-size: 18px; margin: 20px 0 10px; }
+    h5 { font-weight: 400; margin-bottom: 20px; }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 8px 5px;
+    }
+    .btn-primary { background: var(--orange); color: white; }
+    .btn-primary:hover { transform: scale(1.05); }
+    .btn-whatsapp { background: var(--whatsapp); color: white; box-shadow: 0 4px 8px rgba(37,211,102,0.3); }
+    .btn-whatsapp:hover { transform: scale(1.05); }
+
+    /* EXECUTIVE CARDS */
+    .executive {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      margin: 15px 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .executive img {
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--green);
+      margin-bottom: 10px;
+    }
+
+    /* FOOTER - FIXED */
+    footer {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+      margin-top: 40px;
+    }
+    footer p { margin: 10px 0; }
+    .footer-social {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .footer-social a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .footer-social img {
+      width: 28px;   /* fixed small size */
+      height: 28px;
+      object-fit: contain;
+    }
+    .footer-social a:hover { color: #1877F2; }
+
+    /* DESKTOP MENU */
+    @media (min-width: 768px) {
+      .menu-toggle { display: none; }
+      .menu { display: block; }
+      .menu li { display: inline-block; margin: 0 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo"><img src="Alumni logo.png" alt="Chitekesa Alumni Logo"></div>
+    <h1>CHITEKESA CDSS ALUMNI GROUP</h1>
+    <h4>Together We Make The Difference</h4>
+  </header>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
+    <ul id="menu" class="menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="Chitekesa about.html">About</a></li>
+      <li><a href="Chitekesa contact.html">Contact Us</a></li>
+      <li><a href="downloads.html">Downloads</a></li>
+      <li><a href="find-classmate.html">Find Classmate</a></li>
+      <li><a href="vacancies.html">Vacancies/Blog</a></li>
+      <li><button class="logout-btn" onclick="logout()">Logout</button></li>
+    </ul>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="container">
+    <h2>Who are we</h2>
+    <h4>Chitekesa Alumni • Once Chitekesa • Always Chitekesa</h4>
+    <h5>Chitekesa Community Day Secondary School Alumni Association (hereinafter referred to as "the 
+Association") is a Malawian-based non-profit organization comprising former students of 
+Chitekesa CDSS who are committed to fostering unity, mutual support, and community 
+development. Established out of a shared sense of belonging and the desire to give back, the 
+Association aims to harness the collective strengths and resources of its alumni to promote the 
+growth of Chitekesa CDSS, support current students, and contribute meaningfully to the 
+socioeconomic development of the communities in which its members live and work. Guided by 
+the motto "Together We Make the Difference," the Association envisions a brotherhood and 
+sisterhood of alumni working in harmony to elevate one another and the school that shaped them</h5>
+
+    <!-- DONATE SECTION -->
+    <h3>Name and Establishment</h3>
+    <div> 
+    <h5>
+The name of the Alumni Association is called Chitekesa Community Day Secondary School 
+Alumni Association, abbreviated as CHITEKESA CDSS ALUMNI ASSOCIATION.</h5>
+
+<h3>Location of Establishment</h3>
+<h5>The Association is linked to Chitekesa Community Day Secondary School. Its operations 
+is extend to wherever members of the Alumni are based in Malawi and beyond.</h5>
+
+<h3>Contact Address</h3>
+<h5>The contact address of the Association is maintained by the Secretary General and shall be 
+updated as necessary. All official communications are channelled through the Secretary General.</h5>
+
+<h3>Target Group</h3>
+<h5>The Association comprise all former students who studied at Chitekesa CDSS. It also 
+extend its development activities to the Chitekesa CDSS school community, including current 
+<h3>Vision</h3>
+<h5>The vision of the Association is to see a united, empowered, and impactful alumni body that drives 
+transformation at Chitekesa CDSS and contributes to the socioeconomic development of Malawi, 
+guided by the spirit of togetherness.</h5>
+
+<h3>Mission Statement</h3>
+<h5>The mission of the Association is "To unite Chitekesa CDSS alumni in fostering academic 
+excellence, community development, and mutual support, while preserving and advancing the 
+legacy of Chitekesa CDSS for generations to come."</h5>
+    </div>
+
+<!-- EXECUTIVE -->
+<h2>Meet Your Alumni Executive</h2>
+
+<!-- PRESIDENT SECTION -->
+<div class="exec-section">
+  <h3>Presidential Office</h3>
+  <div class="exec-row">
+    <div class="executive">
+      <img src="Kaelama photo.jpg" alt="President">
+      <h4>Francisco Kaelama</h4>
+      <p>President</p>
+    </div>
+
+    <div class="executive">
+      <img src="Linly photo.png" alt="Vice President">
+      <h4>Linly Sumbuleta</h4>
+      <p>Vice President</p>
+    </div>
+  </div>
+</div>
+
+<!-- SECRETARY SECTION -->
+<div class="exec-section">
+  <h3>Secretariat</h3>
+  <div class="exec-row">
+    <div class="executive">
+      <img src="Chibisa photo.png" alt="Secretary">
+      <h4>Patrick Chibisa</h4>
+      <p>General Secretary</p>
+    </div>
+
+    <div class="executive">
+      <img src="Flora photo.png" alt="Vice Secretary">
+      <h4>Flora Harry</h4>
+      <p>Vice General Secretary</p>
+    </div>
+    
+     <div class="exec-row">
+    <div class="executive">
+      <img src="Madeya photo.jpg" alt="Organizing Secretary">
+      <h4>Hope Madeya</h4>
+      <p>Organizing Secretary</p>
+    </div>
+  </div>
+</div>
+
+<!-- TREASURER SECTION -->
+<div class="exec-section">
+  <h3>Treasury</h3>
+  <div class="exec-row">
+    <div class="executive">
+      <img src="My image.png" alt="Treasurer">
+      <h4>Francis Junior Salima</h4>
+      <p>Treasurer</p>
+    </div>
+    
+     <div class="exec-row">
+    <div class="executive">
+      <img src="Austin Photo.png" alt="Vice Treasurer">
+      <h4>Austin Luka</h4>
+      <p>Vice Treasurer</p>
+    </div>
+    </div>
+
+<!--SOCIAL WELFARE-->
+ <div class="exec-section">
+  <h3>Social Welfare</h3>
+  <div class="exec-row">
+    <div class="executive">
+      <img src="Mwakhiwa photo.jpg" alt="Social Welfare Director">
+      <h4>Blessings Mwakhiwa</h4>
+      <p>Social Welfare Director</p>
+    </div>
+ </div>
+ 
+ <!--DISCIPLINARY-->
+ <div class="exec-section">
+   <h3>Disciplinary</h3>
+    <div class="executive">
+      <img src="Munama photo.png" alt="Disciplinary Chairperson">
+      <h4>Samson Munama</h4>
+      <p>Disciplinary Chairperson</p>
+    </div>
+</div>
+
+<!-- FINANCIAL AUDITOR SECTION -->
+<div class="exec-section">
+  <h3>Auditors</h3>
+  <div class="exec-row">
+    <div class="executive">
+      <img src="Mbendera photo.png" alt="Financial Auditor">
+      <h4>Chisomo Mbendera</h4>
+      <p>Financial Auditor</p>
+    </div>
+    
+     <div class="exec-row">
+    <div class="executive">
+      <img src="Gomani photo.png" alt="Vice Financial Auditor">
+      <h4>Chisomo Gomani</h4>
+      <p>Vice Financial Auditor</p>
+    </div>
+    </div>
+    
+    <!--EXECUTIVE ADVISORS SECTION-->
+<div class="exec-section">
+  <h3>Advisors</h3>
+  <div class="exec-row">
+    <div class="executive">
+      <img src="Mukoma photo.png" alt="Executive Advisor">
+      <h4>Fedson Mukoma</h4>
+      <p>Executive Advisor</p>
+    </div>
+    
+     <div class="exec-row">
+    <div class="executive">
+      <img src="Beauty photo.png" alt="Executive Advisor">
+      <h4>Beauty Kacheche</h4>
+      <p>Executive Advisor</p>
+    </div>
+    
+    <div class="exec-row">
+    <div class="executive">
+      <img src="Wongani photo.jpg" alt="Executive Advisor">
+      <h4>Wongani Sibande</h4>
+      <p>Executive Advisor</p>
+    </div>
+    
+    <div class="exec-row">
+    <div class="executive">
+      <img src="Wiske photo.png" alt="Executive Advisor">
+      <h4>Wiske Japa</h4>
+      <p>Executive Advisor</p>
+    </div>
+    </div>
+  </main>
+
+  <!-- FOOTER - FIXED -->
+  <footer>
+    <p><strong>Location:</strong> Along Mwanga to Maliro Road, Near Chitekesa Police Unit, Phalombe</p>
+    
+    <div class="footer-social">
+      <span><strong>Facebook:</strong></span>
+      <a href="https://www.facebook.com/share/19DZppzrht/" target="_blank">
+        <img src="Facebook icon.png" alt="Facebook">
+        CHITEKESA CDSS ALUMNI
+      </a>
+    </div>
+    
+    <p>&copy; 2026 CHITEKESA ALUMNI ASSOCIATION. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById("menu").classList.toggle("active");
+    }
+    function toggleForm(id) {
+      document.getElementById(id).classList.toggle("active");
+    }
+  </script>
+</body>
+</html>
