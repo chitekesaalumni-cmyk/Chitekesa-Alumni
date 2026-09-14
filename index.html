@@ -14,176 +14,51 @@
       --bg: #f0f8ff;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       background: linear-gradient(135deg, #f0f8ff 0%, #e6f2ff 100%);
       font-family: 'Poppins', Arial, sans-serif;
       color: #333;
       line-height: 1.6;
     }
-
-   .container {
-      padding: 0 16px;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    /* HEADER */
-   .header {
-      background-color: var(--green);
-      padding: 25px 15px;
-      text-align: center;
-      color: white;
-    }
-   .logo {
-      width: 100px;
-      height: 100px;
-      background-color: white;
-      border-radius: 50%;
-      margin: 0 auto 10px;
-      border: 3px solid var(--blue);
-      overflow: hidden;
-    }
+   .container { padding: 0 16px; max-width: 900px; margin: 0 auto; }
+   .header { background-color: var(--green); padding: 25px 15px; text-align: center; color: white; }
+   .logo { width: 100px; height: 100px; background-color: white; border-radius: 50%; margin: 0 auto 10px; border: 3px solid var(--blue); overflow: hidden; }
    .logo img { width: 100%; height: 100%; object-fit: cover; }
    .header h1 { margin: 0; font-size: 20px; font-family: 'Times New Roman', serif; }
    .header h4 { font-style: italic; font-family: 'Times New Roman', serif; font-weight: 400; }
-
-    /* NAV MENU */
-   .navbar {
-      background-color: var(--blue);
-      padding: 10px;
-      text-align: left;
-      position: sticky;
-      top: 0;
-      z-index: 999;
-    }
-   .menu-toggle {
-      background: none;
-      border: 2px solid white;
-      color: white;
-      font-size: 22px;
-      padding: 5px 12px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-   .menu {
-      list-style: none;
-      display: none;
-      margin-top: 10px;
-    }
+   .navbar { background-color: var(--blue); padding: 10px; text-align: left; position: sticky; top: 0; z-index: 999; }
+   .menu-toggle { background: none; border: 2px solid white; color: white; font-size: 22px; padding: 5px 12px; border-radius: 5px; cursor: pointer; }
+   .menu { list-style: none; display: none; margin-top: 10px; }
    .menu.active { display: block; }
    .menu li { margin: 8px 0; }
-   .menu a {
-      color: white;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 16px;
-      padding: 8px 15px;
-      display: inline-block;
-    }
+   .menu a { color: white; text-decoration: none; font-weight: 600; font-size: 16px; padding: 8px 15px; display: inline-block; }
    .menu a:hover { background: rgba(255,255,255,0.1); border-radius: 5px; }
-   .logout-btn {
-      background: var(--orange);
-      border: none;
-      color: white;
-      padding: 8px 15px;
-      border-radius: 5px;
-      font-weight: 700;
-      cursor: pointer;
-      margin-left: 10px;
-    }
-
-    /* MAIN CONTENT */
+   .logout-btn { background: var(--orange); border: none; color: white; padding: 8px 15px; border-radius: 5px; font-weight: 700; cursor: pointer; margin-left: 10px; }
     main { padding: 30px 0; }
     h2 { color: var(--blue); font-size: 22px; margin-bottom: 10px; }
     h3 { color: var(--green); font-size: 18px; margin: 20px 0 10px; }
     h5 { font-weight: 400; margin-bottom: 20px; }
-
-    /* BUTTONS */
-   .btn {
-      display: inline-block;
-      padding: 12px 24px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 16px;
-      border: none;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      margin: 8px 5px;
-    }
+   .btn { display: inline-block; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 16px; border: none; cursor: pointer; transition: all 0.3s ease; margin: 8px 5px; }
    .btn-primary { background: var(--orange); color: white; }
    .btn-primary:hover { transform: scale(1.05); }
    .btn-whatsapp { background: var(--whatsapp); color: white; box-shadow: 0 4px 8px rgba(37,211,102,0.3); }
    .btn-whatsapp:hover { transform: scale(1.05); }
    .btn-green { background: var(--green); color: white; }
    .btn-blue { background: var(--blue); color: white; }
-
-    /* COLLAPSIBLE FORMS */
    .collapsible { display: none; margin-top: 15px; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
    .collapsible.active { display: block; }
     form label { display: block; font-weight: 600; margin-top: 12px; margin-bottom: 5px; }
-    form input, form select, form textarea {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-family: 'Poppins', sans-serif;
-    }
+    form input, form select, form textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-family: 'Poppins', sans-serif; }
     form button[type="submit"] { background: var(--green); color: white; width: 100%; margin-top: 15px; }
-
-    /* EXECUTIVE CARDS */
-   .executive {
-      background: white;
-      padding: 15px;
-      border-radius: 10px;
-      text-align: center;
-      margin: 15px 0;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-   .executive img {
-      width: 100px; height: 100px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid var(--green);
-      margin-bottom: 10px;
-    }
-
-    /* GALLERY */
+   .executive { background: white; padding: 15px; border-radius: 10px; text-align: center; margin: 15px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+   .executive img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--green); margin-bottom: 10px; }
    .gallery img { width: 100%; border-radius: 10px; margin: 10px 0; }
-
-    /* FOOTER - FIXED */
-    footer {
-      background: #222;
-      color: white;
-      text-align: center;
-      padding: 30px 20px;
-      margin-top: 40px;
-    }
+    footer { background: #222; color: white; text-align: center; padding: 30px 20px; margin-top: 40px; }
     footer p { margin: 10px 0; }
-   .footer-social {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-   .footer-social a {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: white;
-      text-decoration: none;
-      font-weight: 600;
-    }
-   .footer-social img {
-      width: 28px;
-      height: 28px;
-      object-fit: contain;
-    }
+   .footer-social { display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; }
+   .footer-social a { display: flex; align-items: center; gap: 8px; color: white; text-decoration: none; font-weight: 600; }
+   .footer-social img { width: 28px; height: 28px; object-fit: contain; }
    .footer-social a:hover { color: #1877F2; }
-
-    /* ADMIN DASHBOARD */
    .admin-tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
    .admin-tab { background: var(--blue); color: white; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-weight: 600; }
    .admin-tab.active { background: var(--green); }
@@ -192,8 +67,6 @@
    .admin-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
    .admin-table th,.admin-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
    .admin-table th { background: var(--bg); color: var(--blue); }
-
-    /* DESKTOP MENU */
     @media (min-width: 768px) {
      .menu-toggle { display: none; }
      .menu { display: block; }
@@ -203,14 +76,12 @@
 </head>
 <body>
 
-  <!-- HEADER -->
   <header class="header">
     <div class="logo"><img src="Alumni logo.png" alt="Chitekesa Alumni Logo"></div>
     <h1>CHITEKESA CDSS ALUMNI GROUP</h1>
     <h4>Together We Make The Difference</h4>
   </header>
 
-  <!-- NAVBAR -->
   <nav class="navbar">
     <button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
     <ul id="menu" class="menu">
@@ -225,7 +96,6 @@
     </ul>
   </nav>
 
-  <!-- MAIN -->
   <main class="container">
     <h2>Hi, Welcome to Chitekesa CDSS Alumni Association Platform</h2>
     <h4>Chitekesa Alumni • Once Chitekesa • Always Chitekesa</h4>
@@ -233,27 +103,23 @@
     This is a non-profit association aimed to Reconnect, Give Back and Grow Together.
     You can know more about us on the <strong>about</strong> section.</h5>
 
-    <!-- ADMIN LOGIN SECTION -->
     <h3>Admin Portal</h3>
     <button class="btn btn-green" onclick="toggleForm('adminLoginForm')">Admin Login</button>
     <div id="adminLoginForm" class="collapsible">
       <form onsubmit="adminLogin(event)">
         <label>Username *</label>
-        <input type="text" id="adminUser" value="admin" required>
+        <input type="text" id="adminUser" required>
         <label>Password *</label>
         <input type="password" id="adminPass" placeholder="Enter password" required>
         <button type="submit" class="btn btn-green">Login to Dashboard</button>
-        <p style="font-size:12px; margin-top:10px; color:#555;">Demo: username: admin | password: admin123</p>
       </form>
     </div>
 
-    <!-- ADMIN DASHBOARD -->
     <div id="adminDashboard" style="display:none;">
       <h2>Admin Dashboard</h2>
       <div class="admin-tabs">
         <div class="admin-tab active" onclick="showAdminTab('donations', event)">Donations</div>
         <div class="admin-tab" onclick="showAdminTab('alumni', event)">Alumni Members</div>
-        <div class="admin-tab" onclick="showAdminTab('messages', event)">Messages</div>
       </div>
 
       <div id="donations" class="admin-content active">
@@ -271,34 +137,22 @@
           <tr><th>Name</th><th>Grad Year</th><th>Profession</th><th>Phone</th><th>Interest</th></tr>
         </table>
       </div>
-
-      <div id="messages" class="admin-content">
-        <h3>Contact Messages</h3>
-        <table class="admin-table">
-          <tr><th>Name</th><th>Email</th><th>Message</th></tr>
-          <tr><td>Demo: Mary Banda</td><td>mary@email.com</td><td>Looking for class of 2019</td></tr>
-        </table>
-      </div>
     </div>
 
-    <!-- DONATE SECTION -->
     <h3>Help Us Grow</h3>
     <button class="btn btn-primary" onclick="toggleForm('donateForm')">Donate</button>
     <div id="donateForm" class="collapsible">
-      <form onsubmit="submitDonation(event)">
+      <form id="donationForm">
         <label>Full Name *</label>
         <input type="text" name="fullName" required>
-
         <label>Gender *</label>
         <select name="gender" required>
           <option value="">select</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
         </select>
-
         <label>What would you like to donate? *</label>
         <input type="text" name="donationType" placeholder="e.g. Money, Books, Materials" required>
-
         <label>Donation Period *</label>
         <select name="donationPeriod" required>
           <option value="">Select</option>
@@ -308,75 +162,61 @@
           <option value="1year">1 year</option>
           <option value="ongoing">More than a year</option>
         </select>
-
         <label>Phone Number *</label>
         <input type="tel" name="phone" placeholder="+265 9XX XXX" required>
-
         <label>Email Address</label>
         <input type="email" name="email">
-
         <label>Current Location *</label>
         <input type="text" name="location" placeholder="City, Country" required>
-
         <button type="submit" class="btn btn-primary">Donate Now</button>
+        <p id="donationMsg"></p>
       </form>
     </div>
 
-    <!-- SIGN UP SECTION -->
     <h3>Join Alumni Team</h3>
     <button class="btn btn-primary" onclick="toggleForm('signupForm')">Sign Up</button>
     <div id="signupForm" class="collapsible">
-      <form onsubmit="submitAlumni(event)">
+      <form id="alumniForm">
         <label>Full Name *</label>
         <input type="text" name="fullName" required>
-
         <label>Gender *</label>
         <select name="gender" required>
           <option value="">select</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
         </select>
-
         <label>Year Graduated from Chitekesa CDSS *</label>
         <input type="number" name="gradYear" min="1990" max="2026" required>
-
         <label>Class/Stream</label>
         <input type="text" name="class" placeholder="e.g. Humanities, Sciences">
-
         <label>Phone Number *</label>
         <input type="tel" name="phone" placeholder="+265 9XX XXX" required>
-
         <label>WhatsApp Number</label>
         <input type="tel" name="whatsapp" placeholder="+265 9XX XXX">
-
         <label>Profession / Occupation *</label>
         <input type="text" name="profession" required>
-
         <label>How would you like to get involved? *</label>
         <select name="interest" required>
           <option value="">Select</option>
+          <option value="Membership">Membership</option>
           <option value="Events & Reunions">Events & Reunions</option>
           <option value="Mentorship">Mentorship for Current Students</option>
           <option value="Donations/Fundraising">Donations & Fundraising</option>
           <option value="Networking">Networking Only</option>
         </select>
-
         <label>Short Message to Fellow Alumni</label>
         <textarea name="message" rows="3" placeholder="A memory from Chitekesa or what you do now"></textarea>
-
         <label><input type="checkbox" name="directoryConsent" required> I agree to be in the alumni directory *</label>
-
         <button type="submit" class="btn btn-primary">Join Chitekesa Alumni</button>
+        <p id="alumniMsg"></p>
       </form>
     </div>
 
-    <!-- GALLERY -->
     <h3>Photographs of Our School</h3>
     <div class="gallery">
       <img src="Chitekesa photo.jpg" alt="Chitekesa School Photo">
     </div>
 
-    <!-- EXECUTIVE -->
     <h2>Need Help? Meet Your Alumni Executive</h2>
     <div class="executive">
       <img src="Kaelama photo.jpg" alt="President">
@@ -384,14 +224,12 @@
       <a href="https://wa.me/265882427151?text=Hello%20Alumni%20President,%20I%20need%20help%20with"
          class="btn btn-whatsapp" target="_blank">Chat on WhatsApp</a>
     </div>
-
     <div class="executive">
       <img src="Chibisa photo.png" alt="Secretary">
       <h3>Secretary: Patrick Chibisa, Class of 2023</h3>
       <a href="https://wa.me/265897105274?text=Hello%20Alumni%20Secretary,%20I%20need%20help%20with"
          class="btn btn-whatsapp" target="_blank">Chat on WhatsApp</a>
     </div>
-
     <div class="executive">
       <img src="My image.png" alt="Treasurer">
       <h3>Treasurer: Francis Junior Salima, Class of 2022</h3>
@@ -400,10 +238,8 @@
     </div>
   </main>
 
-  <!-- FOOTER - FIXED -->
   <footer>
     <p><strong>Location:</strong> Along Mwanga to Maliro Road, Near Chitekesa Police Unit, Phalombe</p>
-
     <div class="footer-social">
       <span><strong>Facebook:</strong></span>
       <a href="https://www.facebook.com/share/19DZppzrht/" target="_blank">
@@ -411,11 +247,13 @@
         CHITEKESA CDSS ALUMNI
       </a>
     </div>
-
     <p>&copy; 2026 CHITEKESA ALUMNI ASSOCIATION. All Rights Reserved.</p>
   </footer>
 
   <script>
+    // LINKED TO YOUR NEW WEB APP
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxlg51F7IsuXJUr-kV9DFkhjpCcEHJH0VX6UuBZNaM3UXibPNnLemyNSMoSgwgpcMn5/exec";
+
     function toggleMenu() {
       document.getElementById("menu").classList.toggle("active");
     }
@@ -423,120 +261,105 @@
       document.getElementById(id).classList.toggle("active");
     }
 
-    // SAVE AND LOAD DONATIONS
-    function submitDonation(e){
+    document.getElementById("donationForm").addEventListener("submit", function(e){
       e.preventDefault();
       const form = e.target;
-      const data = {
-        name: form.fullName.value,
-        donation: form.donationType.value,
-        period: form.donationPeriod.value,
-        phone: form.phone.value,
-        location: form.location.value
+      document.getElementById("donationMsg").innerHTML = "Submitting...";
+      const data = { 
+        type: "donation", 
+        name: form.fullName.value, 
+        gender: form.gender.value, 
+        donation: form.donationType.value, 
+        period: form.donationPeriod.value, 
+        phone: form.phone.value, 
+        email: form.email.value, 
+        location: form.location.value 
       };
-      let donations = JSON.parse(localStorage.getItem('chitekesaDonations')) || [];
-      donations.push(data);
-      localStorage.setItem('chitekesaDonations', JSON.stringify(donations));
-      alert('Thank you for your donation pledge! We will contact you soon.');
-      form.reset();
-      toggleForm('donateForm');
-      loadDonations();
-    }
+      fetch(WEB_APP_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(data) })
+      .then(() => { 
+        document.getElementById("donationMsg").innerHTML = "✅ Thank you! Your donation was recorded."; 
+        form.reset(); 
+        toggleForm('donateForm'); 
+        loadDonations(); 
+      })
+      .catch(err => { document.getElementById("donationMsg").innerHTML = "❌ Error. Please try again."; });
+    });
 
-    function loadDonations(){
+    document.getElementById("alumniForm").addEventListener("submit", function(e){
+      e.preventDefault();
+      const form = e.target;
+      document.getElementById("alumniMsg").innerHTML = "Submitting...";
+      const data = { 
+        type: "alumni", 
+        name: form.fullName.value, 
+        gender: form.gender.value, 
+        year: form.gradYear.value, 
+        class: form.class.value, 
+        phone: form.phone.value, 
+        whatsapp: form.whatsapp.value, 
+        profession: form.profession.value, 
+        interest: form.interest.value, 
+        message: form.message.value 
+      };
+      fetch(WEB_APP_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(data) })
+      .then(() => { 
+        document.getElementById("alumniMsg").innerHTML = "✅ Welcome to the network!"; 
+        form.reset(); 
+        setTimeout(() => { toggleForm('signupForm'); loadAlumni(); }, 1500); 
+      })
+      .catch(err => { document.getElementById("alumniMsg").innerHTML = "❌ Error. Please try again."; });
+    });
+
+    async function loadDonations(){
       const table = document.getElementById('donationTable');
-      let donations = JSON.parse(localStorage.getItem('chitekesaDonations')) || [];
-      table.innerHTML = '<tr><th>Name</th><th>Donation</th><th>Period</th><th>Phone</th><th>Location</th></tr>';
-      donations.forEach(d => {
-        table.innerHTML += `<tr><td>${d.name}</td><td>${d.donation}</td><td>${d.period}</td><td>${d.phone}</td><td>${d.location}</td></tr>`;
-      });
+      try { 
+        const res = await fetch(WEB_APP_URL + "?type=donation"); 
+        const data = await res.json();
+        table.innerHTML = '<tr><th>Name</th><th>Donation</th><th>Period</th><th>Phone</th><th>Location</th></tr>';
+        data.donations.forEach(d => { 
+          table.innerHTML += `<tr><td>${d.name||''}</td><td>${d.donation||''}</td><td>${d.period||''}</td><td>${d.phone||''}</td><td>${d.location||''}</td></tr>`; 
+        });
+      } catch(e){ console.log("Donation load error:", e) }
     }
 
-    // SAVE AND LOAD ALUMNI
-    function submitAlumni(e){
-      e.preventDefault();
-      const form = e.target;
-      const data = {
-        name: form.fullName.value,
-        year: form.gradYear.value,
-        profession: form.profession.value,
-        phone: form.phone.value,
-        interest: form.interest.value
-      };
-      let alumni = JSON.parse(localStorage.getItem('chitekesaAlumni')) || [];
-      alumni.push(data);
-      localStorage.setItem('chitekesaAlumni', JSON.stringify(alumni));
-      alert('Welcome to Chitekesa Alumni! Your details have been submitted.');
-      form.reset();
-      toggleForm('signupForm');
-      loadAlumni();
-    }
-
-    function loadAlumni(){
+    async function loadAlumni(){
       const table = document.getElementById('alumniTable');
-      let alumni = JSON.parse(localStorage.getItem('chitekesaAlumni')) || [];
-      table.innerHTML = '<tr><th>Name</th><th>Grad Year</th><th>Profession</th><th>Phone</th><th>Interest</th></tr>';
-      alumni.forEach(a => {
-        table.innerHTML += `<tr><td>${a.name}</td><td>${a.year}</td><td>${a.profession}</td><td>${a.phone}</td><td>${a.interest}</td></tr>`;
-      });
+      try { 
+        const res = await fetch(WEB_APP_URL + "?type=alumni"); 
+        const data = await res.json();
+        table.innerHTML = '<tr><th>Name</th><th>Grad Year</th><th>Profession</th><th>Phone</th><th>Interest</th></tr>';
+        data.alumni.forEach(a => { 
+          table.innerHTML += `<tr><td>${a.name||''}</td><td>${a.year||''}</td><td>${a.profession||''}</td><td>${a.phone||''}</td><td>${a.interest||''}</td></tr>`; 
+        });
+      } catch(e){ console.log("Alumni load error:", e) }
     }
 
-    // EXPORT TO CSV
     function exportCSV(type){
-      let data, filename, headers;
-      if(type === 'donations'){
-        data = JSON.parse(localStorage.getItem('chitekesaDonations')) || [];
-        headers = ['Name', 'Donation', 'Period', 'Phone', 'Location'];
-        filename = 'chitekesa_donations.csv';
-      } else {
-        data = JSON.parse(localStorage.getItem('chitekesaAlumni')) || [];
-        headers = ['Name', 'Grad Year', 'Profession', 'Phone', 'Interest'];
-        filename = 'chitekesa_alumni.csv';
-      }
-
-      if(data.length === 0){
-        alert('No data to export yet!');
-        return;
-      }
-
-      let csv = headers.join(',') + '\n';
-      data.forEach(row => {
-        csv += Object.values(row).join(',') + '\n';
-      });
-
-      const blob = new Blob([csv], { type: 'text/csv' });
+      let table, filename;
+      if(type === 'donations'){ table = document.getElementById('donationTable'); filename = 'donations.csv'; } 
+      else { table = document.getElementById('alumniTable'); filename = 'alumni.csv'; }
+      let csv = [];
+      for(let row of table.rows){ csv.push([...row.cells].map(cell => cell.innerText).join(',')); }
+      const blob = new Blob([csv.join('\n')], { type: 'text/csv' });
       const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.setAttribute('hidden', '');
-      a.setAttribute('href', url);
-      a.setAttribute('download', filename);
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+      const a = document.createElement('a'); a.href = url; a.download = filename; document.body.appendChild(a); a.click();
     }
 
-    // ADMIN FUNCTIONS
     function adminLogin(e) {
       e.preventDefault();
-      const user = document.getElementById('adminUser').value;
-      const pass = document.getElementById('adminPass').value;
-      if(user === 'admin' && pass === 'admin123'){
+      if(document.getElementById('adminUser').value === 'chitekesa2026' && document.getElementById('adminPass').value === 'Chiteke@2026!'){
         localStorage.setItem('chitekesaAdmin', 'loggedIn');
         document.getElementById('adminDashboard').style.display = 'block';
         document.getElementById('adminLoginForm').classList.remove('active');
         document.getElementById('adminLogoutLi').style.display = 'inline-block';
-        loadDonations();
-        loadAlumni();
-        alert('Login Successful! Welcome Admin');
-      } else {
-        alert('Invalid Username or Password');
-      }
+        loadDonations(); loadAlumni();
+        alert('Login Successful!');
+      } else { alert('Invalid Username or Password'); }
     }
     function adminLogout(){
-      localStorage.removeItem('chitekesaAdmin');
-      document.getElementById('adminDashboard').style.display = 'none';
-      document.getElementById('adminLogoutLi').style.display = 'none';
-      alert('Logged out successfully');
+      localStorage.removeItem('chitekesaAdmin'); 
+      document.getElementById('adminDashboard').style.display = 'none'; 
+      document.getElementById('adminLogoutLi').style.display = 'none'; 
     }
     function showAdminTab(tabId, event){
       document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
@@ -545,7 +368,6 @@
       document.getElementById(tabId).classList.add('active');
     }
 
-    // Auto-login if already logged in
     window.onload = function(){
       if(localStorage.getItem('chitekesaAdmin') === 'loggedIn'){
         document.getElementById('adminDashboard').style.display = 'block';
@@ -556,4 +378,4 @@
     }
   </script>
 </body>
-  </html>
+                              </html>
