@@ -40,7 +40,17 @@
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-const firebaseConfig = { /* paste your config here */ };
+
+const firebaseConfig = {
+  apiKey: "AIzaSyARXLsQe4i59U2iWZRHpRfIM33j1l7T_eY",
+  authDomain: "chitekesa-alumni-ae55c.firebaseapp.com",
+  projectId: "chitekesa-alumni-ae55c",
+  storageBucket: "chitekesa-alumni-ae55c.firebasestorage.app",
+  messagingSenderId: "943225897010",
+  appId: "1:943225897010:web:2fc300df337d333aa2fc2b",
+  measurementId: "G-NXW29KE44T"
+};
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
@@ -58,7 +68,7 @@ async function loadMates() {
 
 function renderMates(list) {
   const grid = document.getElementById('classmateGrid');
-  if(list.length==0){ grid.innerHTML="<p>No classmates found</p>"; return; }
+  if(list.length==0){ grid.innerHTML="<p>No classmates found yet - be the first to register!</p>"; return; }
   grid.innerHTML = list.map(u => `
     <div class="mate-card">
       <div class="mate-avatar">${(u.displayName||u.email||'A')[0].toUpperCase()}</div>
