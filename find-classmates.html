@@ -4,42 +4,50 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Find Classmates - Chitekesa Alumni</title>
-<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-.find-hero { background: linear-gradient(135deg, #1a1a2e, #16213e); color:white; padding:50px 20px; text-align:center; }
-.search-box { max-width:800px; margin:-30px auto 30px; background:white; padding:20px; border-radius:16px; box-shadow:0 15px 30px rgba(0,0,0,0.1); display:flex; gap:10px; flex-wrap:wrap; }
-.search-box input, .search-box select { flex:1; min-width:150px; padding:14px; border-radius:10px; border:1px solid #ddd; }
-.classmate-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:20px; max-width:1100px; margin:auto; padding:20px; }
-.mate-card { background:white; border-radius:16px; padding:20px; text-align:center; box-shadow:0 8px 20px rgba(0,0,0,0.06); }
-.mate-avatar { width:80px; height:80px; border-radius:50%; background:#3282b8; color:white; display:flex; align-items:center; justify-content:center; font-size:32px; font-weight:bold; margin:0 auto 15px; }
-.mate-year { background:#0f4c75; color:white; padding:3px 10px; border-radius:20px; font-size:12px; }
+body{font-family:'Poppins',sans-serif;margin:0;background:#f5f7fb}
+.find-hero { background: linear-gradient(135deg, #0f2e1a, #003366); color:white; padding:50px 20px; text-align:center; }
+.search-box { max-width:900px; margin:-30px auto 30px; background:white; padding:20px; border-radius:16px; box-shadow:0 15px 30px rgba(0,0,0,0.1); display:flex; gap:10px; flex-wrap:wrap; }
+.search-box input, .search-box select { flex:1; min-width:150px; padding:14px; border-radius:10px; border:1.5px solid #e5e7eb; font-family:'Poppins'; }
+.search-box input:focus{outline:none;border-color:#004080}
+.classmate-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:20px; max-width:1100px; margin:auto; padding:20px; }
+.mate-card { background:white; border-radius:16px; padding:22px; text-align:center; box-shadow:0 8px 20px rgba(0,0,0,0.06); border:1px solid #e5e7eb; transition:.2s }
+.mate-card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(0,0,0,0.1)}
+.mate-avatar { width:80px; height:80px; border-radius:50%; background:linear-gradient(135deg,#004080,#123d21); color:white; display:flex; align-items:center; justify-content:center; font-size:32px; font-weight:bold; margin:0 auto 15px; }
+.mate-year { background:#0f2e1a; color:white; padding:4px 12px; border-radius:20px; font-size:12px; font-weight:600 }
+.mate-info{font-size:13px;color:#6b7280;margin:6px 0}
+.btn-connect{padding:9px 18px; border-radius:20px; border:1.5px solid #004080; background:white; color:#004080; cursor:pointer; font-weight:600; margin-top:10px}
+.btn-connect:hover{background:#004080;color:white}
 </style>
 </head>
 <body>
 <div class="find-hero">
   <h1>👥 Find Your Classmates</h1>
   <p>Reconnect with Chitekesa Alumni from all years</p>
+  <a href="index.html" style="color:#fde68a;text-decoration:none;font-size:14px">← Back to Home</a>
 </div>
 
 <div class="search-box">
-  <input type="text" id="searchName" placeholder="Search by name..." onkeyup="filterMates()">
+  <input type="text" id="searchName" placeholder="Search by name, profession..." onkeyup="filterMates()">
   <select id="filterYear" onchange="filterMates()">
     <option value="">All Years</option>
-    <option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020</option><option>2019</option><option>2018</option>
+    <option>2026</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020</option><option>2019</option><option>2018</option><option>2015</option><option>2010</option>
   </select>
   <select id="filterClass" onchange="filterMates()">
-    <option value="">All Classes</option>
-    <option>Form 4</option><option>Form 3</option><option>Form 2</option><option>Form 1</option>
+    <option value="">All Streams</option>
+    <option>Humanities</option><option>Sciences</option><option>Form 4</option><option>Form 3</option>
   </select>
 </div>
 
 <div class="classmate-grid" id="classmateGrid">
-  <p style="text-align:center; width:100%;">Loading classmates...</p>
+  <p style="text-align:center; width:100%;grid-column:1/-1;padding:40px">Loading classmates... ⏳</p>
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyARXLsQe4i59U2iWZRHpRfIM33j1l7T_eY",
@@ -47,35 +55,51 @@ const firebaseConfig = {
   projectId: "chitekesa-alumni-ae55c",
   storageBucket: "chitekesa-alumni-ae55c.firebasestorage.app",
   messagingSenderId: "943225897010",
-  appId: "1:943225897010:web:2fc300df337d333aa2fc2b",
-  measurementId: "G-NXW29KE44T"
+  appId: "1:943225897010:web:2fc300df337d333aa2fc2b"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
 let allMates = [];
+
+// Protect page - redirect to login if not logged
+onAuthStateChanged(auth, (user)=>{
+  if(!user){
+    alert("Please login first to view classmates");
+    window.location.href="index.html";
+  } else {
+    loadMates();
+  }
+});
+
 async function loadMates() {
-  const snap = await getDocs(collection(db, "users"));
-  const grid = document.getElementById('classmateGrid');
-  grid.innerHTML = "";
-  snap.forEach(doc => {
-    const u = doc.data();
-    allMates.push(u);
-  });
-  renderMates(allMates);
+  try{
+    const snap = await getDocs(collection(db, "users"));
+    allMates = [];
+    snap.forEach(doc => {
+      allMates.push(doc.data());
+    });
+    renderMates(allMates);
+  }catch(e){
+    document.getElementById('classmateGrid').innerHTML = `<p style="color:red">Error: ${e.message} <br>Check Firestore Rules are set to 'allow read, write: if true;'</p>`;
+    console.error(e);
+  }
 }
 
 function renderMates(list) {
   const grid = document.getElementById('classmateGrid');
-  if(list.length==0){ grid.innerHTML="<p>No classmates found yet - be the first to register!</p>"; return; }
+  if(list.length==0){ grid.innerHTML="<p style='grid-column:1/-1;text-align:center;padding:40px'>No classmates found yet - be the first to register! 🎓<br><a href='index.html'>Go Register</a></p>"; return; }
   grid.innerHTML = list.map(u => `
     <div class="mate-card">
-      <div class="mate-avatar">${(u.displayName||u.email||'A')[0].toUpperCase()}</div>
-      <h3>${u.displayName||u.email}</h3>
-      <p style="color:#666; font-size:14px;">${u.career||'Alumni Member'}</p>
-      <div style="margin:10px 0;"><span class="mate-year">Class of ${u.gradYear||'2020'}</span></div>
-      <button style="padding:8px 16px; border-radius:20px; border:1px solid #0f4c75; background:white; color:#0f4c75; cursor:pointer;">Connect</button>
+      <div class="mate-avatar">${(u.displayName||u.fullName||u.email||'A')[0].toUpperCase()}</div>
+      <h3 style="margin:8px 0;color:#003366">${u.displayName||u.fullName||u.email}</h3>
+      <p class="mate-info">${u.profession||u.career||'Alumni Member'}</p>
+      <p class="mate-info">📱 ${u.phone||''} ${u.whatsapp? ' | WhatsApp: '+u.whatsapp : ''}</p>
+      <div style="margin:12px 0;"><span class="mate-year">Class of ${u.gradYear||u.year||'2020'}</span> ${u.class? `<span style="font-size:12px;color:#6b7280;margin-left:6px">${u.class}</span>`:''}</div>
+      <p style="font-size:12px;color:#6b7280;font-style:italic">${u.interest||''}</p>
+      <button class="btn-connect" onclick="window.open('https://wa.me/${(u.whatsapp||u.phone||'').replace(/[^0-9]/g,'')}','_blank')">Connect on WhatsApp</button>
     </div>
   `).join('');
 }
@@ -83,14 +107,16 @@ function renderMates(list) {
 window.filterMates = () => {
   const name = document.getElementById('searchName').value.toLowerCase();
   const year = document.getElementById('filterYear').value;
+  const cls = document.getElementById('filterClass').value.toLowerCase();
   const filtered = allMates.filter(u => {
-    const matchName = (u.displayName||u.email||'').toLowerCase().includes(name);
-    const matchYear = !year || (u.gradYear==year);
-    return matchName && matchYear;
+    const text = `${u.displayName||''} ${u.fullName||''} ${u.profession||''} ${u.career||''}`.toLowerCase();
+    const matchName = text.includes(name);
+    const matchYear = !year || (u.gradYear==year || u.year==year);
+    const matchClass = !cls || (u.class||'').toLowerCase().includes(cls);
+    return matchName && matchYear && matchClass;
   });
   renderMates(filtered);
 }
-loadMates();
 </script>
 </body>
 </html>
