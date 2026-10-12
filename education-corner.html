@@ -7,73 +7,156 @@
 <link rel="stylesheet" href="style.css">
 <style>
 .education-hero { background: linear-gradient(135deg, #0f4c75, #3282b8); color:white; padding:60px 20px; text-align:center; }
-.edu-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:20px; padding:30px; max-width:1200px; margin:auto; }
-.edu-card { background:white; border-radius:16px; padding:25px; box-shadow:0 10px 25px rgba(0,0,0,0.08); transition:0.3s; border-top:4px solid #3282b8; }
-.edu-card:hover { transform:translateY(-5px); box-shadow:0 15px 35px rgba(0,0,0,0.15); }
-.edu-card h3 { color:#0f4c75; margin-bottom:10px; }
-.edu-tag { background:#e3f2fd; color:#0f4c75; padding:4px 12px; border-radius:20px; font-size:12px; font-weight:bold; }
-.btn-download { display:inline-block; margin-top:15px; background:#0f4c75; color:white; padding:10px 20px; border-radius:8px; text-decoration:none; }
+.search-box { max-width:600px; margin:25px auto 0; display:flex; gap:10px; }
+.search-box input { flex:1; padding:14px 20px; border-radius:30px; border:none; outline:none; }
+.filter-bar { display:flex; gap:10px; overflow-x:auto; padding:20px; max-width:1200px; margin:auto; scrollbar-width:none; }
+.filter-chip { white-space:nowrap; padding:8px 18px; border-radius:30px; border:2px solid #0f4c75; background:white; color:#0f4c75; font-weight:bold; cursor:pointer; transition:0.2s; }
+.filter-chip.active { background:#0f4c75; color:white; }
+.edu-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px; padding:20px 30px 40px; max-width:1200px; margin:auto; }
+.edu-card { background:white; border-radius:16px; padding:22px; box-shadow:0 10px 25px rgba(0,0,0,0.08); border-top:4px solid #3282b8; transition:0.3s; display:flex; flex-direction:column; }
+.edu-card:hover { transform:translateY(-4px); }
+.edu-tag { display:inline-block; background:#e3f2fd; color:#0f4c75; padding:4px 12px; border-radius:20px; font-size:11px; font-weight:bold; margin-bottom:8px; }
+.btn-download { margin-top:auto; display:inline-block; background:#0f4c75; color:white; padding:10px 20px; border-radius:8px; text-decoration:none; text-align:center; font-weight:bold; }
+.requirements-box { max-width:1200px; margin:20px auto; background:#fff8e1; border-left:5px solid #ffb300; padding:20px; border-radius:12px; }
 </style>
 </head>
 <body>
 <div class="education-hero">
   <h1>📚 Education Corner</h1>
-  <p>Past Papers, Study Guides & Career Resources by Alumni for Students</p>
-  <button onclick="document.getElementById('uploadModal').style.display='flex'" style="margin-top:20px; padding:12px 25px; border-radius:30px; border:none; background:white; color:#0f4c75; font-weight:bold; cursor:pointer;">+ Share Resource</button>
+  <p>Past Papers, Books, Notes & Career Resources by Alumni</p>
+  <div class="search-box">
+    <input id="searchInput" placeholder="Search e.g. Biology 2023, MSCE Maths..." onkeyup="filterCards()">
+    <button onclick="document.getElementById('uploadModal').style.display='flex'" style="padding:14px 25px; border-radius:30px; border:none; background:white; color:#0f4c75; font-weight:bold; cursor:pointer; white-space:nowrap;">+ Share</button>
+  </div>
+</div>
+
+<div class="requirements-box">
+  <h3>🎓 MSCE Requirements & Subject Combinations</h3>
+  <p><b>Core:</b> English, Chichewa, Maths, Biology | <b>Sciences:</b> Physics, Chemistry, Biology | <b>Humanities:</b> History, Geography, Bible Knowledge | <b>Min Pass:</b> 6 subjects including English</p>
+</div>
+
+<div class="filter-bar">
+  <button class="filter-chip active" onclick="setFilter('All', this)">All</button>
+  <button class="filter-chip" onclick="setFilter('MSCE Past Paper', this)">MSCE Papers</button>
+  <button class="filter-chip" onclick="setFilter('JCE Past Paper', this)">JCE Papers</button>
+  <button class="filter-chip" onclick="setFilter('Book', this)">Books</button>
+  <button class="filter-chip" onclick="setFilter('Study Notes', this)">Notes</button>
+  <button class="filter-chip" onclick="setFilter('Syllabus', this)">Syllabus</button>
+  <button class="filter-chip" onclick="setFilter('University Guide', this)">University</button>
+  <button class="filter-chip" onclick="setFilter('Career', this)">Scholarships</button>
 </div>
 
 <div class="edu-grid" id="eduGrid">
-  <!-- Sample cards -->
-  <div class="edu-card">
-    <span class="edu-tag">MSCE Past Paper</span>
-    <h3>Biology MSCE 2023 Past Paper</h3>
-    <p>Full past paper with marking key. Shared by Class of 2020.</p>
-    <a href="#" class="btn-download">Download PDF</a>
-  </div>
-  <div class="edu-card">
-    <span class="edu-tag">University Guide</span>
-    <h3>How to Apply to UNIMA</h3>
-    <p>Step-by-step guide for university applications, written by alumni.</p>
-    <a href="#" class="btn-download">Read Guide</a>
-  </div>
-  <div class="edu-card">
-    <span class="edu-tag">Career</span>
-    <h3>Scholarship Opportunities 2026</h3>
-    <p>List of scholarships available for Malawian students.</p>
-    <a href="#" class="btn-download">View List</a>
-  </div>
+  <p style="grid-column:1/-1; text-align:center; color:#888;">Loading resources...</p>
 </div>
 
-<!-- Simple Upload Modal -->
-<div id="uploadModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000;">
-  <div style="background:white; padding:30px; border-radius:16px; width:90%; max-width:400px;">
-    <h3>Share Educational Resource</h3>
-    <input id="resTitle" placeholder="Title" style="width:100%; padding:12px; margin:10px 0; border-radius:8px; border:1px solid #ddd;">
-    <select id="resType" style="width:100%; padding:12px; margin:10px 0; border-radius:8px; border:1px solid #ddd;">
-      <option>MSCE Past Paper</option><option>University Guide</option><option>Career</option><option>Study Notes</option>
-    </select>
-    <input id="resLink" placeholder="Link to PDF / Drive link" style="width:100%; padding:12px; margin:10px 0; border-radius:8px; border:1px solid #ddd;">
-    <button onclick="saveResource()" style="width:100%; padding:12px; background:#0f4c75; color:white; border:none; border-radius:8px; font-weight:bold;">Publish</button>
-    <button onclick="document.getElementById('uploadModal').style.display='none'" style="width:100%; padding:10px; margin-top:10px; background:#eee; border:none; border-radius:8px;">Cancel</button>
+<div id="uploadModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000; overflow:auto; padding:20px;">
+  <div style="background:white; padding:30px; border-radius:16px; width:95%; max-width:450px;">
+    <h3>Share Resource</h3>
+    <input id="resTitle" placeholder="Title e.g. Biology MSCE 2023" style="width:100%; padding:12px; margin:8px 0; border-radius:8px; border:1px solid #ddd;">
+    <div style="display:flex; gap:10px;">
+      <select id="resType" style="flex:1; padding:12px; margin:8px 0; border-radius:8px; border:1px solid #ddd;">
+        <option>MSCE Past Paper</option><option>JCE Past Paper</option><option>Book</option><option>Study Notes</option><option>Syllabus</option><option>University Guide</option><option>Career</option>
+      </select>
+      <select id="resSubject" style="flex:1; padding:12px; margin:8px 0; border-radius:8px; border:1px solid #ddd;">
+        <option>Biology</option><option>Maths</option><option>English</option><option>Physics</option><option>Chemistry</option><option>History</option><option>Geography</option><option>General</option>
+      </select>
+    </div>
+    <div style="display:flex; gap:10px;">
+      <input id="resYear" placeholder="Year e.g. 2023" style="flex:1; padding:12px; margin:8px 0; border-radius:8px; border:1px solid #ddd;">
+      <input id="resUploader" placeholder="Your name & class" style="flex:1; padding:12px; margin:8px 0; border-radius:8px; border:1px solid #ddd;">
+    </div>
+    <input id="resLink" placeholder="Google Drive / PDF link (must be public)" style="width:100%; padding:12px; margin:8px 0; border-radius:8px; border:1px solid #ddd;">
+    <textarea id="resDesc" placeholder="Short description" style="width:100%; padding:12px; margin:8px 0; border-radius:8px; border:1px solid #ddd; height:70px;"></textarea>
+    <button onclick="saveResource()" style="width:100%; padding:13px; background:#0f4c75; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Publish Resource</button>
+    <button onclick="document.getElementById('uploadModal').style.display='none'" style="width:100%; padding:10px; margin-top:10px; background:#eee; border:none; border-radius:8px; cursor:pointer;">Cancel</button>
   </div>
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-// USE YOUR SAME CONFIG FROM index.html
-const firebaseConfig = { /* paste your config here */ };
+import { getFirestore, collection, addDoc, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyARXLsQe4i59U2iWZRHpRfIM33j1l7T_eY",
+  authDomain: "chitekesa-alumni-ae55c.firebaseapp.com",
+  projectId: "chitekesa-alumni-ae55c",
+  storageBucket: "chitekesa-alumni-ae55c.firebasestorage.app",
+  messagingSenderId: "943225897010",
+  appId: "1:943225897010:web:2fc300df337d333aa2fc2b",
+  measurementId: "G-NXW29KE44T"
+};
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-window.saveResource = async () => {
-  const title = document.getElementById('resTitle').value;
-  const type = document.getElementById('resType').value;
-  const link = document.getElementById('resLink').value;
-  if(!title || !link) return alert("Fill all fields");
-  await addDoc(collection(db, "education_resources"), { title, type, link, createdAt: new Date() });
-  alert("Resource published!"); location.reload();
+let allResources = [];
+let currentFilter = "All";
+
+async function loadResources(){
+  try {
+    const q = query(collection(db, "education_resources"), orderBy("createdAt", "desc"));
+    const snap = await getDocs(q);
+    allResources = [];
+    snap.forEach(d => allResources.push({id:d.id, ...d.data()}));
+  } catch(e){ console.log(e); }
+  if(allResources.length===0){
+    allResources = [
+      {title:"Biology MSCE 2023 Past Paper", type:"MSCE Past Paper", subject:"Biology", year:"2023", link:"#", desc:"Full past paper with marking key. Shared by Class of 2020."},
+      {title:"How to Apply to University - Complete Guide", type:"University Guide", subject:"General", year:"2026", link:"#", desc:"Step-by-step guide for UNIMA, MUST, LUANAR, MUBAS - requirements, points, deadlines."},
+      {title:"Scholarship Opportunities 2026", type:"Career", subject:"General", year:"2026", link:"#", desc:"List of scholarships available for Malawian students."},
+      {title:"Mathematics Form 4 Textbook", type:"Book", subject:"Maths", year:"2020", link:"#", desc:"Complete Form 4 maths book PDF."},
+      {title:"MSCE Subject Requirements & Combinations", type:"Syllabus", subject:"General", year:"2026", link:"#", desc:"Minimum requirements for all MSCE subjects and university entry."}
+    ];
+  }
+  render();
 }
+
+function render(){
+  const grid = document.getElementById('eduGrid');
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  let filtered = allResources.filter(r => {
+    const matchFilter = currentFilter==="All" || r.type===currentFilter;
+    const matchSearch = (r.title+" "+r.subject+" "+r.year+" "+(r.desc||"")).toLowerCase().includes(search);
+    return matchFilter && matchSearch;
+  });
+  if(filtered.length===0){ grid.innerHTML='<p style="grid-column:1/-1; text-align:center;">No resources found. Be first to share!</p>'; return; }
+  grid.innerHTML = filtered.map(r => `
+    <div class="edu-card">
+      <span class="edu-tag">${r.type} • ${r.subject || 'General'} ${r.year || ''}</span>
+      <h3>${r.title}</h3>
+      <p style="font-size:14px; color:#555; margin:8px 0;">${r.desc || ''}</p>
+      ${r.uploader ? `<small style="color:#888;">By ${r.uploader}</small>` : ''}
+      <a href="${r.link}" target="_blank" class="btn-download">Download / View</a>
+    </div>
+  `).join('');
+}
+
+window.setFilter = (type, btn) => {
+  currentFilter = type;
+  document.querySelectorAll('.filter-chip').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+window.filterCards = render;
+
+window.saveResource = async () => {
+  const data = {
+    title: document.getElementById('resTitle').value.trim(),
+    type: document.getElementById('resType').value,
+    subject: document.getElementById('resSubject').value,
+    year: document.getElementById('resYear').value.trim(),
+    uploader: document.getElementById('resUploader').value.trim(),
+    link: document.getElementById('resLink').value.trim(),
+    desc: document.getElementById('resDesc').value.trim(),
+    createdAt: new Date()
+  };
+  if(!data.title || !data.link) return alert("Title and Link required!");
+  await addDoc(collection(db, "education_resources"), data);
+  alert("Published! ✅"); document.getElementById('uploadModal').style.display='none'; loadResources();
+}
+
+loadResources();
 </script>
 </body>
-</html>
+  </html>
