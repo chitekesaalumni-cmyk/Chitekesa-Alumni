@@ -30,7 +30,8 @@
    .btn { display: inline-block; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 16px; border: none; cursor: pointer; transition: all 0.3s ease; margin: 8px 5px; }
    .btn-primary { background: var(--orange); color: white; }
    .btn-primary:hover { transform: scale(1.05); }
-   .btn-whatsapp { background: var(--whatsapp); color: white; }
+   .btn-whatsapp { background: var(--whatsapp); color: white; box-shadow: 0 4px 8px rgba(37,211,102,0.3); }
+   .btn-whatsapp:hover { transform: scale(1.05); }
    .btn-green { background: var(--green); color: white; }
    .btn-blue { background: var(--blue); color: white; }
    .collapsible { display: none; margin-top: 15px; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
@@ -42,13 +43,19 @@
    .executive img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--green); margin-bottom: 10px; }
    .gallery img { width: 100%; border-radius: 10px; margin: 10px 0; }
     footer { background: #222; color: white; text-align: center; padding: 30px 20px; margin-top: 40px; }
-    .admin-tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-    .admin-tab { background: var(--blue); color: white; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-weight: 600; }
-    .admin-tab.active { background: var(--green); }
-    .admin-content { display: none; background: white; padding: 20px; border-radius: 10px; }
-    .admin-content.active { display: block; }
-    .admin-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
-    .admin-table th,.admin-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    footer p { margin: 10px 0; }
+   .footer-social { display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; }
+   .footer-social a { display: flex; align-items: center; gap: 8px; color: white; text-decoration: none; font-weight: 600; }
+   .footer-social img { width: 28px; height: 28px; object-fit: contain; }
+   .footer-social a:hover { color: #1877F2; }
+   .admin-tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+   .admin-tab { background: var(--blue); color: white; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-weight: 600; }
+   .admin-tab.active { background: var(--green); }
+   .admin-content { display: none; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+   .admin-content.active { display: block; }
+   .admin-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
+   .admin-table th,.admin-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+   .admin-table th { background: var(--bg); color: var(--blue); }
     @media (min-width: 768px) { .menu-toggle { display: none; } .menu { display: block; } .menu li { display: inline-block; margin: 0 10px; } }
   </style>
 </head>
@@ -73,7 +80,34 @@
   </nav>
   <main class="container">
     <h2>Hi, Welcome to Chitekesa CDSS Alumni Association Platform</h2>
-    <h5>We are glad to have you all on board. This is a non-profit association aimed to Reconnect, Give Back and Grow Together.</h5>
+    <h4>Chitekesa Alumni • Once Chitekesa • Always Chitekesa</h4>
+    <h5>We are glad to have you all on board. This is a non-profit association aimed to Reconnect, Give Back and Grow Together. You can know more about us on the <strong>about</strong> section.</h5>
+    <h3>Admin Portal</h3>
+    <button class="btn btn-green" onclick="toggleForm('adminLoginForm')">Admin Login</button>
+    <div id="adminLoginForm" class="collapsible">
+      <form onsubmit="adminLogin(event)">
+        <label>Username *</label><input type="text" id="adminUser" required>
+        <label>Password *</label><input type="password" id="adminPass" placeholder="Enter password" required>
+        <button type="submit" class="btn btn-green">Login to Dashboard</button>
+      </form>
+    </div>
+    <div id="adminDashboard" style="display:none;">
+      <h2>Admin Dashboard</h2>
+      <div class="admin-tabs">
+        <div class="admin-tab active" onclick="showAdminTab('donations', event)">Donations</div>
+        <div class="admin-tab" onclick="showAdminTab('alumni', event)">Alumni Members</div>
+      </div>
+      <div id="donations" class="admin-content active">
+        <h3>Donation Submissions</h3>
+        <button class="btn btn-blue" onclick="exportCSV('donations')">📥 Export to CSV</button>
+        <table class="admin-table" id="donationTable"><tr><th>Name</th><th>Donation</th><th>Period</th><th>Phone</th><th>Location</th></tr></table>
+      </div>
+      <div id="alumni" class="admin-content">
+        <h3>Alumni Registrations</h3>
+        <button class="btn btn-blue" onclick="exportCSV('alumni')">📥 Export to CSV</button>
+        <table class="admin-table" id="alumniTable"><tr><th>Name</th><th>Grad Year</th><th>Profession</th><th>Phone</th><th>Interest</th></tr></table>
+      </div>
+    </div>
     <h3>Help Us Grow</h3>
     <button class="btn btn-primary" onclick="toggleForm('donateForm')">Donate</button>
     <div id="donateForm" class="collapsible">
@@ -81,7 +115,7 @@
         <label>Full Name *</label><input type="text" name="fullName" required>
         <label>Gender *</label><select name="gender" required><option value="">select</option><option>Male</option><option>Female</option></select>
         <label>What would you like to donate? *</label><input type="text" name="donationType" required>
-        <label>Donation Period *</label><select name="donationPeriod" required><option value="">Select</option><option value="one-time">Only this time</option><option value="3months">About 3 months</option><option value="6months">About 6 months</option><option value="1year">1 year</option><option value="ongoing">More than a year</option></select>
+        <label>Donation Period *</label><select name="donationPeriod" required><option value="">Select</option><option>one-time</option><option>3months</option><option>6months</option><option>1year</option><option>ongoing</option></select>
         <label>Phone Number *</label><input type="tel" name="phone" required>
         <label>Email Address</label><input type="email" name="email">
         <label>Current Location *</label><input type="text" name="location" required>
@@ -95,20 +129,29 @@
         <label>Full Name *</label><input type="text" name="fullName" required>
         <label>Gender *</label><select name="gender" required><option value="">select</option><option>Male</option><option>Female</option></select>
         <label>Year Graduated *</label><input type="number" name="gradYear" min="1990" max="2026" required>
-        <label>Class/Stream</label><input type="text" name="class" placeholder="e.g. Humanities">
+        <label>Class/Stream</label><input type="text" name="class">
         <label>Phone Number *</label><input type="tel" name="phone" required>
         <label>WhatsApp Number</label><input type="tel" name="whatsapp">
-        <label>Profession / Occupation *</label><input type="text" name="profession" required>
-        <label>How would you like to get involved? *</label><select name="interest" required><option value="">Select</option><option>Membership</option><option>Events & Reunions</option><option>Mentorship</option><option>Donations/Fundraising</option><option>Networking Only</option></select>
+        <label>Profession *</label><input type="text" name="profession" required>
+        <label>How would you like to get involved? *</label><select name="interest" required><option value="">Select</option><option>Membership</option><option>Events</option><option>Mentorship</option><option>Donations</option><option>Networking</option></select>
         <label>Short Message</label><textarea name="message" rows="3"></textarea>
         <label><input type="checkbox" name="directoryConsent" required> I agree to be in the alumni directory *</label>
         <button type="submit" class="btn btn-primary">Join Chitekesa Alumni</button><p id="alumniMsg"></p>
       </form>
     </div>
+    <h3>Photographs of Our School</h3>
+    <div class="gallery"><img src="Chitekesa photo.jpg" alt="Chitekesa School Photo"></div>
+    <h2>Need Help? Meet Your Alumni Executive</h2>
+    <div class="executive"><img src="Kaelama photo.jpg" alt="President"><h3>President: Francisco Kaelama, Class of 2021</h3><a href="https://wa.me/265882427151" class="btn btn-whatsapp" target="_blank">Chat on WhatsApp</a></div>
+    <div class="executive"><img src="Chibisa photo.png" alt="Secretary"><h3>Secretary: Patrick Chibisa, Class of 2023</h3><a href="https://wa.me/265897105274" class="btn btn-whatsapp" target="_blank">Chat on WhatsApp</a></div>
+    <div class="executive"><img src="My image.png" alt="Treasurer"><h3>Treasurer: Francis Junior Salima, Class of 2022</h3><a href="https://wa.me/265985583319" class="btn btn-whatsapp" target="_blank">Chat on WhatsApp</a></div>
   </main>
+  <footer>
+    <p><strong>Location:</strong> Along Mwanga to Maliro Road, Near Chitekesa Police Unit, Phalombe</p>
+    <p>&copy; 2026 CHITEKESA ALUMNI ASSOCIATION. All Rights Reserved.</p>
+  </footer>
 
 <script type="module">
-// --- FIREBASE SETUP FOR FIND CLASSMATE SYNC ---
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
@@ -122,14 +165,12 @@ const firebaseConfig = {
 };
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
-// YOUR GOOGLE SHEET WEB APP
 const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxlg51F7IsuXJUr-kV9DFkhjpCcEHJH0VX6UuBZNaM3UXibPNnLemyNSMoSgwgpcMn5/exec";
 
 window.toggleMenu = () => document.getElementById("menu").classList.toggle("active");
 window.toggleForm = (id) => document.getElementById(id).classList.toggle("active");
 
-// DONATION FORM (only to Google Sheet)
+// Donation - Google Sheet only
 document.getElementById("donationForm").addEventListener("submit", function(e){
   e.preventDefault();
   const form = e.target;
@@ -139,18 +180,31 @@ document.getElementById("donationForm").addEventListener("submit", function(e){
   .then(() => { document.getElementById("donationMsg").innerHTML = "✅ Thank you!"; form.reset(); });
 });
 
-// ALUMNI FORM - NOW SYNCs TO BOTH SHEET + FIREBASE
+// ALUMNI FORM - DUAL SAVE (Sheet + Firestore for Find Classmate)
 document.getElementById("alumniForm").addEventListener("submit", async function(e){
   e.preventDefault();
   const form = e.target;
-  document.getElementById("alumniMsg").innerHTML = "Submitting... Please wait...";
-  const data = { type: "alumni", name: form.fullName.value, gender: form.gender.value, year: form.gradYear.value, class: form.class.value, phone: form.phone.value, whatsapp: form.whatsapp.value, profession: form.profession.value, interest: form.interest.value, message: form.message.value };
+  const alumniMsg = document.getElementById("alumniMsg");
+  alumniMsg.innerHTML = "Submitting... Please wait...";
   
+  const data = { 
+    type: "alumni", 
+    name: form.fullName.value.trim(), 
+    gender: form.gender.value, 
+    year: form.gradYear.value, 
+    class: form.class.value, 
+    phone: form.phone.value, 
+    whatsapp: form.whatsapp.value, 
+    profession: form.profession.value, 
+    interest: form.interest.value, 
+    message: form.message.value 
+  };
+
   try {
-    // 1. Save to Google Sheet (your existing system)
+    // 1. Save to Google Sheet
     fetch(WEB_APP_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(data) });
     
-    // 2. NEW: Save to Firebase Firestore for Find Classmate search
+    // 2. Save to Firestore so they appear in find-classmate.html
     await addDoc(collection(db, "users"), {
       displayName: data.name,
       fullName: data.name,
@@ -166,21 +220,77 @@ document.getElementById("alumniForm").addEventListener("submit", async function(
       createdAt: serverTimestamp()
     });
 
-    document.getElementById("alumniMsg").innerHTML = "✅ Welcome! You now appear in Find Classmate 👥";
+    alumniMsg.innerHTML = "✅ Welcome! You now appear in Find Classmate 👥";
     form.reset();
     setTimeout(() => { window.location.href = "find-classmate.html"; }, 1500);
   } catch (err) {
     console.error(err);
-    document.getElementById("alumniMsg").innerHTML = "❌ Firebase error: " + err.message;
+    alumniMsg.innerHTML = "❌ Error: " + err.message + " (Check Firestore Rules are 'if true')";
   }
 });
-</script>
 
-<script>
-// Admin logic (non-module)
-function adminLogin(e){ e.preventDefault(); if(document.getElementById('adminUser').value === 'chitekesa2026' && document.getElementById('adminPass').value === 'Chiteke@2026!'){ localStorage.setItem('chitekesaAdmin','loggedIn'); alert('Login Successful!'); } else { alert('Invalid'); } }
-function adminLogout(){ localStorage.removeItem('chitekesaAdmin'); }
-function showAdminTab(tabId, event){ document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active')); document.querySelectorAll('.admin-content').forEach(c => c.classList.remove('active')); event.target.classList.add('active'); document.getElementById(tabId).classList.add('active'); }
+// Admin functions (kept exactly)
+window.adminLogin = function(e){
+  e.preventDefault();
+  if(document.getElementById('adminUser').value === 'chitekesa2026' && document.getElementById('adminPass').value === 'Chiteke@2026!'){
+    localStorage.setItem('chitekesaAdmin', 'loggedIn');
+    document.getElementById('adminDashboard').style.display = 'block';
+    document.getElementById('adminLoginForm').classList.remove('active');
+    document.getElementById('adminLogoutLi').style.display = 'inline-block';
+    loadDonations(); loadAlumni();
+    alert('Login Successful!');
+  } else { alert('Invalid Username or Password'); }
+}
+window.adminLogout = function(){
+  localStorage.removeItem('chitekesaAdmin'); 
+  document.getElementById('adminDashboard').style.display = 'none'; 
+  document.getElementById('adminLogoutLi').style.display = 'none'; 
+}
+window.showAdminTab = function(tabId, event){
+  document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.admin-content').forEach(c => c.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById(tabId).classList.add('active');
+}
+window.exportCSV = function(type){
+  let table, filename;
+  if(type === 'donations'){ table = document.getElementById('donationTable'); filename = 'donations.csv'; } 
+  else { table = document.getElementById('alumniTable'); filename = 'alumni.csv'; }
+  let csv = [];
+  for(let row of table.rows){ csv.push([...row.cells].map(cell => cell.innerText).join(',')); }
+  const blob = new Blob([csv.join('\n')], { type: 'text/csv' });
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = filename; document.body.appendChild(a); a.click();
+}
+async function loadDonations(){
+  const table = document.getElementById('donationTable');
+  try { 
+    const res = await fetch(WEB_APP_URL + "?type=donation"); 
+    const data = await res.json();
+    table.innerHTML = '<tr><th>Name</th><th>Donation</th><th>Period</th><th>Phone</th><th>Location</th></tr>';
+    data.donations.forEach(d => { 
+      table.innerHTML += `<tr><td>${d.name||''}</td><td>${d.donation||''}</td><td>${d.period||''}</td><td>${d.phone||''}</td><td>${d.location||''}</td></tr>`; 
+    });
+  } catch(e){}
+}
+async function loadAlumni(){
+  const table = document.getElementById('alumniTable');
+  try { 
+    const res = await fetch(WEB_APP_URL + "?type=alumni"); 
+    const data = await res.json();
+    table.innerHTML = '<tr><th>Name</th><th>Grad Year</th><th>Profession</th><th>Phone</th><th>Interest</th></tr>';
+    data.alumni.forEach(a => { 
+      table.innerHTML += `<tr><td>${a.name||''}</td><td>${a.year||''}</td><td>${a.profession||''}</td><td>${a.phone||''}</td><td>${a.interest||''}</td></tr>`; 
+    });
+  } catch(e){}
+}
+window.onload = function(){
+  if(localStorage.getItem('chitekesaAdmin') === 'loggedIn'){
+    document.getElementById('adminDashboard').style.display = 'block';
+    document.getElementById('adminLogoutLi').style.display = 'inline-block';
+    loadDonations(); loadAlumni();
+  }
+}
 </script>
 </body>
-      </html>
+  </html>
