@@ -7,7 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root { --green:#0f2e1a; --green-light:#123d21; --blue:#003366; --blue-light:#004080; --orange:#FF7A00; --bg:#f5f7fb; --card:#ffffff; --text:#1f2937; --muted:#6b7280; --border:#e5e7eb; }
-    _{box-sizing:border-box;margin:0;padding:0}
+    *{box-sizing:border-box;margin:0;padding:0}
     body{background:var(--bg);font-family:'Poppins',Arial,sans-serif;color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
    .container{padding:0 18px;max-width:1000px;margin:0 auto}
    .header{background:linear-gradient(135deg,var(--green) 0%, var(--green-light) 100%);padding:30px 15px;text-align:center;color:white;box-shadow:0 4px 20px rgba(0,0,0,0.15)}
@@ -79,7 +79,7 @@
 </head>
 <body>
   <header class="header">
-    <div class="logo"><img src="Alumni http://logo.png" alt="Chitekesa Alumni Logo"></div>
+    <div class="logo"><img src="Alumni logo.png" alt="Chitekesa Alumni Logo"></div>
     <h1>CHITEKESA CDSS ALUMNI GROUP</h1>
     <h4>Together We Make The Difference</h4>
   </header>
@@ -88,8 +88,8 @@
       <button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
       <ul id="menu" class="menu">
         <li><a href="index.html">Home</a></li>
-        <li><a href="Chitekesa http://about.html">About</a></li>
-        <li><a href="Chitekesa http://contact.html">Contact</a></li>
+        <li><a href="Chitekesa about.html">About</a></li>
+        <li><a href="Chitekesa contact.html">Contact</a></li>
         <li><a onclick="requireAuth('downloads.html')">Downloads</a></li>
         <li><a onclick="requireAuth('find-classmates.html')">Classmates</a></li>
         <li><a onclick="requireAuth('vacancies.html')">Vacancies</a></li>
@@ -115,7 +115,7 @@
     <h3>Admin Portal</h3>
     <button class="btn btn-green" onclick="toggleForm('adminLoginForm')">Admin Login</button>
     <div id="adminLoginForm" class="collapsible">
-      <form onsubmit="adminLogin(event)"><label>Username _</label><input type="text" id="adminUser" required><label>Password _</label><input type="password" id="adminPass" required><button type="submit" class="btn btn-green">Login to Dashboard</button></form>
+      <form onsubmit="adminLogin(event)"><label>Username *</label><input type="text" id="adminUser" required><label>Password *</label><input type="password" id="adminPass" required><button type="submit" class="btn btn-green">Login to Dashboard</button></form>
     </div>
     <div id="adminDashboard" style="display:none;">
       <h2>Admin Dashboard</h2>
@@ -127,14 +127,14 @@
       <h3 style="margin-top:0">Help Us Grow</h3>
       <button class="btn btn-primary" onclick="toggleForm('donateForm')">Donate Now</button>
       <div id="donateForm" class="collapsible" style="box-shadow:none;border:none;padding:10px 0">
-        <form id="donationForm"><label>Full Name _</label><input type="text" name="fullName" required><label>Gender _</label><select name="gender" required><option value="">select</option><option value="Male">Male</option><option value="Female">Female</option></select><label>What would you like to donate? _</label><input type="text" name="donationType" required><label>Donation Period _</label><select name="donationPeriod" required><option value="">Select</option><option value="one-time">Only this time</option><option value="3months">About 3 months</option><option value="6months">About 6 months</option><option value="1year">1 year</option><option value="ongoing">More than a year</option></select><label>Phone Number _</label><input type="tel" name="phone" required><label>Email Address</label><input type="email" name="email"><label>Current Location _</label><input type="text" name="location" required><button type="submit" class="btn btn-primary">Donate Now</button><p id="donationMsg"></p></form>
+        <form id="donationForm"><label>Full Name *</label><input type="text" name="fullName" required><label>Gender *</label><select name="gender" required><option value="">select</option><option value="Male">Male</option><option value="Female">Female</option></select><label>What would you like to donate? *</label><input type="text" name="donationType" required><label>Donation Period *</label><select name="donationPeriod" required><option value="">Select</option><option value="one-time">Only this time</option><option value="3months">About 3 months</option><option value="6months">About 6 months</option><option value="1year">1 year</option><option value="ongoing">More than a year</option></select><label>Phone Number *</label><input type="tel" name="phone" required><label>Email Address</label><input type="email" name="email"><label>Current Location *</label><input type="text" name="location" required><button type="submit" class="btn btn-primary">Donate Now</button><p id="donationMsg"></p></form>
       </div>
     </div>
     <div class="hero-card">
       <h3 style="margin-top:0">Join Alumni Team</h3>
       <button class="btn btn-primary" onclick="handleProtectedClick('signupForm')">Sign Up</button>
       <div id="signupForm" class="collapsible" style="box-shadow:none;border:none;padding:10px 0">
-        <form id="alumniForm"><label>Full Name _</label><input type="text" name="fullName" required><label>Gender _</label><select name="gender" required><option value="">select</option><option value="Male">Male</option><option value="Female">Female</option></select><label>Year Graduated _</label><input type="number" name="gradYear" min="1990" max="2026" required><label>Class/Stream</label><input type="text" name="class"><label>Phone Number _</label><input type="tel" name="phone" required><label>WhatsApp Number</label><input type="tel" name="whatsapp"><label>Profession _</label><input type="text" name="profession" required><label>How would you like to get involved? _</label><select name="interest" required><option value="">Select</option><option value="Membership">Membership</option><option value="Events & Reunions">Events & Reunions</option><option value="Mentorship">Mentorship</option><option value="Donations/Fundraising">Donations & Fundraising</option><option value="Networking">Networking Only</option></select><label>Short Message</label><textarea name="message" rows="3"></textarea><label style="display:flex;gap:8px;align-items:center"><input type="checkbox" name="directoryConsent" required style="width:auto"> I agree to be in the alumni directory _</label><button type="submit" class="btn btn-primary">Join Chitekesa Alumni</button><p id="alumniMsg"></p></form>
+        <form id="alumniForm"><label>Full Name *</label><input type="text" name="fullName" required><label>Gender *</label><select name="gender" required><option value="">select</option><option value="Male">Male</option><option value="Female">Female</option></select><label>Year Graduated *</label><input type="number" name="gradYear" min="1990" max="2026" required><label>Class/Stream</label><input type="text" name="class"><label>Phone Number *</label><input type="tel" name="phone" required><label>WhatsApp Number</label><input type="tel" name="whatsapp"><label>Profession *</label><input type="text" name="profession" required><label>How would you like to get involved? *</label><select name="interest" required><option value="">Select</option><option value="Membership">Membership</option><option value="Events & Reunions">Events & Reunions</option><option value="Mentorship">Mentorship</option><option value="Donations/Fundraising">Donations & Fundraising</option><option value="Networking">Networking Only</option></select><label>Short Message</label><textarea name="message" rows="3"></textarea><label style="display:flex;gap:8px;align-items:center"><input type="checkbox" name="directoryConsent" required style="width:auto"> I agree to be in the alumni directory *</label><button type="submit" class="btn btn-primary">Join Chitekesa Alumni</button><p id="alumniMsg"></p></form>
       </div>
     </div>
     <h3>🔒 Protected Features</h3>
@@ -144,11 +144,11 @@
       <div class="executive"><h3>Vacancies</h3><p style="font-size:13px;color:var(--muted)">Jobs & News</p><button class="btn btn-blue" onclick="requireAuth('vacancies.html')">Open</button></div>
       <div class="executive" style="border:1.5px solid var(--green)"><h3>Education Corner</h3><p style="font-size:13px;color:var(--muted)">Notes & Past Papers</p><button class="btn btn-green" onclick="requireAuth('education-corner.html')">Open</button></div>
     </div>
-    <h3>Our School</h3><div class="gallery"><img src="Chitekesa http://photo.jpg" alt="Chitekesa School Photo"></div>
+    <h3>Our School</h3><div class="gallery"><img src="Chitekesa photo.jpg" alt="Chitekesa School Photo"></div>
     <h2>Meet Your Alumni Executive</h2>
-    <div class="executive"><img src="Kaelama http://photo.jpg" alt="President"><h3>President: Francisco Kaelama, Class of 2021</h3><a href="https://wa.me/265882427151" class="btn btn-whatsapp" target="_blank">WhatsApp</a></div>
-    <div class="executive"><img src="Chibisa http://photo.png" alt="Secretary"><h3>Secretary: Patrick Chibisa, Class of 2023</h3><a href="https://wa.me/265897105274" class="btn btn-whatsapp" target="_blank">WhatsApp</a></div>
-    <div class="executive"><img src="My http://image.png" alt="Treasurer"><h3>Treasurer: Francis Junior Salima, Class of 2022</h3><a href="https://wa.me/265985583319" class="btn btn-whatsapp" target="_blank">WhatsApp</a></div>
+    <div class="executive"><img src="Kaelama photo.jpg" alt="President"><h3>President: Francisco Kaelama, Class of 2021</h3><a href="https://wa.me/265882427151" class="btn btn-whatsapp" target="_blank">WhatsApp</a></div>
+    <div class="executive"><img src="Chibisa photo.png" alt="Secretary"><h3>Secretary: Patrick Chibisa, Class of 2023</h3><a href="https://wa.me/265897105274" class="btn btn-whatsapp" target="_blank">WhatsApp</a></div>
+    <div class="executive"><img src="My image.png" alt="Treasurer"><h3>Treasurer: Francis Junior Salima, Class of 2022</h3><a href="https://wa.me/265985583319" class="btn btn-whatsapp" target="_blank">WhatsApp</a></div>
   </main>
   <footer><p><strong>Location:</strong> Along Mwanga to Maliro Road, Near Chitekesa Police Unit, Phalombe</p><p>&copy; 2026 CHITEKESA ALUMNI ASSOCIATION. All Rights Reserved.</p></footer>
   <div id="firebaseAuthModal">
@@ -156,8 +156,8 @@
       <h2 id="authTitle">Create Account</h2>
       <div class="auth-subtitle">🔒 Secure login required for Downloads, Classmates, Vacancies, Education Corner & Registration</div>
       <div class="auth-field" id="nameField"><label>Full Name</label><input type="text" id="fbName" placeholder="e.g. Chitekesa Alumni"></div>
-      <div class="auth-field"><label>Email Address _</label><input type="email" id="fbEmail" placeholder="you@gmail.com"></div>
-      <div class="auth-field"><label>Password _</label><input type="password" id="fbPassword" placeholder="Minimum 6 characters"></div>
+      <div class="auth-field"><label>Email Address *</label><input type="email" id="fbEmail" placeholder="you@gmail.com"></div>
+      <div class="auth-field"><label>Password *</label><input type="password" id="fbPassword" placeholder="Minimum 6 characters"></div>
       <div class="auth-field"><label>Registration Code *</label><input type="text" id="fbRegCode" placeholder="e.g. CHT-R-26-001" style="text-transform:uppercase; letter-spacing:1px; font-weight:600;"></div>
       <button class="auth-btn" id="fbActionBtn" onclick="handleFirebaseAuth()">Create Account</button>
       <p id="fbMsg" style="text-align:center;font-size:13px;margin-top:12px;font-weight:600"></p>
@@ -178,209 +178,66 @@
     appId: "1:943225897010:web:2fc300df337d333aa2fc2b",
     measurementId: "G-NXW29KE44T"
   };
-  http://firebase.initializeApp(firebaseConfig);
-  const auth = http://firebase.auth();
-  const db = http://firebase.firestore();
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
   let fbIsLogin=false; let pendingRedirect=null;
-  function openFirebaseAuth(redirectUrl=null){pendingRedirect=redirectUrl; http://document.getElementById('firebaseAuthModal').style.display='flex';}
+  function openFirebaseAuth(redirectUrl=null){pendingRedirect=redirectUrl; document.getElementById('firebaseAuthModal').style.display='flex';}
   function closeFirebaseAuth(){document.getElementById('firebaseAuthModal').style.display='none';}
 function toggleFbMode() {
   fbIsLogin =!fbIsLogin;
-  http://document.getElementById("authTitle").innerText = fbIsLogin? "Welcome Back" : "Create Account";
-  http://document.getElementById("fbActionBtn").innerText = fbIsLogin? "Login Now" : "Create Account";
-  http://document.getElementById("fbToggleText").innerText = fbIsLogin? "Don't have account? Create one" : "Already have an account? Login";
-  http://document.getElementById("nameField").style.display = fbIsLogin? "none" : "block";
-  http://document.getElementById("fbRegCode").closest(".auth-field").style.display = fbIsLogin? "none" : "block";
-  http://document.getElementById("fbMsg").innerText = "";
+  document.getElementById("authTitle").innerText = fbIsLogin? "Welcome Back" : "Create Account";
+  document.getElementById("fbActionBtn").innerText = fbIsLogin? "Login Now" : "Create Account";
+  document.getElementById("fbToggleText").innerText =
+    fbIsLogin? "Don't have account? Create one" : "Already have an account? Login";
+  document.getElementById("nameField").style.display = fbIsLogin? "none" : "block";
+  document.getElementById("fbRegCode").closest(".auth-field").style.display = fbIsLogin? "none" : "block";
+  document.getElementById("fbMsg").innerText = "";
 }
 async function handleFirebaseAuth() {
-  const email = http://document.getElementById("fbEmail").value.trim();
-  const pass = http://document.getElementById("fbPassword").value.trim();
-  const name = http://document.getElementById("fbName").value.trim();
-  const regCode = http://document.getElementById("fbRegCode").value.trim().toUpperCase();
-  const msg = http://document.getElementById("fbMsg");
-  const btn = http://document.getElementById("fbActionBtn");
-
-  if (!email ||!pass) {
-    http://msg.style.color = "red";
-    http://msg.innerText = "⚠️ Fill email and password.";
-    return;
-  }
-  if (pass.length < 6) {
-    http://msg.style.color = "red";
-    http://msg.innerText = "⚠️ Password must be at least 6 characters.";
-    return;
-  }
-  if (!fbIsLogin &&!name) {
-    http://msg.style.color = "red";
-    http://msg.innerText = "⚠️ Enter your full name.";
-    return;
-  }
-  if (!fbIsLogin &&!regCode) {
-    http://msg.style.color = "red";
-    http://msg.innerText = "⚠️ Enter Registration Code given after payment.";
-    return;
-  }
-
-  http://btn.disabled = true;
-  http://btn.innerText = fbIsLogin? "Logging in..." : "Verifying code...";
-  http://msg.style.color = "#003366";
-  http://msg.innerText = fbIsLogin? "Logging in..." : "Verifying registration code...";
-
+  const email = document.getElementById("fbEmail").value.trim();
+  const pass = document.getElementById("fbPassword").value.trim();
+  const name = document.getElementById("fbName").value.trim();
+  const regCode = document.getElementById("fbRegCode").value.trim().toUpperCase();
+  const msg = document.getElementById("fbMsg");
+  const btn = document.getElementById("fbActionBtn");
+  if (!email ||!pass) { msg.style.color="red"; msg.innerText="⚠️ Fill email and password."; return; }
+  if (pass.length < 6) { msg.style.color="red"; msg.innerText="⚠️ Password must be at least 6 characters."; return; }
+  if (!fbIsLogin &&!name) { msg.style.color="red"; msg.innerText="⚠️ Enter your full name."; return; }
+  if (!fbIsLogin &&!regCode) { msg.style.color="red"; msg.innerText="⚠️ Enter Registration Code given after payment."; return; }
+  btn.disabled=true; btn.innerText=fbIsLogin?"Logging in...":"Verifying code..."; msg.style.color="#003366"; msg.innerText=fbIsLogin?"Logging in...":"Verifying registration code...";
   try {
-    let codeDoc = null;
-    let codeData = null;
-
+    let codeDoc=null; let codeData=null;
     if (!fbIsLogin) {
-      try {
-        const docSnap = await http://db.collection("registration_codes").doc(regCode).get();
-        if (docSnap.exists) { codeDoc = docSnap; codeData = http://docSnap.data(); }
-      } catch (e) {}
-
-      if (!codeData) {
-        try {
-          const q = await http://db.collection("registration_codes").where("code", "==", regCode).limit(1).get();
-          if (!q.empty) { codeDoc = http://q.docs; codeData = http://q.docs.data(); }
-        } catch (e) {}
-      }[0]
-
-      if (!codeData) {
-        try {
-          const all = await http://db.collection("registration_codes").get();
-          http://all.forEach(d => {
-            const v = (d.data().code || "").toString().trim().toUpperCase();
-            if (v === regCode) { codeDoc = d; codeData = http://d.data(); }
-          });
-        } catch (e) {}
-      }
-
-      if (!codeData) {
-        http://msg.style.color = "red";
-        http://msg.innerText = "❌ Invalid Registration Code: " + regCode + " not found. Contact Admin.";
-        http://btn.disabled = false;
-        http://btn.innerText = "Create Account";
-        return;
-      }
-
-      if (codeData.used === true) {
-        const usedBy = (codeData.usedBy || "").toLowerCase();
-        if (usedBy && usedBy!== http://email.toLowerCase()) {
-          http://msg.style.color = "red";
-          http://msg.innerText = "❌ This code already used by another member.";
-          http://btn.disabled = false;
-          http://btn.innerText = "Create Account";
-          return;
-        }
-      }
+      try { const d=await db.collection("registration_codes").doc(regCode).get(); if(d.exists){codeDoc=d; codeData=d.data();} } catch(e){}
+      if (!codeData) { try { const s=await db.collection("registration_codes").where("code","==",regCode).limit(1).get(); if(!s.empty){codeDoc=s.docs[0]; codeData=s.docs[0].data();} } catch(e){} }
+      if (!codeData) { try { const all=await db.collection("registration_codes").get(); all.forEach(doc=>{const v=(doc.data().code||"").toString().trim().toUpperCase(); if(v===regCode){codeDoc=doc; codeData=doc.data();}}); } catch(e){} }
+      if (!codeData) { msg.style.color="red"; msg.innerText="❌ Invalid Registration Code: "+regCode+" not found. Contact Admin."; btn.disabled=false; btn.innerText="Create Account"; return; }
+      if (codeData.used===true) { const usedBy=(codeData.usedBy||"").toLowerCase(); if(usedBy && usedBy!==email.toLowerCase()){msg.style.color="red"; msg.innerText="❌ This code already used by another member."; btn.disabled=false; btn.innerText="Create Account"; return;} }
     }
-
-    if (fbIsLogin) {
-      await http://auth.signInWithEmailAndPassword(email, pass);
-      http://msg.style.color = "green";
-      http://msg.innerText = "✅ Login successful.";
-    } else {
-      const cred = await http://auth.createUserWithEmailAndPassword(email, pass);
-      await http://cred.user.updateProfile({ displayName: name });
-      try {
-        await http://codeDoc.ref.update({
-          used: true,
-          usedBy: http://email.toLowerCase(),
-          usedByName: name,
-          usedAt: http://firebase.firestore.FieldValue.serverTimestamp()
-        });
-      } catch (e) {}
-      http://msg.style.color = "green";
-      http://msg.innerText = "✅ Account created successfully!";
-    }
-
-    setTimeout(() => {
-      closeFirebaseAuth();
-      if (pendingRedirect) http://window.location.href = pendingRedirect;
-      else http://location.reload();
-    }, 800);
-
-  } catch (e) {
-    http://msg.style.color = "red";
-    http://msg.innerText = "❌ " + (e.message || "Something went wrong.");
-    http://btn.disabled = false;
-    http://btn.innerText = fbIsLogin? "Login Now" : "Create Account";
-  }
+    if (fbIsLogin) { await auth.signInWithEmailAndPassword(email,pass); msg.style.color="green"; msg.innerText="✅ Login successful."; }
+    else { const cred=await auth.createUserWithEmailAndPassword(email,pass); await cred.user.updateProfile({displayName:name}); try{await codeDoc.ref.update({used:true,usedBy:email.toLowerCase(),usedByName:name,usedAt:firebase.firestore.FieldValue.serverTimestamp()});}catch(e){} msg.style.color="green"; msg.innerText="✅ Account created successfully!"; }
+    setTimeout(()=>{closeFirebaseAuth(); if(pendingRedirect) window.location.href=pendingRedirect; else location.reload();},800);
+  } catch(e){ msg.style.color="red"; msg.innerText="❌ "+(e.message||"Something went wrong."); btn.disabled=false; btn.innerText=fbIsLogin?"Login Now":"Create Account"; }
 }
-  function requireAuth(url){
-    const user=auth.currentUser;
-    if(!user){openFirebaseAuth(url); return;}
-    http://window.location.href=url;
-  }
-  function handleProtectedClick(formId){
-    const user=auth.currentUser;
-    if(!user){openFirebaseAuth(); return;}
-    toggleForm(formId);
-  }
+  function requireAuth(url){const user=auth.currentUser; if(!user){openFirebaseAuth(url); return;} window.location.href=url;}
+  function handleProtectedClick(formId){const user=auth.currentUser; if(!user){openFirebaseAuth(); return;} toggleForm(formId);}
   function firebaseLogout(){auth.signOut().then(()=>location.reload())}
-  http://auth.onAuthStateChanged(user=>{
-    if(user){
-      const box=document.getElementById('notLoggedBox'); if(box) http://box.style.display='none';
-      http://document.getElementById('userDisplay').innerText="Hi, "+(user.displayName||user.email);
-      http://document.getElementById('userDisplayLi').style.display='inline-block';
-      http://document.getElementById('logoutLi').style.display='inline-block';
-      http://document.getElementById('loginLi').style.display='none';
-    }
-  });
+  auth.onAuthStateChanged(user=>{if(user){const box=document.getElementById('notLoggedBox'); if(box) box.style.display='none'; document.getElementById('userDisplay').innerText="Hi, "+(user.displayName||user.email); document.getElementById('userDisplayLi').style.display='inline-block'; document.getElementById('logoutLi').style.display='inline-block'; document.getElementById('loginLi').style.display='none';}});
 </script>
 <script>
   const WEB_APP_URL="https://script.google.com/macros/s/AKfycbxlg51F7IsuXJUr-kV9DFkhjpCcEHJH0VX6UuBZNaM3UXibPNnLemyNSMoSgwgpcMn5/exec";
   function toggleMenu(){document.getElementById("menu").classList.toggle("active")}
   function toggleForm(id){document.getElementById(id).classList.toggle("active")}
-  http://document.getElementById("donationForm").addEventListener("submit",function(e){
-    http://e.preventDefault();
-    const form=e.target;
-    http://document.getElementById("donationMsg").innerHTML="Submitting...";
-    const data={type:"donation",name:form.fullName.value,gender:form.gender.value,donation:form.donationType.value,period:form.donationPeriod.value,phone:form.phone.value,email:form.email.value,location:form.location.value};
-    fetch(WEB_APP_URL,{method:"POST",mode:"no-cors",body:JSON.stringify(data)})
-   .then(()=>{document.getElementById("donationMsg").innerHTML="✅ Thank you!";form.reset();toggleForm('donateForm');loadDonations()})
-   .catch(()=>{document.getElementById("donationMsg").innerHTML="❌ Error."})
-  });
-  http://document.getElementById("alumniForm").addEventListener("submit", async function(e){
-    http://e.preventDefault();
-    const user=firebase.auth().currentUser;
-    if(!user){openFirebaseAuth();return}
-    const form=e.target;
-    const msgEl=document.getElementById("alumniMsg");
-    http://msgEl.innerHTML="Submitting... Please wait...";
-    const data={type:"alumni",name:form.fullName.value,gender:form.gender.value,year:form.gradYear.value,class:form.class.value,phone:form.phone.value,whatsapp:form.whatsapp.value,profession:form.profession.value,interest:form.interest.value,message:form.message.value,accountEmail:user.email};
-    try{
-      fetch(WEB_APP_URL,{method:"POST",mode:"no-cors",body:JSON.stringify(data)});
-      await http://db.collection("users").add({
-        displayName: http://data.name,
-        fullName: http://data.name,
-        gradYear: http://data.year,
-        year: http://data.year,
-        class: http://data.class,
-        career: http://data.profession,
-        profession: http://data.profession,
-        phone: http://data.phone,
-        whatsapp: http://data.whatsapp,
-        interest: http://data.interest,
-        message: http://data.message,
-        email: http://user.email,
-        uid: http://user.uid,
-        createdAt: http://firebase.firestore.FieldValue.serverTimestamp()
-      });
-      http://msgEl.innerHTML="✅ Welcome! You now appear in Find Classmate 👥";
-      http://form.reset();
-      setTimeout(()=>{ http://window.location.href="find-classmates.html"; },1500);
-    }catch(err){
-      http://console.error(err);
-      http://msgEl.innerHTML="❌ Error: "+err.message;
-    }
-  });
-  async function loadDonations(){const table=document.getElementById('donationTable');try{const res=await fetch(WEB_APP_URL+"?type=donation");const data=await http://res.json();table.innerHTML='<tr><th>Name</th><th>Donation</th><th>Period</th><th>Phone</th><th>Location</th></tr>';data.donations.forEach(d=>{table.innerHTML+=`<tr><td>${d.name||''}</td><td>${d.donation||''}</td><td>${d.period||''}</td><td>${d.phone||''}</td><td>${d.location||''}</td></tr>`})}catch(e){}}
-  async function loadAlumni(){const table=document.getElementById('alumniTable');try{const res=await fetch(WEB_APP_URL+"?type=alumni");const data=await http://res.json();table.innerHTML='<tr><th>Name</th><th>Grad Year</th><th>Profession</th><th>Phone</th><th>Interest</th></tr>';data.alumni.forEach(a=>{table.innerHTML+=`<tr><td>${a.name||''}</td><td>${a.year||''}</td><td>${a.profession||''}</td><td>${a.phone||''}</td><td>${a.interest||''}</td></tr>`})}catch(e){}}
-  function exportCSV(type){let table,filename;if(type==='donations'){table=document.getElementById('donationTable');filename='donations.csv'}else{table=document.getElementById('alumniTable');filename='alumni.csv'}let csv=[];for(let row of http://table.rows){csv.push([...row.cells].map(cell=>cell.innerText).join(','))}const blob=new Blob([csv.join('\n')],{type:'text/csv'});const url=window.URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click()}
+  document.getElementById("donationForm").addEventListener("submit",function(e){e.preventDefault();const form=e.target;document.getElementById("donationMsg").innerHTML="Submitting...";const data={type:"donation",name:form.fullName.value,gender:form.gender.value,donation:form.donationType.value,period:form.donationPeriod.value,phone:form.phone.value,email:form.email.value,location:form.location.value};fetch(WEB_APP_URL,{method:"POST",mode:"no-cors",body:JSON.stringify(data)}).then(()=>{document.getElementById("donationMsg").innerHTML="✅ Thank you!";form.reset();toggleForm('donateForm');loadDonations()}).catch(()=>{document.getElementById("donationMsg").innerHTML="❌ Error."})});
+  document.getElementById("alumniForm").addEventListener("submit", async function(e){e.preventDefault();const user=firebase.auth().currentUser;if(!user){openFirebaseAuth();return}const form=e.target;const msgEl=document.getElementById("alumniMsg");msgEl.innerHTML="Submitting... Please wait...";const data={type:"alumni",name:form.fullName.value,gender:form.gender.value,year:form.gradYear.value,class:form.class.value,phone:form.phone.value,whatsapp:form.whatsapp.value,profession:form.profession.value,interest:form.interest.value,message:form.message.value,accountEmail:user.email};try{fetch(WEB_APP_URL,{method:"POST",mode:"no-cors",body:JSON.stringify(data)});await db.collection("users").add({displayName:data.name,fullName:data.name,gradYear:data.year,year:data.year,class:data.class,career:data.profession,profession:data.profession,phone:data.phone,whatsapp:data.whatsapp,interest:data.interest,message:data.message,email:user.email,uid:user.uid,createdAt:firebase.firestore.FieldValue.serverTimestamp()});msgEl.innerHTML="✅ Welcome! You now appear in Find Classmate 👥";form.reset();setTimeout(()=>{window.location.href="find-classmates.html";},1500);}catch(err){msgEl.innerHTML="❌ Error: "+err.message;}});
+  async function loadDonations(){const table=document.getElementById('donationTable');try{const res=await fetch(WEB_APP_URL+"?type=donation");const data=await res.json();table.innerHTML='<tr><th>Name</th><th>Donation</th><th>Period</th><th>Phone</th><th>Location</th></tr>';data.donations.forEach(d=>{table.innerHTML+=`<tr><td>${d.name||''}</td><td>${d.donation||''}</td><td>${d.period||''}</td><td>${d.phone||''}</td><td>${d.location||''}</td></tr>`})}catch(e){}}
+  async function loadAlumni(){const table=document.getElementById('alumniTable');try{const res=await fetch(WEB_APP_URL+"?type=alumni");const data=await res.json();table.innerHTML='<tr><th>Name</th><th>Grad Year</th><th>Profession</th><th>Phone</th><th>Interest</th></tr>';data.alumni.forEach(a=>{table.innerHTML+=`<tr><td>${a.name||''}</td><td>${a.year||''}</td><td>${a.profession||''}</td><td>${a.phone||''}</td><td>${a.interest||''}</td></tr>`})}catch(e){}}
+  function exportCSV(type){let table,filename;if(type==='donations'){table=document.getElementById('donationTable');filename='donations.csv'}else{table=document.getElementById('alumniTable');filename='alumni.csv'}let csv=[];for(let row of table.rows){csv.push([...row.cells].map(cell=>cell.innerText).join(','))}const blob=new Blob([csv.join('\n')],{type:'text/csv'});const url=window.URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click()}
   function adminLogin(e){e.preventDefault();if(document.getElementById('adminUser').value==='chitekesa2026'&&document.getElementById('adminPass').value==='Chiteke@2026!'){localStorage.setItem('chitekesaAdmin','loggedIn');document.getElementById('adminDashboard').style.display='block';document.getElementById('adminLoginForm').classList.remove('active');document.getElementById('adminLogoutLi').style.display='inline-block';loadDonations();loadAlumni();alert('Login Successful!')}else{alert('Invalid Username or Password')}}
   function adminLogout(){localStorage.removeItem('chitekesaAdmin');document.getElementById('adminDashboard').style.display='none';document.getElementById('adminLogoutLi').style.display='none'}
   function showAdminTab(tabId,event){document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.admin-content').forEach(c=>c.classList.remove('active'));event.target.classList.add('active');document.getElementById(tabId).classList.add('active')}
-  http://window.onload=function(){if(localStorage.getItem('chitekesaAdmin')==='loggedIn'){document.getElementById('adminDashboard').style.display='block';document.getElementById('adminLogoutLi').style.display='inline-block';loadDonations();loadAlumni()}}
+  window.onload=function(){if(localStorage.getItem('chitekesaAdmin')==='loggedIn'){document.getElementById('adminDashboard').style.display='block';document.getElementById('adminLogoutLi').style.display='inline-block';loadDonations();loadAlumni()}}
 </script>
 </body>
-                                         </html>
+        </html>
