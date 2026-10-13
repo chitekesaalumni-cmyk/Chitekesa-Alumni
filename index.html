@@ -111,6 +111,10 @@
         <p style="font-size:14px;color:#7c2d12">Create a free account to access Downloads, Classmates, Vacancies, Education Corner & Registration.</p>
         <button class="btn btn-primary" onclick="openFirebaseAuth()">Create Free Account</button>
       </div>
+      <div id="pendingBox" style="display:none;background:linear-gradient(135deg,#fef3c7,#fde68a);border:1.5px solid #fbbf24;padding:16px;border-radius:12px;margin-top:16px">
+        <h3 style="margin-top:0;color:#92400e">⏳ Payment Verification Pending</h3>
+        <p style="font-size:14px;color:#78350f">Your account is created but not yet approved. Please send payment proof to Admin. You will be activated within 24 hours.</p>
+      </div>
     </div>
     <h3>Admin Portal</h3>
     <button class="btn btn-green" onclick="toggleForm('adminLoginForm')">Admin Login</button>
@@ -119,8 +123,18 @@
     </div>
     <div id="adminDashboard" style="display:none;">
       <h2>Admin Dashboard</h2>
-      <div class="admin-tabs"><div class="admin-tab active" onclick="showAdminTab('donations', event)">Donations</div><div class="admin-tab" onclick="showAdminTab('alumni', event)">Alumni Members</div></div>
-      <div id="donations" class="admin-content active"><h3>Donation Submissions</h3><button class="btn btn-blue" onclick="exportCSV('donations')">📥 Export CSV</button><table class="admin-table" id="donationTable"><tr><th>Name</th><th>Donation</th><th>Period</th><th>Phone</th><th>Location</th></tr></table></div>
+      <div class="admin-tabs">
+        <div class="admin-tab active" onclick="showAdminTab('pendingApprovals', event)">⏳ Pending Approvals</div>
+        <div class="admin-tab" onclick="showAdminTab('donations', event)">Donations</div>
+        <div class="admin-tab" onclick="showAdminTab('alumni', event)">Alumni Members</div>
+      </div>
+      <div id="pendingApprovals" class="admin-content active">
+        <h3>⏳ Accounts Waiting For Payment Verification</h3>
+        <p style="font-size:13px;color:var(--muted)">Approve after confirming payment from Admin. Approved users can access Vacancies, Classmates, Education, Registration.</p>
+        <button class="btn btn-blue" onclick="loadPending()">🔄 Refresh</button>
+        <table class="admin-table" id="pendingTable"><tr><th>Name</th><th>Email</th><th>Date</th><th>Action</th></tr></table>
+      </div>
+      <div id="donations" class="admin-content"><h3>Donation Submissions</h3><button class="btn btn-blue" onclick="exportCSV('donations')">📥 Export CSV</button><table class="admin-table" id="donationTable"><tr><th>Name</th><th>Donation</th><th>Period</th><th>Phone</th><th>Location</th></tr></table></div>
       <div id="alumni" class="admin-content"><h3>Alumni Registrations</h3><button class="btn btn-blue" onclick="exportCSV('alumni')">📥 Export CSV</button><table class="admin-table" id="alumniTable"><tr><th>Name</th><th>Grad Year</th><th>Profession</th><th>Phone</th><th>Interest</th></tr></table></div>
     </div>
     <div class="hero-card">
@@ -158,11 +172,10 @@
       <div class="auth-field" id="nameField"><label>Full Name</label><input type="text" id="fbName" placeholder="e.g. Chitekesa Alumni"></div>
       <div class="auth-field"><label>Email Address *</label><input type="email" id="fbEmail" placeholder="you@gmail.com"></div>
       <div class="auth-field"><label>Password *</label><input type="password" id="fbPassword" placeholder="Minimum 6 characters"></div>
-      <div class="auth-field"><label>Registration Code *</label><input type="text" id="fbRegCode" placeholder="e.g. CHT-R-26-001" style="text-transform:uppercase; letter-spacing:1px; font-weight:600;"></div>
       <button class="auth-btn" id="fbActionBtn" onclick="handleFirebaseAuth()">Create Account</button>
       <p id="fbMsg" style="text-align:center;font-size:13px;margin-top:12px;font-weight:600"></p>
-      <div class="auth-links"><a href="#" onclick="toggleFbMode();return false;" id="fbToggleText">Already have an account? Login</a></div>
-      <div class="auth-close"><a href="#" onclick="closeFirebaseAuth();return false;">✕ Close</a></div>
+      <div class="auth-links"><a href="#" onclick="toggleFbMode()" id="fbToggleText">Already have an account? Login</a></div>
+      <div class="auth-close"><a href="#" onclick="closeFirebaseAuth()">✕ Close</a></div>
     </div>
   </div>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
@@ -184,60 +197,207 @@
   let fbIsLogin=false; let pendingRedirect=null;
   function openFirebaseAuth(redirectUrl=null){pendingRedirect=redirectUrl; document.getElementById('firebaseAuthModal').style.display='flex';}
   function closeFirebaseAuth(){document.getElementById('firebaseAuthModal').style.display='none';}
-function toggleFbMode() {
-  fbIsLogin =!fbIsLogin;
-  document.getElementById("authTitle").innerText = fbIsLogin? "Welcome Back" : "Create Account";
-  document.getElementById("fbActionBtn").innerText = fbIsLogin? "Login Now" : "Create Account";
-  document.getElementById("fbToggleText").innerText =
-    fbIsLogin? "Don't have account? Create one" : "Already have an account? Login";
-  document.getElementById("nameField").style.display = fbIsLogin? "none" : "block";
-  document.getElementById("fbRegCode").closest(".auth-field").style.display = fbIsLogin? "none" : "block";
-  document.getElementById("fbMsg").innerText = "";
-}
-async function handleFirebaseAuth() {
-  const email = document.getElementById("fbEmail").value.trim();
-  const pass = document.getElementById("fbPassword").value.trim();
-  const name = document.getElementById("fbName").value.trim();
-  const regCode = document.getElementById("fbRegCode").value.trim().toUpperCase();
-  const msg = document.getElementById("fbMsg");
-  const btn = document.getElementById("fbActionBtn");
-  if (!email ||!pass) { msg.style.color="red"; msg.innerText="⚠️ Fill email and password."; return; }
-  if (pass.length < 6) { msg.style.color="red"; msg.innerText="⚠️ Password must be at least 6 characters."; return; }
-  if (!fbIsLogin &&!name) { msg.style.color="red"; msg.innerText="⚠️ Enter your full name."; return; }
-  if (!fbIsLogin &&!regCode) { msg.style.color="red"; msg.innerText="⚠️ Enter Registration Code given after payment."; return; }
-  btn.disabled=true; btn.innerText=fbIsLogin?"Logging in...":"Verifying code..."; msg.style.color="#003366"; msg.innerText=fbIsLogin?"Logging in...":"Verifying registration code...";
-  try {
-    let codeDoc=null; let codeData=null;
-    if (!fbIsLogin) {
-      try { const d=await db.collection("registration_codes").doc(regCode).get(); if(d.exists){codeDoc=d; codeData=d.data();} } catch(e){}
-      if (!codeData) { try { const s=await db.collection("registration_codes").where("code","==",regCode).limit(1).get(); if(!s.empty){codeDoc=s.docs[0]; codeData=s.docs[0].data();} } catch(e){} }
-      if (!codeData) { try { const all=await db.collection("registration_codes").get(); all.forEach(doc=>{const v=(doc.data().code||"").toString().trim().toUpperCase(); if(v===regCode){codeDoc=doc; codeData=doc.data();}}); } catch(e){} }
-      if (!codeData) { msg.style.color="red"; msg.innerText="❌ Invalid Registration Code: "+regCode+" not found. Contact Admin."; btn.disabled=false; btn.innerText="Create Account"; return; }
-      if (codeData.used===true) { const usedBy=(codeData.usedBy||"").toLowerCase(); if(usedBy && usedBy!==email.toLowerCase()){msg.style.color="red"; msg.innerText="❌ This code already used by another member."; btn.disabled=false; btn.innerText="Create Account"; return;} }
+  function toggleFbMode(){
+    fbIsLogin=!fbIsLogin;
+    document.getElementById('authTitle').innerText=fbIsLogin?"Welcome Back":"Create Account";
+    document.getElementById('fbActionBtn').innerText=fbIsLogin?"Login Now":"Create Account";
+    document.getElementById('fbToggleText').innerText=fbIsLogin?"Don't have account? Create one":"Already have an account? Login";
+    document.getElementById('nameField').style.display=fbIsLogin?"none":"block";
+    document.getElementById('fbMsg').innerText="";
+  }
+  async function handleFirebaseAuth(){
+    const email=document.getElementById('fbEmail').value.trim();
+    const pass=document.getElementById('fbPassword').value.trim();
+    const name=document.getElementById('fbName').value.trim();
+    const msg=document.getElementById('fbMsg');
+    const btn=document.getElementById('fbActionBtn');
+    if(!email||!pass){msg.style.color="red";msg.innerText="⚠️ Fill email and password";return}
+    if(pass.length<6){msg.style.color="red";msg.innerText="⚠️ Password must be at least 6 characters";return}
+    if(!fbIsLogin &&!name){msg.style.color="red";msg.innerText="⚠️ Enter your full name";return}
+    btn.disabled=true;
+    btn.innerText=fbIsLogin?"Logging in...":"Creating account...";
+    msg.style.color="#003366"; msg.innerText="Please wait...";
+    try {
+      if(fbIsLogin){
+        const cred = await auth.signInWithEmailAndPassword(email,pass);
+        const snap = await db.collection("users").where("uid","==",cred.user.uid).limit(1).get();
+        if(!snap.empty){
+          const data = snap.docs[0].data();
+          if(data.approved===false){
+            msg.style.color="#92400e";
+            msg.innerText="⏳ Account pending approval. Please send payment proof to Admin.";
+            btn.disabled=false; btn.innerText="Login Now";
+            return;
+          }
+        }
+        msg.style.color="green";msg.innerText="✅ Login success!";
+        setTimeout(()=>{closeFirebaseAuth(); if(pendingRedirect) window.location.href=pendingRedirect; else location.reload()},800);
+      } else {
+        const cred = await auth.createUserWithEmailAndPassword(email,pass);
+        await cred.user.updateProfile({displayName:name});
+        await db.collection("users").add({
+          displayName: name,
+          fullName: name,
+          email: email.toLowerCase(),
+          uid: cred.user.uid,
+          approved: false,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        msg.style.color="green";
+        msg.innerHTML="✅ Account created! <br>⏳ Pending approval. Send payment proof to <b>Admin</b>";
+        btn.disabled=false;
+        btn.innerText="Create Account";
+        setTimeout(()=>{closeFirebaseAuth(); location.reload();},2500);
+      }
+    } catch(e){
+      msg.style.color="red";msg.innerText="❌ "+e.message; btn.disabled=false; btn.innerText=fbIsLogin?"Login Now":"Create Account";
     }
-    if (fbIsLogin) { await auth.signInWithEmailAndPassword(email,pass); msg.style.color="green"; msg.innerText="✅ Login successful."; }
-    else { const cred=await auth.createUserWithEmailAndPassword(email,pass); await cred.user.updateProfile({displayName:name}); try{await codeDoc.ref.update({used:true,usedBy:email.toLowerCase(),usedByName:name,usedAt:firebase.firestore.FieldValue.serverTimestamp()});}catch(e){} msg.style.color="green"; msg.innerText="✅ Account created successfully!"; }
-    setTimeout(()=>{closeFirebaseAuth(); if(pendingRedirect) window.location.href=pendingRedirect; else location.reload();},800);
-  } catch(e){ msg.style.color="red"; msg.innerText="❌ "+(e.message||"Something went wrong."); btn.disabled=false; btn.innerText=fbIsLogin?"Login Now":"Create Account"; }
-}
-  function requireAuth(url){const user=auth.currentUser; if(!user){openFirebaseAuth(url); return;} window.location.href=url;}
-  function handleProtectedClick(formId){const user=auth.currentUser; if(!user){openFirebaseAuth(); return;} toggleForm(formId);}
+  }
+  async function requireAuth(url){
+    const user=auth.currentUser;
+    if(!user){openFirebaseAuth(url); return;}
+    try{
+      const snap = await db.collection("users").where("uid","==",user.uid).limit(1).get();
+      if(!snap.empty){
+        const data = snap.docs[0].data();
+        if(data.approved===false){
+          document.getElementById('pendingBox').style.display='block';
+          document.getElementById('notLoggedBox').style.display='none';
+          alert("⏳ Your account is pending approval. Please send payment proof to Admin");
+          return;
+        }
+      }
+    }catch(e){}
+    window.location.href=url;
+  }
+  async function handleProtectedClick(formId){
+    const user=auth.currentUser;
+    if(!user){openFirebaseAuth(); return;}
+    try{
+      const snap = await db.collection("users").where("uid","==",user.uid).limit(1).get();
+      if(!snap.empty){
+        const data = snap.docs[0].data();
+        if(data.approved===false){
+          document.getElementById('pendingBox').style.display='block';
+          document.getElementById('notLoggedBox').style.display='none';
+          alert("⏳ Your account is pending approval. Please send payment proof to Admin before you can register.");
+          return;
+        }
+      }
+    }catch(e){}
+    toggleForm(formId);
+  }
   function firebaseLogout(){auth.signOut().then(()=>location.reload())}
-  auth.onAuthStateChanged(user=>{if(user){const box=document.getElementById('notLoggedBox'); if(box) box.style.display='none'; document.getElementById('userDisplay').innerText="Hi, "+(user.displayName||user.email); document.getElementById('userDisplayLi').style.display='inline-block'; document.getElementById('logoutLi').style.display='inline-block'; document.getElementById('loginLi').style.display='none';}});
+  auth.onAuthStateChanged(async user=>{
+    if(user){
+      const box=document.getElementById('notLoggedBox'); if(box) box.style.display='none';
+      document.getElementById('userDisplay').innerText="Hi, "+(user.displayName||user.email);
+      document.getElementById('userDisplayLi').style.display='inline-block';
+      document.getElementById('logoutLi').style.display='inline-block';
+      document.getElementById('loginLi').style.display='none';
+      try{
+        const snap = await db.collection("users").where("uid","==",user.uid).limit(1).get();
+        if(!snap.empty){
+          const data = snap.docs[0].data();
+          if(data.approved===false){
+            document.getElementById('pendingBox').style.display='block';
+          }
+        }
+      }catch(e){}
+    }
+  });
 </script>
 <script>
   const WEB_APP_URL="https://script.google.com/macros/s/AKfycbxlg51F7IsuXJUr-kV9DFkhjpCcEHJH0VX6UuBZNaM3UXibPNnLemyNSMoSgwgpcMn5/exec";
   function toggleMenu(){document.getElementById("menu").classList.toggle("active")}
   function toggleForm(id){document.getElementById(id).classList.toggle("active")}
-  document.getElementById("donationForm").addEventListener("submit",function(e){e.preventDefault();const form=e.target;document.getElementById("donationMsg").innerHTML="Submitting...";const data={type:"donation",name:form.fullName.value,gender:form.gender.value,donation:form.donationType.value,period:form.donationPeriod.value,phone:form.phone.value,email:form.email.value,location:form.location.value};fetch(WEB_APP_URL,{method:"POST",mode:"no-cors",body:JSON.stringify(data)}).then(()=>{document.getElementById("donationMsg").innerHTML="✅ Thank you!";form.reset();toggleForm('donateForm');loadDonations()}).catch(()=>{document.getElementById("donationMsg").innerHTML="❌ Error."})});
-  document.getElementById("alumniForm").addEventListener("submit", async function(e){e.preventDefault();const user=firebase.auth().currentUser;if(!user){openFirebaseAuth();return}const form=e.target;const msgEl=document.getElementById("alumniMsg");msgEl.innerHTML="Submitting... Please wait...";const data={type:"alumni",name:form.fullName.value,gender:form.gender.value,year:form.gradYear.value,class:form.class.value,phone:form.phone.value,whatsapp:form.whatsapp.value,profession:form.profession.value,interest:form.interest.value,message:form.message.value,accountEmail:user.email};try{fetch(WEB_APP_URL,{method:"POST",mode:"no-cors",body:JSON.stringify(data)});await db.collection("users").add({displayName:data.name,fullName:data.name,gradYear:data.year,year:data.year,class:data.class,career:data.profession,profession:data.profession,phone:data.phone,whatsapp:data.whatsapp,interest:data.interest,message:data.message,email:user.email,uid:user.uid,createdAt:firebase.firestore.FieldValue.serverTimestamp()});msgEl.innerHTML="✅ Welcome! You now appear in Find Classmate 👥";form.reset();setTimeout(()=>{window.location.href="find-classmates.html";},1500);}catch(err){msgEl.innerHTML="❌ Error: "+err.message;}});
+  document.getElementById("donationForm").addEventListener("submit",function(e){
+    e.preventDefault();
+    const form=e.target;
+    document.getElementById("donationMsg").innerHTML="Submitting...";
+    const data={type:"donation",name:form.fullName.value,gender:form.gender.value,donation:form.donationType.value,period:form.donationPeriod.value,phone:form.phone.value,email:form.email.value,location:form.location.value};
+    fetch(WEB_APP_URL,{method:"POST",mode:"no-cors",body:JSON.stringify(data)})
+   .then(()=>{document.getElementById("donationMsg").innerHTML="✅ Thank you!";form.reset();toggleForm('donateForm');loadDonations()})
+   .catch(()=>{document.getElementById("donationMsg").innerHTML="❌ Error."})
+  });
+  document.getElementById("alumniForm").addEventListener("submit", async function(e){
+    e.preventDefault();
+    const user=firebase.auth().currentUser;
+    if(!user){openFirebaseAuth();return}
+    try{
+      const snap = await db.collection("users").where("uid","==",user.uid).where("approved","==",false).get();
+      if(!snap.empty){
+        document.getElementById("alumniMsg").innerHTML="⏳ Your account is pending approval. Please send payment proof to Admin before registering.";
+        return;
+      }
+    }catch(e){}
+    const form=e.target;
+    const msgEl=document.getElementById("alumniMsg");
+    msgEl.innerHTML="Submitting... Please wait...";
+    const data={type:"alumni",name:form.fullName.value,gender:form.gender.value,year:form.gradYear.value,class:form.class.value,phone:form.phone.value,whatsapp:form.whatsapp.value,profession:form.profession.value,interest:form.interest.value,message:form.message.value,accountEmail:user.email};
+    try{
+      fetch(WEB_APP_URL,{method:"POST",mode:"no-cors",body:JSON.stringify(data)});
+      await db.collection("users").add({
+        displayName: data.name,
+        fullName: data.name,
+        gradYear: data.year,
+        year: data.year,
+        class: data.class,
+        career: data.profession,
+        profession: data.profession,
+        phone: data.phone,
+        whatsapp: data.whatsapp,
+        interest: data.interest,
+        message: data.message,
+        email: user.email,
+        uid: user.uid,
+        approved: true,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      msgEl.innerHTML="✅ Welcome! You now appear in Find Classmate 👥";
+      form.reset();
+      setTimeout(()=>{ window.location.href="find-classmates.html"; },1500);
+    }catch(err){
+      console.error(err);
+      msgEl.innerHTML="❌ Error: "+err.message;
+    }
+  });
   async function loadDonations(){const table=document.getElementById('donationTable');try{const res=await fetch(WEB_APP_URL+"?type=donation");const data=await res.json();table.innerHTML='<tr><th>Name</th><th>Donation</th><th>Period</th><th>Phone</th><th>Location</th></tr>';data.donations.forEach(d=>{table.innerHTML+=`<tr><td>${d.name||''}</td><td>${d.donation||''}</td><td>${d.period||''}</td><td>${d.phone||''}</td><td>${d.location||''}</td></tr>`})}catch(e){}}
   async function loadAlumni(){const table=document.getElementById('alumniTable');try{const res=await fetch(WEB_APP_URL+"?type=alumni");const data=await res.json();table.innerHTML='<tr><th>Name</th><th>Grad Year</th><th>Profession</th><th>Phone</th><th>Interest</th></tr>';data.alumni.forEach(a=>{table.innerHTML+=`<tr><td>${a.name||''}</td><td>${a.year||''}</td><td>${a.profession||''}</td><td>${a.phone||''}</td><td>${a.interest||''}</td></tr>`})}catch(e){}}
+  async function loadPending(){
+    const table=document.getElementById('pendingTable');
+    table.innerHTML='<tr><th>Name</th><th>Email</th><th>Date</th><th>Action</th></tr>';
+    try{
+      const snap = await db.collection("users").where("approved","==",false).get();
+      if(snap.empty){table.innerHTML+='<tr><td colspan="4" style="text-align:center;padding:20px;color:var(--muted)">No pending approvals 🎉</td></tr>'; return;}
+      snap.forEach(doc=>{
+        const d=doc.data();
+        const date = d.createdAt? d.createdAt.toDate().toLocaleDateString() : 'N/A';
+        table.innerHTML+=`<tr><td>${d.displayName||d.fullName||''}</td><td>${d.email||''}</td><td>${date}</td><td><button class="btn btn-green" style="padding:6px 12px;font-size:12px" onclick="approveUser('${doc.id}')">✅ Approve</button> <button class="btn" style="background:#ef4444;color:white;padding:6px 12px;font-size:12px" onclick="rejectUser('${doc.id}')">❌ Reject</button></td></tr>`;
+      });
+    }catch(e){ table.innerHTML+='<tr><td colspan="4">Error: '+e.message+'</td></tr>'; }
+  }
+  async function approveUser(docId){
+    if(!confirm("Approve this user after payment?")) return;
+    try{
+      await db.collection("users").doc(docId).update({approved:true, approvedAt: firebase.firestore.FieldValue.serverTimestamp()});
+      alert("✅ Approved!");
+      loadPending();
+    }catch(e){alert("Error: "+e.message)}
+  }
+  async function rejectUser(docId){
+    if(!confirm("Reject and delete this user?")) return;
+    try{
+      await db.collection("users").doc(docId).delete();
+      alert("Deleted");
+      loadPending();
+    }catch(e){alert("Error: "+e.message)}
+  }
   function exportCSV(type){let table,filename;if(type==='donations'){table=document.getElementById('donationTable');filename='donations.csv'}else{table=document.getElementById('alumniTable');filename='alumni.csv'}let csv=[];for(let row of table.rows){csv.push([...row.cells].map(cell=>cell.innerText).join(','))}const blob=new Blob([csv.join('\n')],{type:'text/csv'});const url=window.URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click()}
-  function adminLogin(e){e.preventDefault();if(document.getElementById('adminUser').value==='chitekesa2026'&&document.getElementById('adminPass').value==='Chiteke@2026!'){localStorage.setItem('chitekesaAdmin','loggedIn');document.getElementById('adminDashboard').style.display='block';document.getElementById('adminLoginForm').classList.remove('active');document.getElementById('adminLogoutLi').style.display='inline-block';loadDonations();loadAlumni();alert('Login Successful!')}else{alert('Invalid Username or Password')}}
+  function adminLogin(e){e.preventDefault();if(document.getElementById('adminUser').value==='chitekesa2026'&&document.getElementById('adminPass').value==='Chiteke@2026!'){localStorage.setItem('chitekesaAdmin','loggedIn');document.getElementById('adminDashboard').style.display='block';document.getElementById('adminLoginForm').classList.remove('active');document.getElementById('adminLogoutLi').style.display='inline-block';loadDonations();loadAlumni();loadPending();alert('Login Successful!')}else{alert('Invalid Username or Password')}}
   function adminLogout(){localStorage.removeItem('chitekesaAdmin');document.getElementById('adminDashboard').style.display='none';document.getElementById('adminLogoutLi').style.display='none'}
-  function showAdminTab(tabId,event){document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.admin-content').forEach(c=>c.classList.remove('active'));event.target.classList.add('active');document.getElementById(tabId).classList.add('active')}
-  window.onload=function(){if(localStorage.getItem('chitekesaAdmin')==='loggedIn'){document.getElementById('adminDashboard').style.display='block';document.getElementById('adminLogoutLi').style.display='inline-block';loadDonations();loadAlumni()}}
+  function showAdminTab(tabId,event){document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.admin-content').forEach(c=>c.classList.remove('active'));event.target.classList.add('active');document.getElementById(tabId).classList.add('active'); if(tabId==='pendingApprovals') loadPending();}
+  window.onload=function(){if(localStorage.getItem('chitekesaAdmin')==='loggedIn'){document.getElementById('adminDashboard').style.display='block';document.getElementById('adminLogoutLi').style.display='inline-block';loadDonations();loadAlumni();loadPending();}}
 </script>
 </body>
-        </html>
+      </html>
