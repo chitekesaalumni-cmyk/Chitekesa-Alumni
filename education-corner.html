@@ -12,12 +12,12 @@ body{font-family:Poppins,sans-serif;background:var(--bg);color:#1f2937}
 .header{background:linear-gradient(135deg,#0a3d6b,#1e6fb5);color:white;padding:18px 16px 36px;text-align:center}
 .header-top{display:flex;justify-content:flex-end;gap:8px;padding:0 8px 18px}
 .header-top button{padding:8px 18px;border-radius:20px;border:1.5px solid rgba(255,255,255,.8);background:transparent;color:white;font-weight:600;cursor:pointer}
-.header-top.admin{background:#0b9a5a;border-color:#0b9a5a}
+.header-top button.admin{background:#0b9a5a;border-color:#0b9a5a}
 .header h1{font-size:30px;font-weight:700}
 .header p{opacity:.9;margin-top:10px;font-size:15px}
 .search-row{display:flex;gap:10px;justify-content:center;margin-top:22px;flex-wrap:wrap}
-.search-row input{width:68%;max-width:520px;padding:16px 20px;border-radius:30px;border:none;font-size:15px;outline:none}
-.search-row.share{background:white;color:var(--blue);padding:14px 26px;border-radius:30px;border:none;font-weight:700;cursor:pointer;font-size:15px}
+.search-row input{width:62%;max-width:500px;padding:16px 20px;border-radius:30px;border:none;font-size:15px;outline:none}
+.search-row.share-btn{background:white;color:#0a3d6b;padding:14px 28px;border-radius:30px;border:none;font-weight:700;cursor:pointer;font-size:15px;box-shadow:0 4px 12px rgba(0,0,0,.15)}
 .filters{display:flex;gap:10px;overflow-x:auto;padding:14px 12px;background:white;border-bottom:1px solid var(--border);white-space:nowrap}
 .filters button{padding:10px 20px;border-radius:25px;border:2px solid #0a3d6b;background:white;color:#0a3d6b;font-weight:600;cursor:pointer;flex-shrink:0}
 .filters button.active{background:#0a3d6b;color:white}
@@ -30,6 +30,18 @@ body{font-family:Poppins,sans-serif;background:var(--bg);color:#1f2937}
 .btn-outline{background:white;color:var(--blue);border:1.5px solid var(--blue)}
 .trusted-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 @media(max-width:600px){.trusted-grid{grid-template-columns:1fr}}
+/* Professional Share Modal */
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:999;justify-content:center;align-items:center;padding:16px}
+.modal.show{display:flex}
+.modal-content{background:white;width:100%;max-width:500px;border-radius:20px;padding:24px;box-shadow:0 10px 30px rgba(0,0,0,.2)}
+.modal-content h2{color:#0a3d6b;margin-bottom:16px;text-align:center}
+.modal-content label{font-size:13px;font-weight:600;color:#333;margin-top:10px;display:block}
+.modal-content input,.modal-content select,.modal-content textarea{width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid var(--border);margin-top:6px;font-family:Poppins,sans-serif;font-size:14px;outline:none}
+.modal-content input:focus,.modal-content select:focus,.modal-content textarea:focus{border-color:var(--blue)}
+.modal-actions{display:flex;gap:10px;margin-top:18px}
+.modal-actions button{flex:1;padding:12px;border-radius:12px;border:none;font-weight:700;cursor:pointer}
+.btn-cancel{background:#f1f5f9;color:#333}
+.btn-submit{background:#0a3d6b;color:white}
 </style>
 </head>
 <body>
@@ -39,28 +51,50 @@ body{font-family:Poppins,sans-serif;background:var(--bg);color:#1f2937}
     <button class="admin">Admin Mode</button>
   </div>
   <h1>📚 Education Corner</h1>
-  <p>Past Papers, Books, Notes & Career Resources by<br>Alumni</p>
+  <p>Past Papers, Books, Notes & Career Resources by Alumni</p>
   <div class="search-row">
-    <input id="searchInput" placeholder="Search e.g. Biology 2023..." onkeyup="doSearch()">
-    <button class="share" onclick="openShare()">+ Share</button>
+    <input id="searchInput" placeholder="Search e.g. Biology MSCE 2023..." onkeyup="doSearch()">
+    <button class="share-btn" onclick="openShareModal()">+ Share</button>
   </div>
 </div>
 
 <div class="filters" id="filters">
   <button onclick="filterBy('all')" class="active" id="f-all">All</button>
-  <button onclick="filterBy('past paper')" id="f-past">Past Papers</button>
   <button onclick="filterBy('msce')" id="f-msce">MSCE</button>
   <button onclick="filterBy('jce')" id="f-jce">JCE</button>
+  <button onclick="filterBy('past paper')" id="f-past">Past Papers</button>
   <button onclick="filterBy('notes')" id="f-notes">Notes</button>
+  <button onclick="filterBy('books')" id="f-books">Books</button>
   <button onclick="filterBy('syllabus')" id="f-syllabus">Syllabus</button>
   <button onclick="filterBy('university')" id="f-university">University</button>
-  <button onclick="filterBy('scholarships')" id="f-scholarships">Scholarships</button>
-  <button onclick="filterBy('books')" id="f-books">Books</button>
+  <button onclick="filterBy('scholarship')" id="f-scholarship">Scholarship</button>
 </div>
 
 <div class="container">
   <div id="trustedBox" style="display:none"></div>
   <div id="notesList">Loading notes...</div>
+</div>
+
+<!-- Professional Share Modal -->
+<div class="modal" id="shareModal" onclick="if(event.target==this) closeShareModal()">
+  <div class="modal-content">
+    <h2>📤 Share Education Resource</h2>
+    <label>Title *</label>
+    <input id="mTitle" placeholder="e.g. Biology MSCE Past Paper 2023">
+    <label>Level *</label>
+    <select id="mLevel"><option value="">Select Level</option><option>MSCE</option><option>JCE</option><option>BOOKS</option><option>UNIVERSITY</option><option>ALL</option></select>
+    <label>Subject</label>
+    <input id="mSubject" placeholder="e.g. Biology, Mathematics">
+    <label>Type *</label>
+    <select id="mType"><option value="">Select Type</option><option value="past paper">Past Paper</option><option value="notes">Notes</option><option value="books">Books</option><option value="syllabus">Syllabus</option><option value="msce">MSCE</option><option value="jce">JCE</option></select>
+    <label>Google Drive Link *</label>
+    <input id="mLink" placeholder="https://drive.google.com/file/d/...">
+    <p style="font-size:11px;color:#888;margin-top:4px">Make sure link is "Anyone with the link - Viewer"</p>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeShareModal()">Cancel</button>
+      <button class="btn-submit" onclick="submitShare()">Share Now</button>
+    </div>
+  </div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
@@ -120,7 +154,7 @@ function filterBy(cat){
   else if(cat=="msce") btnId="f-msce";
   else if(cat=="jce") btnId="f-jce";
   else if(cat=="university") btnId="f-university";
-  else if(cat=="scholarships") btnId="f-scholarships";
+  else if(cat=="scholarship") btnId="f-scholarship";
   else if(cat=="notes") btnId="f-notes";
   else if(cat=="syllabus") btnId="f-syllabus";
   else if(cat=="books") btnId="f-books";
@@ -142,7 +176,7 @@ function filterBy(cat){
         </div>
       </div>`; return;
   }
-  if(cat==='scholarships'){
+  if(cat==='scholarship'){
     document.getElementById("notesList").innerHTML="";
     document.getElementById("trustedBox").style.display="block";
     document.getElementById("trustedBox").innerHTML=`
@@ -158,7 +192,6 @@ function filterBy(cat){
         </div>
       </div>`; return;
   }
-
   document.getElementById("trustedBox").style.display="none";
   if(cat==='all'){render(allNotes);return;}
   const filtered=allNotes.filter(n=> {
@@ -175,18 +208,23 @@ function doSearch(){
   render(filtered);
 }
 
-function openShare(){
-  const link=prompt("Paste your Google Drive link (Anyone with link):");
-  if(!link) return;
-  const title=prompt("Title e.g. Biology MSCE 2023 or English Grammar Book");
-  const level=prompt("Level: MSCE / JCE / BOOKS? (type MSCE / JCE / BOOKS)");
-  const subject=prompt("Subject e.g. Biology");
-  const type=prompt("Type: past paper / notes / syllabus / books / university / scholarships");
-  if(title && link){
-    db.collection("education_resources").add({
-      title:title, subject:subject||"", level:(level||"").toUpperCase(), type:type||"books", link:link, desc:"Shared by Alumni", year:new Date().getFullYear().toString(), uploadedBy:"alumni", createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    }).then(()=>alert("✅ Shared!"));
-  }
+function openShareModal(){ document.getElementById("shareModal").classList.add("show"); }
+function closeShareModal(){ document.getElementById("shareModal").classList.remove("show"); }
+
+function submitShare(){
+  const title=document.getElementById("mTitle").value.trim();
+  const level=document.getElementById("mLevel").value;
+  const subject=document.getElementById("mSubject").value.trim();
+  const type=document.getElementById("mType").value;
+  const link=document.getElementById("mLink").value.trim();
+  if(!title ||!level ||!type ||!link){ alert("Please fill all required fields *"); return; }
+  db.collection("education_resources").add({
+    title:title, subject:subject, level:level.toUpperCase(), type:type.toLowerCase(), link:link, desc:"Shared by Alumni", year:new Date().getFullYear().toString(), uploadedBy:"alumni", createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  }).then(()=>{
+    alert("✅ Shared successfully! Will auto-download as Real PDF");
+    closeShareModal();
+    document.getElementById("mTitle").value=""; document.getElementById("mSubject").value=""; document.getElementById("mLink").value="";
+  });
 }
 
 loadNotes();
