@@ -68,7 +68,7 @@ body { margin:0; font-family: 'Segoe UI', sans-serif; background:#f5f7fb; }
     <input id="resTitle" placeholder="Title e.g. Physics MSCE Paper" style="width:100%; padding:12px; margin:8px 0; border-radius:8px; border:1px solid #ddd;">
     <div style="display:flex; gap:10px;">
       <select id="resType" style="flex:1; padding:12px; margin:8px 0; border-radius:8px; border:1px solid #ddd;">
-        <option>MSCE Past Paper</option><option>JCE Past Paper</option><option>Book</option><option>Study Notes</option><option>Syllabus</option><option>University Guide</option><option>Career</option>
+        <option>MSCE</option><option>JCE</option><option>Book</option><option>Study Notes</option><option>Syllabus</option><option>University Guide</option><option>Career</option>
       </select>
       <select id="resSubject" style="flex:1; padding:12px; margin:8px 0; border-radius:8px; border:1px solid #ddd;">
         <optgroup label="Sciences">
@@ -165,7 +165,7 @@ async function loadResources(){
     allResources = [
       {title:"Biology MSCE 2023 Past Paper", type:"MSCE Past Paper", subject:"Biology", year:"2023", link:"#", desc:"Full past paper with marking key."},
       {title:"Physics MSCE 2022 - Sciences", type:"MSCE Past Paper", subject:"Physics", year:"2022", link:"#", desc:"Physics past paper for science students."},
-      {title:"How to Apply to University - Complete Guide", type:"University Guide", subject:"General", year:"2026", link:"#", desc:"UNIMA, MUST, LUANAR, MUBAS guide."},
+      {title:"How to Apply to University - Complete Guide", type:"University Guide", subject:"General", year:"2026", link:"#", desc:"UNIMA, MUST, LUANAR, MUBAS, KUHeS guide."},
     ];
   }
   render();
