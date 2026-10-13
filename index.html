@@ -8,7 +8,6 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:Poppins,sans-serif; background:#f5f7fb; color:#1f2937; line-height:1.6;}
-/* Header Green - YOUR EXACT CODE UNTOUCHED */
 .top-header{
   background: linear-gradient(135deg, #0a2f1a, #144d28);
   color:white; text-align:center; padding:25px 15px 20px;
@@ -17,54 +16,55 @@ body{font-family:Poppins,sans-serif; background:#f5f7fb; color:#1f2937; line-hei
 .top-header img{width:85px; height:85px; border-radius:50%; background:white; padding:4px;}
 .top-header h1{font-size:22px; margin-top:12px; font-weight:700; letter-spacing:0.5px;}
 .top-header p{font-style:italic; opacity:.85; font-size:14px; margin-top:6px;}
-/* Menu Button - YOUR EXACT CODE UNTOUCHED */
 .menu-btn{
   position:absolute; left:15px; top:50%; transform:translateY(-50%);
   background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3);
   color:white; padding:8px 14px; border-radius:20px; cursor:pointer;
   backdrop-filter:blur(10px); font-weight:600; font-size:14px;
 }
-/* SIDE DRAWER - YOUR EXACT CODE UNTOUCHED */
+/* DRAWER - EXACTLY LIKE YOUR SCREENSHOT */
 .side-nav{
-  position:fixed; top:0; left:-100%; width:300px; height:100%;
-  background: linear-gradient(180deg, #12385f, #0f4c75);
+  position:fixed; top:0; left:-100%; width:75%; max-width:320px; height:100%;
+  background: linear-gradient(180deg, #0f365f, #12385f);
   z-index:9999; transition:0.35s ease;
-  padding:20px; display:flex; flex-direction:column;
-  box-shadow:4px 0 20px rgba(0,0,0,0.3);
+  padding:18px; display:flex; flex-direction:column;
+  box-shadow:4px 0 25px rgba(0,0,0,0.4);
 }
 .side-nav.open{ left:0; }
 .nav-header{
   display:flex; justify-content:space-between; align-items:center;
-  padding-bottom:20px; border-bottom:1px solid rgba(255,255,255,0.15); margin-bottom:10px;
+  padding-bottom:18px; border-bottom:1px solid rgba(255,255,255,0.12); margin-bottom:12px;
 }
-.nav-header span{ color:white; font-weight:700; font-size:16px; }
+.nav-header span{ color:white; font-weight:700; font-size:18px; display:flex; align-items:center; gap:8px;}
 .close-btn{
-  background:rgba(255,255,255,0.12); border:none; color:white;
-  width:36px; height:36px; border-radius:50%; cursor:pointer;
-  font-size:18px; display:flex; align-items:center; justify-content:center;
+  background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:#ff5a5a;
+  width:38px; height:38px; border-radius:50%; cursor:pointer;
+  font-size:18px; display:flex; align-items:center; justify-content:center; font-weight:700;
 }
-.close-btn:hover{ background:rgba(255,255,255,0.25); }
-.nav-links{ list-style:none; margin-top:15px; flex:1; }
-.nav-links li{ margin:4px 0; }
+.nav-links{ list-style:none; margin-top:10px; flex:1; }
+.nav-links li{ margin:6px 0; }
 .nav-links a{
-  display:flex; align-items:center; gap:12px;
+  display:flex; align-items:center; gap:14px;
   color:rgba(255,255,255,0.85); text-decoration:none;
-  padding:12px 14px; border-radius:10px; font-size:15px; font-weight:500;
+  padding:14px 12px; border-radius:10px; font-size:15px; font-weight:500;
   transition:0.2s; text-align:left; cursor:pointer;
 }
-.nav-links a:hover{ background:rgba(255,255,255,0.12); color:white; transform:translateX(4px); }
-.nav-links a.active{ background:rgba(255,255,255,0.18); color:white; }
-.nav-footer{ margin-top:auto; display:flex; flex-direction:column; gap:10px; }
-.btn-login{ background:#16a085; color:white; padding:12px; border-radius:10px; border:none; font-weight:700; cursor:pointer; text-align:center; text-decoration:none; }
-.btn-logout{ background:#e67e22; color:white; padding:12px; border-radius:10px; border:none; font-weight:700; cursor:pointer; }
-.user-badge{color:#fde68a;font-weight:700;font-size:13px;text-align:center;padding:8px;background:rgba(255,255,255,0.1);border-radius:8px;}
+.nav-links a:hover{ background:rgba(255,255,255,0.1); color:white; }
+.nav-links a.active{ background:rgba(255,255,255,0.14); color:white; }
+.nav-footer{ margin-top:auto; padding-top:20px; }
+.btn-logout-full{
+  background:#FF7A00; color:white; width:100%; padding:13px; border-radius:12px; border:none;
+  font-weight:700; cursor:pointer; font-size:15px; text-align:center;
+  box-shadow:0 4px 12px rgba(255,122,0,0.3);
+}
+.btn-login{ background:#16a085; color:white; padding:12px; border-radius:10px; border:none; font-weight:700; cursor:pointer; text-align:center; text-decoration:none; display:block; margin-bottom:10px;}
+.user-badge{color:#fde68a;font-weight:700;font-size:13px;text-align:center;padding:8px;background:rgba(255,255,255,0.1);border-radius:8px;margin-bottom:10px;}
 .overlay{
   position:fixed; top:0; left:0; width:100%; height:100%;
   background:rgba(0,0,0,0.45); backdrop-filter:blur(2px);
   z-index:9998; display:none;
 }
 .overlay.show{ display:block; }
-/* Content Styles */
 .container{padding:0 18px;max-width:1000px;margin:0 auto}
 main{padding:35px 0}
 .hero-card{background:#ffffff;border-radius:16px;padding:24px;box-shadow:0 6px 24px rgba(0,0,0,0.06);border:1px solid #e5e7eb;margin-bottom:24px}
@@ -72,20 +72,16 @@ h2{color:#003366;font-size:22px;margin-bottom:8px;font-weight:700}
 h3{color:#0f2e1a;font-size:18px;margin:24px 0 12px;font-weight:600}
 h5{font-weight:400;color:#6b7280;margin-bottom:20px;font-size:15px}
 .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 22px;border-radius:10px;text-decoration:none;font-weight:600;font-size:15px;border:none;cursor:pointer;transition:all 0.2s ease;margin:6px 5px;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
-.btn:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,0.12)}
 .btn-primary{background:linear-gradient(135deg,#FF7A00,#ff9a2e);color:white}
 .btn-whatsapp{background:#128C7E;color:white}
 .btn-green{background:#123d21;color:white}
 .btn-blue{background:#004080;color:white}
-.collapsible{display:none;margin-top:16px;padding:22px;background:#ffffff;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,0.07);border:1px solid #e5e7eb;animation:fadeIn.3s ease}
+.collapsible{display:none;margin-top:16px;padding:22px;background:#ffffff;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,0.07);border:1px solid #e5e7eb}
 .collapsible.active{display:block}
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 form label{display:block;font-weight:600;margin-top:14px;margin-bottom:6px;font-size:14px;color:#1f2937}
-form input,form select,form textarea{width:100%;padding:12px 14px;border:1px solid #e5e7eb;border-radius:10px;font-family:'Poppins',sans-serif;font-size:14px;background:#fcfcfd;transition:all.2s}
-form input:focus,form select:focus,form textarea:focus{outline:none;border-color:#004080;box-shadow:0 0 0 4px rgba(0,64,128,0.1);background:white}
+form input,form select,form textarea{width:100%;padding:12px 14px;border:1px solid #e5e7eb;border-radius:10px;font-family:'Poppins',sans-serif;font-size:14px;background:#fcfcfd}
 form button[type="submit"]{background:#123d21;color:white;width:100%;margin-top:18px;padding:13px}
-.executive{background:#ffffff;padding:18px;border-radius:14px;text-align:center;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,0.06);border:1px solid #e5e7eb;transition:.2s}
-.executive:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,0.1)}
+.executive{background:#ffffff;padding:18px;border-radius:14px;text-align:center;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,0.06);border:1px solid #e5e7eb}
 .executive img{width:92px;height:92px;border-radius:50%;object-fit:cover;border:3px solid #0f2e1a;margin-bottom:10px}
 .gallery img{width:100%;border-radius:14px;margin:10px 0;box-shadow:0 4px 18px rgba(0,0,0,0.08)}
 footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;margin-top:50px;border-top:4px solid #0f2e1a}
@@ -98,15 +94,13 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
 .admin-table th,.admin-table td{border:1px solid #e5e7eb;padding:10px;text-align:left}
 .admin-table th{background:#f8fafc;color:#003366;font-weight:600}
 #firebaseAuthModal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10, 25, 41, 0.75);backdrop-filter:blur(6px);display:none;justify-content:center;align-items:center;z-index:20000;padding:16px}
-.auth-box{background:white;padding:28px 24px;border-radius:20px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,0.3);animation:modalPop.35s cubic-bezier(0.34, 1.56, 0.64, 1)}
-@keyframes modalPop{from{opacity:0;transform:scale(0.9) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.auth-box{background:white;padding:28px 24px;border-radius:20px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
 .auth-box h2{font-size:22px;text-align:center;color:#003366;margin-bottom:6px}
 .auth-subtitle{font-size:13px;color:#6b7280;text-align:center;margin-bottom:20px;line-height:1.5;background:#f8fafc;padding:10px;border-radius:10px}
 .auth-field{margin-bottom:16px}
 .auth-field label{display:block;font-size:13px;font-weight:600;color:#1f2937;margin-bottom:6px}
-.auth-field input{width:100%;padding:13px 14px;border-radius:12px;border:1.5px solid #e5e7eb;font-size:14px;background:#f9fafb;transition:.2s}
-.auth-field input:focus{background:white;border-color:#004080;box-shadow:0 0 0 4px rgba(0,64,128,0.1);outline:none}
-.auth-btn{width:100%;background:linear-gradient(135deg,#FF7A00,#ff9a2e);color:white;border:none;padding:14px;border-radius:12px;font-weight:700;font-size:15px;cursor:pointer;margin-top:8px;box-shadow:0 6px 16px rgba(255,122,0,0.3);transition:.2s}
+.auth-field input{width:100%;padding:13px 14px;border-radius:12px;border:1.5px solid #e5e7eb;font-size:14px;background:#f9fafb}
+.auth-btn{width:100%;background:linear-gradient(135deg,#FF7A00,#ff9a2e);color:white;border:none;padding:14px;border-radius:12px;font-weight:700;font-size:15px;cursor:pointer;margin-top:8px}
 .auth-links{text-align:center;margin-top:18px}
 .auth-links a{color:#004080;font-weight:600;text-decoration:none;font-size:14px}
 .auth-close{text-align:center;margin-top:12px}
@@ -124,10 +118,11 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
 
 <div class="overlay" id="overlay" onclick="closeNav()"></div>
 
+<!-- DRAWER EXACTLY LIKE SCREENSHOT -->
 <div class="side-nav" id="sideNav">
   <div class="nav-header">
     <span>📚 Navigation</span>
-    <button class="close-btn" onclick="closeNav()">❌</button>
+    <button class="close-btn" onclick="closeNav()">✕</button>
   </div>
   <ul class="nav-links">
     <li><a href="index.html" class="active">🏠 Home</a></li>
@@ -141,8 +136,8 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
   <div class="nav-footer">
     <div id="userDisplayBox" style="display:none;"><div class="user-badge" id="userDisplay"></div></div>
     <a href="#" id="loginBtn" class="btn-login" onclick="closeNav(); openFirebaseAuth(); return false;">Login / Sign Up</a>
-    <button id="logoutBtn" class="btn-logout" style="display:none;" onclick="firebaseLogout()">Logout</button>
-    <button id="adminLogoutBtn" class="btn-logout" style="display:none; background:#34495e;" onclick="adminLogout()">Admin Logout</button>
+    <button id="logoutBtn" class="btn-logout-full" style="display:none;" onclick="firebaseLogout()">Logout</button>
+    <button id="adminLogoutBtn" class="btn-logout-full" style="display:none; background:#34495e; margin-top:10px;" onclick="adminLogout()">Admin Logout</button>
   </div>
 </div>
 
@@ -175,7 +170,6 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
       </div>
       <div id="pendingApprovals" class="admin-content active">
         <h3>⏳ Accounts Waiting For Payment Verification</h3>
-        <p style="font-size:13px;color:#6b7280">Approve after confirming payment from Admin.</p>
         <button class="btn btn-blue" onclick="loadPending()">🔄 Refresh</button>
         <table class="admin-table" id="pendingTable"><tr><th>Name</th><th>Email</th><th>Date</th><th>Action</th></tr></table>
       </div>
@@ -198,10 +192,10 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
     </div>
     <h3>🔒 Protected Features</h3>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
-      <div class="executive"><h3>Downloads</h3><p style="font-size:13px;color:#6b7280">Study Materials</p><button class="btn btn-blue" onclick="requireAuth('downloads.html')">Open</button></div>
-      <div class="executive"><h3>Find Classmate</h3><p style="font-size:13px;color:#6b7280">Reconnect</p><button class="btn btn-blue" onclick="requireAuth('find-classmates.html')">Open</button></div>
-      <div class="executive"><h3>Vacancies</h3><p style="font-size:13px;color:#6b7280">Jobs & News</p><button class="btn btn-blue" onclick="requireAuth('vacancies.html')">Open</button></div>
-      <div class="executive" style="border:1.5px solid #0f2e1a"><h3>Education Corner</h3><p style="font-size:13px;color:#6b7280">Notes & Past Papers</p><button class="btn btn-green" onclick="requireAuth('education-corner.html')">Open</button></div>
+      <div class="executive"><h3>Downloads</h3><button class="btn btn-blue" onclick="requireAuth('downloads.html')">Open</button></div>
+      <div class="executive"><h3>Find Classmate</h3><button class="btn btn-blue" onclick="requireAuth('find-classmates.html')">Open</button></div>
+      <div class="executive"><h3>Vacancies</h3><button class="btn btn-blue" onclick="requireAuth('vacancies.html')">Open</button></div>
+      <div class="executive" style="border:1.5px solid #0f2e1a"><h3>Education Corner</h3><button class="btn btn-green" onclick="requireAuth('education-corner.html')">Open</button></div>
     </div>
     <h3>Our School</h3><div class="gallery"><img src="Chitekesa photo.jpg" alt="Chitekesa School Photo"></div>
     <h2>Meet Your Alumni Executive</h2>
@@ -214,7 +208,7 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
 <div id="firebaseAuthModal">
   <div class="auth-box">
     <h2 id="authTitle">Create Account</h2>
-    <div class="auth-subtitle">🔒 Secure login required for Downloads, Classmates, Vacancies, Education Corner & Registration</div>
+    <div class="auth-subtitle">🔒 Secure login required</div>
     <div class="auth-field" id="nameField"><label>Full Name</label><input type="text" id="fbName" placeholder="e.g. Chitekesa Alumni"></div>
     <div class="auth-field"><label>Email Address *</label><input type="email" id="fbEmail" placeholder="you@gmail.com"></div>
     <div class="auth-field"><label>Password *</label><input type="password" id="fbPassword" placeholder="Minimum 6 characters"></div>
@@ -242,10 +236,8 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
   const auth = firebase.auth();
   const db = firebase.firestore();
   let fbIsLogin=false; let pendingRedirect=null;
-
   function openNav(){ document.getElementById('sideNav').classList.add('open'); document.getElementById('overlay').classList.add('show'); }
   function closeNav(){ document.getElementById('sideNav').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); }
-
   function openFirebaseAuth(redirectUrl=null){pendingRedirect=redirectUrl; document.getElementById('firebaseAuthModal').style.display='flex'; closeNav();}
   function closeFirebaseAuth(){document.getElementById('firebaseAuthModal').style.display='none';}
   function toggleFbMode(){
@@ -298,7 +290,6 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
       const snap = await db.collection("users").where("uid","==",user.uid).limit(1).get();
       if(!snap.empty && snap.docs[0].data().approved===false){
         document.getElementById('pendingBox').style.display='block';
-        document.getElementById('notLoggedBox').style.display='none';
         alert("⏳ Your account is pending approval. Please send payment proof to Admin"); return;
       }
     }catch(e){}
@@ -311,8 +302,7 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
       const snap = await db.collection("users").where("uid","==",user.uid).limit(1).get();
       if(!snap.empty && snap.docs[0].data().approved===false){
         document.getElementById('pendingBox').style.display='block';
-        document.getElementById('notLoggedBox').style.display='none';
-        alert("⏳ Your account is pending approval. Please send payment proof to Admin before you can register."); return;
+        alert("⏳ Your account is pending approval."); return;
       }
     }catch(e){}
     toggleForm(formId);
@@ -339,13 +329,13 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
     e.preventDefault(); const form=e.target; document.getElementById("donationMsg").innerHTML="Submitting...";
     const data={type:"donation",name:form.fullName.value,gender:form.gender.value,donation:form.donationType.value,period:form.donationPeriod.value,phone:form.phone.value,email:form.email.value,location:form.location.value};
     fetch(WEB_APP_URL,{method:"POST",mode:"no-cors",body:JSON.stringify(data)})
- .then(()=>{document.getElementById("donationMsg").innerHTML="✅ Thank you!";form.reset();toggleForm('donateForm');loadDonations()})
- .catch(()=>{document.getElementById("donationMsg").innerHTML="❌ Error."})
+.then(()=>{document.getElementById("donationMsg").innerHTML="✅ Thank you!";form.reset();toggleForm('donateForm');loadDonations()})
+.catch(()=>{document.getElementById("donationMsg").innerHTML="❌ Error."})
   });
   document.getElementById("alumniForm").addEventListener("submit", async function(e){
     e.preventDefault(); const user=firebase.auth().currentUser; if(!user){openFirebaseAuth();return}
-    try{ const snap = await db.collection("users").where("uid","==",user.uid).where("approved","==",false).get(); if(!snap.empty){ document.getElementById("alumniMsg").innerHTML="⏳ Your account is pending approval. Please send payment proof to Admin before registering."; return; } }catch(e){}
-    const form=e.target; const msgEl=document.getElementById("alumniMsg"); msgEl.innerHTML="Submitting... Please wait...";
+    try{ const snap = await db.collection("users").where("uid","==",user.uid).where("approved","==",false).get(); if(!snap.empty){ document.getElementById("alumniMsg").innerHTML="⏳ Pending approval."; return; } }catch(e){}
+    const form=e.target; const msgEl=document.getElementById("alumniMsg"); msgEl.innerHTML="Submitting...";
     const data={type:"alumni",name:form.fullName.value,gender:form.gender.value,year:form.gradYear.value,class:form.class.value,phone:form.phone.value,whatsapp:form.whatsapp.value,profession:form.profession.value,interest:form.interest.value,message:form.message.value,accountEmail:user.email};
     try{
       fetch(WEB_APP_URL,{method:"POST",mode:"no-cors",body:JSON.stringify(data)});
@@ -356,7 +346,7 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
         message: data.message, email: user.email, uid: user.uid, approved: true,
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       });
-      msgEl.innerHTML="✅ Welcome! You now appear in Find Classmate 👥"; form.reset();
+      msgEl.innerHTML="✅ Welcome!"; form.reset();
       setTimeout(()=>{ window.location.href="find-classmates.html"; },1500);
     }catch(err){ msgEl.innerHTML="❌ Error: "+err.message; }
   });
@@ -382,4 +372,4 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
   window.onload=function(){if(localStorage.getItem('chitekesaAdmin')==='loggedIn'){document.getElementById('adminDashboard').style.display='block';document.getElementById('adminLogoutBtn').style.display='block';loadDonations();loadAlumni();loadPending();}}
 </script>
 </body>
-                                                                                                                                                                                                                                                                                           </html>
+        </html>
