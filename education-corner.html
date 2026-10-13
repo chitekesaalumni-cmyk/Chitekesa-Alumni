@@ -12,19 +12,20 @@ body{font-family:Poppins,sans-serif;background:var(--bg);color:#1f2937}
 .header{background:linear-gradient(135deg,#0a3d6b,#1a6fb5);color:white;padding:22px 16px 30px;text-align:center}
 .header-top{display:flex;justify-content:flex-end;gap:8px;padding:0 8px 12px}
 .header-top button{padding:8px 16px;border-radius:20px;border:1.5px solid rgba(255,255,255,.6);background:rgba(255,255,255,.15);color:white;font-weight:600;cursor:pointer}
-.header-top .admin{background:#0b9a5a;border-color:#0b9a5a}
+.header-top.admin{background:#0b9a5a;border-color:#0b9a5a}
 .search-row{display:flex;gap:10px;justify-content:center;margin-top:18px;flex-wrap:wrap}
 .search-row input{width:65%;max-width:520px;padding:14px 18px;border-radius:28px;border:none;font-size:15px;outline:none}
-.search-row .share{background:white;color:var(--blue);padding:12px 22px;border-radius:28px;border:none;font-weight:700;cursor:pointer}
-.filters{display:flex;gap:10px;overflow-x:auto;padding:14px 12px;background:white;border-bottom:1px solid var(--border);white-space:nowrap}
-.filters button{padding:8px 18px;border-radius:20px;border:1.5px solid var(--blue);background:white;color:var(--blue);font-weight:600;cursor:pointer}
+.search-row.share{background:white;color:var(--blue);padding:12px 22px;border-radius:28px;border:none;font-weight:700;cursor:pointer}
+.filters{display:flex;gap:10px;overflow-x:auto;padding:14px 12px;background:white;border-bottom:1px solid var(--border);white-space:nowrap;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.filters button{padding:8px 18px;border-radius:20px;border:1.5px solid var(--blue);background:white;color:var(--blue);font-weight:600;cursor:pointer;flex-shrink:0}
 .filters button.active{background:var(--blue);color:white}
 .container{max-width:1000px;margin:0 auto;padding:16px}
 .card{background:var(--card);border-radius:14px;padding:16px;margin:12px 0;box-shadow:0 4px 14px rgba(0,0,0,.06);border:1px solid var(--border)}
 .card h3{color:var(--blue);font-size:16px}
 .card p{font-size:13px;color:var(--muted);margin:6px 0}
-.btn{display:inline-flex;padding:9px 16px;border-radius:10px;text-decoration:none;font-weight:600;font-size:13px;margin:5px 4px;color:white}
-.btn-blue{background:var(--blue2)} .btn-green{background:#0f6a3a} .btn-orange{background:#ff7a00}
+.btn{display:inline-flex;padding:9px 16px;border-radius:10px;text-decoration:none;font-weight:600;font-size:13px;margin:5px 4px;color:white;align-items:center}
+.btn-blue{background:var(--blue2)}.btn-green{background:#0f6a3a}.btn-orange{background:#ff7a00}
 .trusted-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 @media(max-width:600px){.trusted-grid{grid-template-columns:1fr}}
 </style>
@@ -32,13 +33,13 @@ body{font-family:Poppins,sans-serif;background:var(--bg);color:#1f2937}
 <body>
 <div class="header">
   <div class="header-top">
-    <button onclick="location.href='index.html'">Logout</button>
+    <button onclick="location.href='index.html'">Home</button>
     <button class="admin">Admin Mode</button>
   </div>
   <h1 style="font-size:28px">📚 Education Corner</h1>
   <p style="opacity:.9;margin-top:6px">Past Papers, Books, Notes & Career Resources by Alumni</p>
   <div class="search-row">
-    <input id="searchInput" placeholder="Search e.g. Biology 2023 .." onkeyup="doSearch()">
+    <input id="searchInput" placeholder="Search e.g. Biology 2023.." onkeyup="doSearch()">
     <button class="share" onclick="openShare()">+ Share</button>
   </div>
 </div>
@@ -73,11 +74,26 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 let allNotes=[];
 
+// --- NEW: Auto convert Drive link to real direct download ---
+function toDirectDownload(link){
+  try{
+    if(!link) return link;
+    if(link.includes('uc?export=download')) return link;
+    let id=null;
+    if(link.includes('/file/d/')){ id=link.split('/file/d/')[1].split('/')[0]; }
+    else if(link.includes('open?id=')){ id=link.split('open?id=')[1].split('&')[0]; }
+    else if(link.includes('id=')){ id=link.split('id=')[1].split('&')[0]; }
+    else if(link.includes('/d/')){ id=link.split('/d/')[1].split('/')[0].split('?')[0]; }
+    if(id && id.length>15){ return 'https://drive.google.com/uc?export=download&id='+id; }
+    return link;
+  }catch(e){ return link; }
+}
+
 function loadNotes(){
   db.collection("education_resources").orderBy("createdAt","desc").onSnapshot(snap=>{
     allNotes=[];
     snap.forEach(doc=>{
-      allNotes.push({id:doc.id, ...doc.data()});
+      allNotes.push({id:doc.id,...doc.data()});
     });
     render(allNotes);
   });
@@ -91,15 +107,24 @@ function render(list){
       <h3>${n.title||'Untitled'}</h3>
       <p>${n.subject||''} • ${n.type||''} • ${n.year||''}</p>
       <p>${n.desc||''}</p>
-      <a href="${n.link}" target="_blank" class="btn btn-blue">📥 View / Download</a>
+      <a href="${toDirectDownload(n.link)}" target="_blank" class="btn btn-blue">📥 Download Real PDF</a>
+      <a href="${n.link}" target="_blank" style="font-size:11px;color:#888;margin-left:10px;text-decoration:none">👁 Preview</a>
     </div>
   `).join("");
 }
 
 function filterBy(cat){
   document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
-  document.getElementById("f-"+cat.replace(" ","").replace("pastpaper","past")).classList.add("active");
-  
+  let btnId="f-all";
+  if(cat=="past paper") btnId="f-past";
+  else if(cat=="university") btnId="f-university";
+  else if(cat=="scholarships") btnId="f-scholarships";
+  else if(cat=="notes") btnId="f-notes";
+  else if(cat=="syllabus") btnId="f-syllabus";
+  else if(cat=="books") btnId="f-books";
+  const activeBtn=document.getElementById(btnId);
+  if(activeBtn) activeBtn.classList.add("active");
+
   if(cat==='university'){
     document.getElementById("notesList").innerHTML="";
     document.getElementById("trustedBox").style.display="block";
@@ -137,7 +162,7 @@ function filterBy(cat){
       </div>`;
     return;
   }
-  
+
   document.getElementById("trustedBox").style.display="none";
   if(cat==='all'){render(allNotes);return;}
   const filtered=allNotes.filter(n=> (n.type||"").toLowerCase().includes(cat) || (n.subject||"").toLowerCase().includes(cat) );
@@ -160,7 +185,7 @@ function openShare(){
   if(title && link){
     db.collection("education_resources").add({
       title:title, subject:subject||"", type:type||"notes", link:link, desc:"Shared by Alumni", year:new Date().getFullYear().toString(), uploadedBy:"alumni", createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    }).then(()=>alert("✅ Shared successfully!"));
+    }).then(()=>alert("✅ Shared successfully! Will auto-download as real PDF"));
   }
 }
 
