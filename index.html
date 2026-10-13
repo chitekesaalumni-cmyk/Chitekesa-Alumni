@@ -15,16 +15,55 @@
     .logo img{width:100%;height:100%;object-fit:cover}
     .header h1{margin:0;font-size:22px;font-weight:700;letter-spacing:0.5px}
     .header h4{font-style:italic;font-weight:400;opacity:0.9;margin-top:4px;font-size:14px}
-    .navbar{background:var(--blue);padding:0 12px;position:sticky;top:0;z-index:999;box-shadow:0 2px 10px rgba(0,0,0,0.2)}
-    .navbar-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 0}
+    
+    /* NAVBAR - PROFESSIONAL LEFT DRAWER */
+    .navbar{background:var(--blue);padding:10px 12px;position:sticky;top:0;z-index:999;box-shadow:0 2px 10px rgba(0,0,0,0.2)}
+    .navbar-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0}
     .menu-toggle{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:white;font-size:14px;padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:600}
-    .menu{list-style:none;display:none;margin-top:10px;padding-bottom:10px}
-    .menu.active{display:block}
-    .menu li{margin:6px 0}
-    .menu a{color:rgba(255,255,255,0.95);text-decoration:none;font-weight:500;font-size:15px;padding:10px 14px;display:block;border-radius:8px;cursor:pointer;transition:all .2s}
-    .menu a:hover{background:rgba(255,255,255,0.12)}
-    .logout-btn{background:var(--orange);border:none;color:white;padding:9px 16px;border-radius:8px;font-weight:700;cursor:pointer;transition:0.2s}
+    
+    /* Overlay - shows home area on right */
+    #navOverlay{
+      position:fixed; top:0; left:0; width:100%; height:100%;
+      background:rgba(0,0,0,0.45); backdrop-filter:blur(2px);
+      z-index:998; display:none;
+    }
+    #navOverlay.show{ display:block; }
+
+    /* Side Menu Drawer - LEFT ONLY */
+    .menu{
+      list-style:none;
+      position:fixed; top:0; left:-100%; width:285px; height:100vh;
+      background: linear-gradient(180deg, #002244, #003366);
+      z-index:999; padding:22px 18px;
+      display:flex; flex-direction:column; gap:2px;
+      transition: left 0.35s cubic-bezier(0.4,0,0.2,1);
+      box-shadow:4px 0 25px rgba(0,0,0,0.3);
+      overflow-y:auto; margin-top:0;
+    }
+    .menu.active{ left:0; }
+    .menu-header{
+      display:flex; justify-content:space-between; align-items:center;
+      padding-bottom:18px; border-bottom:1px solid rgba(255,255,255,0.12);
+      margin-bottom:14px;
+    }
+    .menu-header span{ color:white; font-weight:700; font-size:16px; }
+    .close-menu-btn{
+      background:rgba(255,255,255,0.12); border:none; color:white;
+      width:36px; height:36px; border-radius:50%; cursor:pointer;
+      font-size:16px; display:flex; align-items:center; justify-content:center;
+    }
+    .close-menu-btn:hover{ background:rgba(255,255,255,0.22); }
+    .menu li{margin:3px 0}
+    .menu a{
+      color:rgba(255,255,255,0.88); text-decoration:none; font-weight:500; font-size:14.5px;
+      padding:11px 14px; display:flex; align-items:center; gap:10px;
+      border-radius:10px; cursor:pointer; transition:all .2s; text-align:left; justify-content:flex-start;
+    }
+    .menu a:hover{background:rgba(255,255,255,0.10); color:white; transform:translateX(4px)}
+    .logout-btn{background:var(--orange);border:none;color:white;padding:9px 16px;border-radius:8px;font-weight:700;cursor:pointer;transition:0.2s; width:100%; margin-top:6px;}
     .logout-btn:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(255,122,0,0.3)}
+    .user-badge{color:#fde68a;font-weight:700; font-size:13px; padding:8px 14px; display:block;}
+
     main{padding:35px 0}
     .hero-card{background:var(--card);border-radius:16px;padding:24px;box-shadow:0 6px 24px rgba(0,0,0,0.06);border:1px solid var(--border);margin-bottom:24px}
     h2{color:var(--blue);font-size:22px;margin-bottom:8px;font-weight:700}
@@ -73,8 +112,6 @@
     .auth-links a:hover{text-decoration:underline}
     .auth-close{text-align:center;margin-top:12px}
     .auth-close a{color:var(--muted);font-size:13px;text-decoration:none}
-    .user-badge{color:#fde68a;font-weight:700;margin-left:10px}
-    @media(min-width:768px){.menu-toggle{display:none}.menu{display:flex !important;gap:4px;align-items:center;margin-top:0;padding-bottom:0}.menu li{margin:0}.menu a{padding:8px 12px;font-size:14px}}
   </style>
 </head>
 <body>
@@ -86,21 +123,34 @@
   <nav class="navbar">
     <div class="navbar-inner">
       <button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
-      <ul id="menu" class="menu">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="Chitekesa about.html">About</a></li>
-        <li><a href="Chitekesa contact.html">Contact</a></li>
-        <li><a onclick="requireAuth('downloads.html')">Downloads</a></li>
-        <li><a onclick="requireAuth('find-classmates.html')">Classmates</a></li>
-        <li><a onclick="requireAuth('vacancies.html')">Vacancies</a></li>
-        <li><a onclick="requireAuth('education-corner.html')">Education</a></li>
-        <li id="userDisplayLi" style="display:none;"><span class="user-badge" id="userDisplay"></span></li>
-        <li id="logoutLi" style="display:none;"><button class="logout-btn" onclick="firebaseLogout()">Logout</button></li>
-        <li id="loginLi"><button class="logout-btn" style="background:#128C7E" onclick="openFirebaseAuth()">Login / Sign Up</button></li>
-        <li id="adminLogoutLi" style="display:none;"><button class="logout-btn" onclick="adminLogout()">Admin Logout</button></li>
-      </ul>
+      <div style="color:rgba(255,255,255,0.7); font-size:12px;">Welcome Alumni</div>
     </div>
   </nav>
+
+  <!-- Overlay - Right side home area -->
+  <div id="navOverlay" onclick="toggleMenu()"></div>
+
+  <!-- LEFT DRAWER MENU -->
+  <ul id="menu" class="menu">
+    <li class="menu-header">
+      <span>📚 Navigation</span>
+      <button class="close-menu-btn" onclick="toggleMenu()">❌</button>
+    </li>
+    <li><a href="index.html">🏠 Home</a></li>
+    <li><a href="Chitekesa about.html">👥 About</a></li>
+    <li><a href="Chitekesa contact.html">📞 Contact</a></li>
+    <li><a onclick="requireAuth('downloads.html')">📥 Downloads</a></li>
+    <li><a onclick="requireAuth('find-classmates.html')">🎓 Classmates</a></li>
+    <li><a onclick="requireAuth('vacancies.html')">💼 Vacancies</a></li>
+    <li><a onclick="requireAuth('education-corner.html')">📚 Education</a></li>
+    <li style="margin-top:18px; border-top:1px solid rgba(255,255,255,0.12); padding-top:14px;">
+      <div id="userDisplayLi" style="display:none;"><span class="user-badge" id="userDisplay"></span></div>
+    </li>
+    <li id="logoutLi" style="display:none;"><button class="logout-btn" style="background:#128C7E" onclick="firebaseLogout()">Logout</button></li>
+    <li id="loginLi"><button class="logout-btn" style="background:#128C7E" onclick="openFirebaseAuth(); toggleMenu();">Login / Sign Up</button></li>
+    <li id="adminLogoutLi" style="display:none;"><button class="logout-btn" onclick="adminLogout()">Admin Logout</button></li>
+  </ul>
+
   <main class="container">
     <div class="hero-card">
       <h2>Welcome to Chitekesa Alumni Platform 🎓</h2>
@@ -219,15 +269,18 @@
     if(user){
       const box=document.getElementById('notLoggedBox'); if(box) box.style.display='none';
       document.getElementById('userDisplay').innerText="Hi, "+(user.displayName||user.email);
-      document.getElementById('userDisplayLi').style.display='inline-block';
-      document.getElementById('logoutLi').style.display='inline-block';
+      document.getElementById('userDisplayLi').style.display='block';
+      document.getElementById('logoutLi').style.display='block';
       document.getElementById('loginLi').style.display='none';
     }
   });
 </script>
 <script>
   const WEB_APP_URL="https://script.google.com/macros/s/AKfycbxlg51F7IsuXJUr-kV9DFkhjpCcEHJH0VX6UuBZNaM3UXibPNnLemyNSMoSgwgpcMn5/exec";
-  function toggleMenu(){document.getElementById("menu").classList.toggle("active")}
+  function toggleMenu(){
+    document.getElementById("menu").classList.toggle("active");
+    document.getElementById("navOverlay").classList.toggle("show");
+  }
   function toggleForm(id){document.getElementById(id).classList.toggle("active")}
   document.getElementById("donationForm").addEventListener("submit",function(e){
     e.preventDefault();
@@ -275,10 +328,10 @@
   async function loadDonations(){const table=document.getElementById('donationTable');try{const res=await fetch(WEB_APP_URL+"?type=donation");const data=await res.json();table.innerHTML='<tr><th>Name</th><th>Donation</th><th>Period</th><th>Phone</th><th>Location</th></tr>';data.donations.forEach(d=>{table.innerHTML+=`<tr><td>${d.name||''}</td><td>${d.donation||''}</td><td>${d.period||''}</td><td>${d.phone||''}</td><td>${d.location||''}</td></tr>`})}catch(e){}}
   async function loadAlumni(){const table=document.getElementById('alumniTable');try{const res=await fetch(WEB_APP_URL+"?type=alumni");const data=await res.json();table.innerHTML='<tr><th>Name</th><th>Grad Year</th><th>Profession</th><th>Phone</th><th>Interest</th></tr>';data.alumni.forEach(a=>{table.innerHTML+=`<tr><td>${a.name||''}</td><td>${a.year||''}</td><td>${a.profession||''}</td><td>${a.phone||''}</td><td>${a.interest||''}</td></tr>`})}catch(e){}}
   function exportCSV(type){let table,filename;if(type==='donations'){table=document.getElementById('donationTable');filename='donations.csv'}else{table=document.getElementById('alumniTable');filename='alumni.csv'}let csv=[];for(let row of table.rows){csv.push([...row.cells].map(cell=>cell.innerText).join(','))}const blob=new Blob([csv.join('\n')],{type:'text/csv'});const url=window.URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click()}
-  function adminLogin(e){e.preventDefault();if(document.getElementById('adminUser').value==='chitekesa2026'&&document.getElementById('adminPass').value==='Chiteke@2026!'){localStorage.setItem('chitekesaAdmin','loggedIn');document.getElementById('adminDashboard').style.display='block';document.getElementById('adminLoginForm').classList.remove('active');document.getElementById('adminLogoutLi').style.display='inline-block';loadDonations();loadAlumni();alert('Login Successful!')}else{alert('Invalid Username or Password')}}
+  function adminLogin(e){e.preventDefault();if(document.getElementById('adminUser').value==='chitekesa2026'&&document.getElementById('adminPass').value==='Chiteke@2026!'){localStorage.setItem('chitekesaAdmin','loggedIn');document.getElementById('adminDashboard').style.display='block';document.getElementById('adminLoginForm').classList.remove('active');document.getElementById('adminLogoutLi').style.display='block';loadDonations();loadAlumni();alert('Login Successful!')}else{alert('Invalid Username or Password')}}
   function adminLogout(){localStorage.removeItem('chitekesaAdmin');document.getElementById('adminDashboard').style.display='none';document.getElementById('adminLogoutLi').style.display='none'}
   function showAdminTab(tabId,event){document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.admin-content').forEach(c=>c.classList.remove('active'));event.target.classList.add('active');document.getElementById(tabId).classList.add('active')}
-  window.onload=function(){if(localStorage.getItem('chitekesaAdmin')==='loggedIn'){document.getElementById('adminDashboard').style.display='block';document.getElementById('adminLogoutLi').style.display='inline-block';loadDonations();loadAlumni()}}
+  window.onload=function(){if(localStorage.getItem('chitekesaAdmin')==='loggedIn'){document.getElementById('adminDashboard').style.display='block';document.getElementById('adminLogoutLi').style.display='block';loadDonations();loadAlumni()}}
 </script>
 </body>
-        </html>
+  </html>
