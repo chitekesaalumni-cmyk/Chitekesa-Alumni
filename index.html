@@ -7,24 +7,30 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Poppins,sans-serif; background:#f5f7fb; color:#1f2937; line-height:1.6;}
+body{font-family:Poppins,sans-serif; background:#f5f7fb; color:#1f2937; line-height:1.7;}
+/* GREEN HEADER - LIKE SCREENSHOT 1 */
 .top-header{
-  background: linear-gradient(135deg, #0a2f1a, #144d28);
-  color:white; text-align:center; padding:25px 15px 20px;
-  position:relative;
+  background: #0e2f1e;
+  background: linear-gradient(180deg, #123d21, #0a2f1a);
+  color:white; text-align:center; padding:28px 15px 22px;
 }
-.top-header img{width:85px; height:85px; border-radius:50%; background:white; padding:4px;}
-.top-header h1{font-size:22px; margin-top:12px; font-weight:700; letter-spacing:0.5px;}
-.top-header p{font-style:italic; opacity:.85; font-size:14px; margin-top:6px;}
+.top-header img{width:95px; height:95px; border-radius:50%; background:white; padding:5px; border:3px solid rgba(255,255,255,0.2);}
+.top-header h1{font-size:20px; margin-top:14px; font-weight:700; letter-spacing:0.3px; line-height:1.3;}
+.top-header p{font-style:italic; opacity:.85; font-size:14px; margin-top:8px;}
+/* SECOND BAR - MENU + ABOUT - LIKE SCREENSHOT 1 */
+.sub-nav{
+  background:#eaf0f8; padding:10px 16px; display:flex; justify-content:space-between; align-items:center;
+  border-bottom:1px solid #dbe4f0;
+}
 .menu-btn{
-  position:absolute; left:15px; top:50%; transform:translateY(-50%);
-  background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3);
-  color:white; padding:8px 14px; border-radius:20px; cursor:pointer;
-  backdrop-filter:blur(10px); font-weight:600; font-size:14px;
+  background:#2f4056; color:white; padding:8px 18px; border-radius:8px; border:none;
+  cursor:pointer; font-weight:600; font-size:14px; display:flex; align-items:center; gap:6px;
 }
-/* DRAWER - EXACTLY LIKE YOUR SCREENSHOT */
+.menu-btn:hover{ background:#1f2f43; }
+.sub-nav a{ color:#1e3a5f; text-decoration:none; font-weight:500; font-size:14px; }
+/* DRAWER - LIKE SCREENSHOT 2 */
 .side-nav{
-  position:fixed; top:0; left:-100%; width:75%; max-width:320px; height:100%;
+  position:fixed; top:0; left:-100%; width:72%; max-width:300px; height:100%;
   background: linear-gradient(180deg, #0f365f, #12385f);
   z-index:9999; transition:0.35s ease;
   padding:18px; display:flex; flex-direction:column;
@@ -39,52 +45,48 @@ body{font-family:Poppins,sans-serif; background:#f5f7fb; color:#1f2937; line-hei
 .close-btn{
   background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:#ff5a5a;
   width:38px; height:38px; border-radius:50%; cursor:pointer;
-  font-size:18px; display:flex; align-items:center; justify-content:center; font-weight:700;
+  font-size:20px; display:flex; align-items:center; justify-content:center; font-weight:700;
 }
 .nav-links{ list-style:none; margin-top:10px; flex:1; }
-.nav-links li{ margin:6px 0; }
+.nav-links li{ margin:8px 0; }
 .nav-links a{
   display:flex; align-items:center; gap:14px;
   color:rgba(255,255,255,0.85); text-decoration:none;
-  padding:14px 12px; border-radius:10px; font-size:15px; font-weight:500;
-  transition:0.2s; text-align:left; cursor:pointer;
+  padding:12px 10px; border-radius:10px; font-size:15px; font-weight:500;
+  transition:0.2s; cursor:pointer;
 }
 .nav-links a:hover{ background:rgba(255,255,255,0.1); color:white; }
-.nav-links a.active{ background:rgba(255,255,255,0.14); color:white; }
 .nav-footer{ margin-top:auto; padding-top:20px; }
 .btn-logout-full{
   background:#FF7A00; color:white; width:100%; padding:13px; border-radius:12px; border:none;
   font-weight:700; cursor:pointer; font-size:15px; text-align:center;
-  box-shadow:0 4px 12px rgba(255,122,0,0.3);
 }
 .btn-login{ background:#16a085; color:white; padding:12px; border-radius:10px; border:none; font-weight:700; cursor:pointer; text-align:center; text-decoration:none; display:block; margin-bottom:10px;}
 .user-badge{color:#fde68a;font-weight:700;font-size:13px;text-align:center;padding:8px;background:rgba(255,255,255,0.1);border-radius:8px;margin-bottom:10px;}
-.overlay{
-  position:fixed; top:0; left:0; width:100%; height:100%;
-  background:rgba(0,0,0,0.45); backdrop-filter:blur(2px);
-  z-index:9998; display:none;
-}
+.overlay{ position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.45); backdrop-filter:blur(2px); z-index:9998; display:none; }
 .overlay.show{ display:block; }
-.container{padding:0 18px;max-width:1000px;margin:0 auto}
-main{padding:35px 0}
-.hero-card{background:#ffffff;border-radius:16px;padding:24px;box-shadow:0 6px 24px rgba(0,0,0,0.06);border:1px solid #e5e7eb;margin-bottom:24px}
-h2{color:#003366;font-size:22px;margin-bottom:8px;font-weight:700}
-h3{color:#0f2e1a;font-size:18px;margin:24px 0 12px;font-weight:600}
-h5{font-weight:400;color:#6b7280;margin-bottom:20px;font-size:15px}
-.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 22px;border-radius:10px;text-decoration:none;font-weight:600;font-size:15px;border:none;cursor:pointer;transition:all 0.2s ease;margin:6px 5px;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+.container{padding:0 18px;max-width:900px;margin:0 auto}
+main{padding:0 0 40px 0; background:white; margin:0; min-height:80vh;}
+.content-pad{padding:22px 18px;}
+.who-title{color:#003366; font-size:22px; font-weight:700; margin-bottom:14px;}
+.who-subtitle{color:#111827; font-weight:700; font-size:16px; line-height:1.4; margin-bottom:10px;}
+.who-text{color:#4b5563; font-size:14.5px; line-height:1.8;}
+.hero-card{background:#ffffff;border-radius:16px;padding:22px;box-shadow:0 6px 24px rgba(0,0,0,0.06);border:1px solid #e5e7eb;margin:20px 18px;}
+h3{color:#0f2e1a;font-size:18px;margin:20px 0 12px;font-weight:600}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 22px;border-radius:10px;text-decoration:none;font-weight:600;font-size:15px;border:none;cursor:pointer;margin:6px 5px;}
 .btn-primary{background:linear-gradient(135deg,#FF7A00,#ff9a2e);color:white}
 .btn-whatsapp{background:#128C7E;color:white}
 .btn-green{background:#123d21;color:white}
 .btn-blue{background:#004080;color:white}
-.collapsible{display:none;margin-top:16px;padding:22px;background:#ffffff;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,0.07);border:1px solid #e5e7eb}
+.collapsible{display:none;margin-top:16px;padding:20px;background:#ffffff;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,0.07);border:1px solid #e5e7eb}
 .collapsible.active{display:block}
-form label{display:block;font-weight:600;margin-top:14px;margin-bottom:6px;font-size:14px;color:#1f2937}
+form label{display:block;font-weight:600;margin-top:14px;margin-bottom:6px;font-size:14px}
 form input,form select,form textarea{width:100%;padding:12px 14px;border:1px solid #e5e7eb;border-radius:10px;font-family:'Poppins',sans-serif;font-size:14px;background:#fcfcfd}
 form button[type="submit"]{background:#123d21;color:white;width:100%;margin-top:18px;padding:13px}
-.executive{background:#ffffff;padding:18px;border-radius:14px;text-align:center;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,0.06);border:1px solid #e5e7eb}
+.executive{background:#ffffff;padding:18px;border-radius:14px;text-align:center;margin:14px 18px;box-shadow:0 4px 18px rgba(0,0,0,0.06);border:1px solid #e5e7eb}
 .executive img{width:92px;height:92px;border-radius:50%;object-fit:cover;border:3px solid #0f2e1a;margin-bottom:10px}
 .gallery img{width:100%;border-radius:14px;margin:10px 0;box-shadow:0 4px 18px rgba(0,0,0,0.08)}
-footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;margin-top:50px;border-top:4px solid #0f2e1a}
+footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;margin-top:40px;border-top:4px solid #0f2e1a}
 .admin-tabs{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap}
 .admin-tab{background:white;border:1px solid #e5e7eb;color:#1f2937;padding:10px 16px;border-radius:10px;cursor:pointer;font-weight:600;font-size:14px}
 .admin-tab.active{background:#003366;color:white;border-color:#003366}
@@ -110,22 +112,25 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
 <body>
 
 <div class="top-header">
-  <button class="menu-btn" onclick="openNav()">☰ Menu</button>
   <img src="Alumni logo.png" alt="CDSS Logo">
   <h1>CHITEKESA CDSS ALUMNI GROUP</h1>
   <p>Together We Make The Difference</p>
 </div>
 
+<div class="sub-nav">
+  <button class="menu-btn" onclick="openNav()">☰ Menu</button>
+  <a href="Chitekesa about.html">Welcome Alumni</a>
+</div>
+
 <div class="overlay" id="overlay" onclick="closeNav()"></div>
 
-<!-- DRAWER EXACTLY LIKE SCREENSHOT -->
 <div class="side-nav" id="sideNav">
   <div class="nav-header">
     <span>📚 Navigation</span>
     <button class="close-btn" onclick="closeNav()">✕</button>
   </div>
   <ul class="nav-links">
-    <li><a href="index.html" class="active">🏠 Home</a></li>
+    <li><a href="index.html">🏠 Home</a></li>
     <li><a href="Chitekesa about.html">👥 About</a></li>
     <li><a href="Chitekesa contact.html">📞 Contact</a></li>
     <li><a onclick="closeNav(); requireAuth('downloads.html')">📥 Downloads</a></li>
@@ -141,21 +146,51 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
   </div>
 </div>
 
-<main class="container">
-    <div class="hero-card">
-      <h2>Welcome to Chitekesa Alumni Platform 🎓</h2>
-      <h4>Once Chitekesa • Always Chitekesa</h4>
-      <h5>A non-profit association aimed to Reconnect, Give Back and Grow Together.</h5>
-      <div id="notLoggedBox" style="background:linear-gradient(135deg,#fff7ed,#ffedd5);border:1.5px solid #fed7aa;padding:16px;border-radius:12px;margin-top:16px">
-        <h3 style="margin-top:0;color:#c2410c">🔐 Members Only Area</h3>
-        <p style="font-size:14px;color:#7c2d12">Create a free account to access Downloads, Classmates, Vacancies, Education Corner & Registration.</p>
-        <button class="btn btn-primary" onclick="openFirebaseAuth()">Create Free Account</button>
-      </div>
-      <div id="pendingBox" style="display:none;background:linear-gradient(135deg,#fef3c7,#fde68a);border:1.5px solid #fbbf24;padding:16px;border-radius:12px;margin-top:16px">
-        <h3 style="margin-top:0;color:#92400e">⏳ Payment Verification Pending</h3>
-        <p style="font-size:14px;color:#78350f">Your account is created but not yet approved. Please send payment proof to Admin. You will be activated within 24 hours.</p>
-      </div>
+<main>
+  <div class="content-pad">
+    <h2 class="who-title">Who are we</h2>
+    <p class="who-subtitle">Chitekesa Alumni • Once Chitekesa • Always Chitekesa</p>
+    <p class="who-text">
+      Chitekesa Community Day Secondary School Alumni Association is a Malawian-based non-profit organization comprising former students of Chitekesa CDSS who are committed to fostering unity, mutual support, and community development.<br><br>
+      Established out of a shared sense of belonging and the desire to give back, the Association aims to harness the collective strengths and resources of its alumni to promote the growth of Chitekesa CDSS, support current students, and contribute meaningfully to the socioeconomic development of the communities in which its members live and work. Guided by the motto "Together We Make the Difference," the Association strives to maintain lifelong connections among its members while championing educational advancement and social responsibility.
+    </p>
+
+    <div id="notLoggedBox" style="background:linear-gradient(135deg,#fff7ed,#ffedd5);border:1.5px solid #fed7aa;padding:16px;border-radius:12px;margin-top:22px">
+      <h3 style="margin-top:0;color:#c2410c">🔐 Members Only Area</h3>
+      <p style="font-size:14px;color:#7c2d12">Create a free account to access Downloads, Classmates, Vacancies, Education Corner & Registration.</p>
+      <button class="btn btn-primary" onclick="openFirebaseAuth()">Create Free Account</button>
     </div>
+    <div id="pendingBox" style="display:none;background:linear-gradient(135deg,#fef3c7,#fde68a);border:1.5px solid #fbbf24;padding:16px;border-radius:12px;margin-top:16px">
+      <h3 style="margin-top:0;color:#92400e">⏳ Payment Verification Pending</h3>
+      <p style="font-size:14px;color:#78350f">Your account is created but not yet approved. Please send payment proof to Admin.</p>
+    </div>
+  </div>
+
+  <div class="hero-card">
+    <h3 style="margin-top:0">Help Us Grow</h3>
+    <button class="btn btn-primary" onclick="toggleForm('donateForm')">Donate Now</button>
+    <div id="donateForm" class="collapsible" style="box-shadow:none;border:none;padding:10px 0">
+      <form id="donationForm"><label>Full Name *</label><input type="text" name="fullName" required><label>Gender *</label><select name="gender" required><option value="">select</option><option value="Male">Male</option><option value="Female">Female</option></select><label>What would you like to donate? *</label><input type="text" name="donationType" required><label>Donation Period *</label><select name="donationPeriod" required><option value="">Select</option><option value="one-time">Only this time</option><option value="3months">About 3 months</option><option value="6months">About 6 months</option><option value="1year">1 year</option><option value="ongoing">More than a year</option></select><label>Phone Number *</label><input type="tel" name="phone" required><label>Email Address</label><input type="email" name="email"><label>Current Location *</label><input type="text" name="location" required><button type="submit" class="btn btn-primary">Donate Now</button><p id="donationMsg"></p></form>
+    </div>
+  </div>
+
+  <div class="hero-card">
+    <h3 style="margin-top:0">Join Alumni Team</h3>
+    <button class="btn btn-primary" onclick="handleProtectedClick('signupForm')">Sign Up</button>
+    <div id="signupForm" class="collapsible" style="box-shadow:none;border:none;padding:10px 0">
+      <form id="alumniForm"><label>Full Name *</label><input type="text" name="fullName" required><label>Gender *</label><select name="gender" required><option value="">select</option><option value="Male">Male</option><option value="Female">Female</option></select><label>Year Graduated *</label><input type="number" name="gradYear" min="1990" max="2026" required><label>Class/Stream</label><input type="text" name="class"><label>Phone Number *</label><input type="tel" name="phone" required><label>WhatsApp Number</label><input type="tel" name="whatsapp"><label>Profession *</label><input type="text" name="profession" required><label>How would you like to get involved? *</label><select name="interest" required><option value="">Select</option><option value="Membership">Membership</option><option value="Events & Reunions">Events & Reunions</option><option value="Mentorship">Mentorship</option><option value="Donations/Fundraising">Donations & Fundraising</option><option value="Networking">Networking Only</option></select><label>Short Message</label><textarea name="message" rows="3"></textarea><label style="display:flex;gap:8px;align-items:center"><input type="checkbox" name="directoryConsent" required style="width:auto"> I agree to be in the alumni directory *</label><button type="submit" class="btn btn-primary">Join Chitekesa Alumni</button><p id="alumniMsg"></p></form>
+    </div>
+  </div>
+
+  <h3 style="padding:0 18px;">🔒 Protected Features</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px; padding:0 18px;">
+    <div class="executive" style="margin:0;"><h3>Downloads</h3><button class="btn btn-blue" onclick="requireAuth('downloads.html')">Open</button></div>
+    <div class="executive" style="margin:0;"><h3>Find Classmate</h3><button class="btn btn-blue" onclick="requireAuth('find-classmates.html')">Open</button></div>
+    <div class="executive" style="margin:0;"><h3>Vacancies</h3><button class="btn btn-blue" onclick="requireAuth('vacancies.html')">Open</button></div>
+    <div class="executive" style="margin:0; border:1.5px solid #0f2e1a"><h3>Education</h3><button class="btn btn-green" onclick="requireAuth('education-corner.html')">Open</button></div>
+  </div>
+
+  <div style="padding:0 18px;">
     <h3>Admin Portal</h3>
     <button class="btn btn-green" onclick="toggleForm('adminLoginForm')">Admin Login</button>
     <div id="adminLoginForm" class="collapsible">
@@ -164,45 +199,27 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
     <div id="adminDashboard" style="display:none;">
       <h2>Admin Dashboard</h2>
       <div class="admin-tabs">
-        <div class="admin-tab active" onclick="showAdminTab('pendingApprovals', event)">⏳ Pending Approvals</div>
+        <div class="admin-tab active" onclick="showAdminTab('pendingApprovals', event)">⏳ Pending</div>
         <div class="admin-tab" onclick="showAdminTab('donations', event)">Donations</div>
-        <div class="admin-tab" onclick="showAdminTab('alumni', event)">Alumni Members</div>
+        <div class="admin-tab" onclick="showAdminTab('alumni', event)">Alumni</div>
       </div>
       <div id="pendingApprovals" class="admin-content active">
-        <h3>⏳ Accounts Waiting For Payment Verification</h3>
+        <h3>⏳ Accounts Waiting</h3>
         <button class="btn btn-blue" onclick="loadPending()">🔄 Refresh</button>
         <table class="admin-table" id="pendingTable"><tr><th>Name</th><th>Email</th><th>Date</th><th>Action</th></tr></table>
       </div>
       <div id="donations" class="admin-content"><h3>Donation Submissions</h3><button class="btn btn-blue" onclick="exportCSV('donations')">📥 Export CSV</button><table class="admin-table" id="donationTable"><tr><th>Name</th><th>Donation</th><th>Period</th><th>Phone</th><th>Location</th></tr></table></div>
       <div id="alumni" class="admin-content"><h3>Alumni Registrations</h3><button class="btn btn-blue" onclick="exportCSV('alumni')">📥 Export CSV</button><table class="admin-table" id="alumniTable"><tr><th>Name</th><th>Grad Year</th><th>Profession</th><th>Phone</th><th>Interest</th></tr></table></div>
     </div>
-    <div class="hero-card">
-      <h3 style="margin-top:0">Help Us Grow</h3>
-      <button class="btn btn-primary" onclick="toggleForm('donateForm')">Donate Now</button>
-      <div id="donateForm" class="collapsible" style="box-shadow:none;border:none;padding:10px 0">
-        <form id="donationForm"><label>Full Name *</label><input type="text" name="fullName" required><label>Gender *</label><select name="gender" required><option value="">select</option><option value="Male">Male</option><option value="Female">Female</option></select><label>What would you like to donate? *</label><input type="text" name="donationType" required><label>Donation Period *</label><select name="donationPeriod" required><option value="">Select</option><option value="one-time">Only this time</option><option value="3months">About 3 months</option><option value="6months">About 6 months</option><option value="1year">1 year</option><option value="ongoing">More than a year</option></select><label>Phone Number *</label><input type="tel" name="phone" required><label>Email Address</label><input type="email" name="email"><label>Current Location *</label><input type="text" name="location" required><button type="submit" class="btn btn-primary">Donate Now</button><p id="donationMsg"></p></form>
-      </div>
-    </div>
-    <div class="hero-card">
-      <h3 style="margin-top:0">Join Alumni Team</h3>
-      <button class="btn btn-primary" onclick="handleProtectedClick('signupForm')">Sign Up</button>
-      <div id="signupForm" class="collapsible" style="box-shadow:none;border:none;padding:10px 0">
-        <form id="alumniForm"><label>Full Name *</label><input type="text" name="fullName" required><label>Gender *</label><select name="gender" required><option value="">select</option><option value="Male">Male</option><option value="Female">Female</option></select><label>Year Graduated *</label><input type="number" name="gradYear" min="1990" max="2026" required><label>Class/Stream</label><input type="text" name="class"><label>Phone Number *</label><input type="tel" name="phone" required><label>WhatsApp Number</label><input type="tel" name="whatsapp"><label>Profession *</label><input type="text" name="profession" required><label>How would you like to get involved? *</label><select name="interest" required><option value="">Select</option><option value="Membership">Membership</option><option value="Events & Reunions">Events & Reunions</option><option value="Mentorship">Mentorship</option><option value="Donations/Fundraising">Donations & Fundraising</option><option value="Networking">Networking Only</option></select><label>Short Message</label><textarea name="message" rows="3"></textarea><label style="display:flex;gap:8px;align-items:center"><input type="checkbox" name="directoryConsent" required style="width:auto"> I agree to be in the alumni directory *</label><button type="submit" class="btn btn-primary">Join Chitekesa Alumni</button><p id="alumniMsg"></p></form>
-      </div>
-    </div>
-    <h3>🔒 Protected Features</h3>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
-      <div class="executive"><h3>Downloads</h3><button class="btn btn-blue" onclick="requireAuth('downloads.html')">Open</button></div>
-      <div class="executive"><h3>Find Classmate</h3><button class="btn btn-blue" onclick="requireAuth('find-classmates.html')">Open</button></div>
-      <div class="executive"><h3>Vacancies</h3><button class="btn btn-blue" onclick="requireAuth('vacancies.html')">Open</button></div>
-      <div class="executive" style="border:1.5px solid #0f2e1a"><h3>Education Corner</h3><button class="btn btn-green" onclick="requireAuth('education-corner.html')">Open</button></div>
-    </div>
-    <h3>Our School</h3><div class="gallery"><img src="Chitekesa photo.jpg" alt="Chitekesa School Photo"></div>
-    <h2>Meet Your Alumni Executive</h2>
-    <div class="executive"><img src="Kaelama photo.jpg" alt="President"><h3>President: Francisco Kaelama, Class of 2021</h3><a href="https://wa.me/265882427151" class="btn btn-whatsapp" target="_blank">WhatsApp</a></div>
-    <div class="executive"><img src="Chibisa photo.png" alt="Secretary"><h3>Secretary: Patrick Chibisa, Class of 2023</h3><a href="https://wa.me/265897105274" class="btn btn-whatsapp" target="_blank">WhatsApp</a></div>
-    <div class="executive"><img src="My image.png" alt="Treasurer"><h3>Treasurer: Francis Junior Salima, Class of 2022</h3><a href="https://wa.me/265985583319" class="btn btn-whatsapp" target="_blank">WhatsApp</a></div>
+  </div>
+
+  <h3 style="padding:0 18px;">Our School</h3><div class="gallery" style="padding:0 18px;"><img src="Chitekesa photo.jpg" alt="Chitekesa School Photo"></div>
+  <h2 style="padding:0 18px;">Meet Your Alumni Executive</h2>
+  <div class="executive"><img src="Kaelama photo.jpg" alt="President"><h3>President: Francisco Kaelama, Class of 2021</h3><a href="https://wa.me/265882427151" class="btn btn-whatsapp" target="_blank">WhatsApp</a></div>
+  <div class="executive"><img src="Chibisa photo.png" alt="Secretary"><h3>Secretary: Patrick Chibisa, Class of 2023</h3><a href="https://wa.me/265897105274" class="btn btn-whatsapp" target="_blank">WhatsApp</a></div>
+  <div class="executive"><img src="My image.png" alt="Treasurer"><h3>Treasurer: Francis Junior Salima, Class of 2022</h3><a href="https://wa.me/265985583319" class="btn btn-whatsapp" target="_blank">WhatsApp</a></div>
 </main>
+
 <footer><p><strong>Location:</strong> Along Mwanga to Maliro Road, Near Chitekesa Police Unit, Phalombe</p><p>&copy; 2026 CHITEKESA ALUMNI ASSOCIATION. All Rights Reserved.</p></footer>
 
 <div id="firebaseAuthModal">
@@ -229,8 +246,7 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
     projectId: "chitekesa-alumni-ae55c",
     storageBucket: "chitekesa-alumni-ae55c.firebasestorage.app",
     messagingSenderId: "943225897010",
-    appId: "1:943225897010:web:2fc300df337d333aa2fc2b",
-    measurementId: "G-NXW29KE44T"
+    appId: "1:943225897010:web:2fc300df337d333aa2fc2b"
   };
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
