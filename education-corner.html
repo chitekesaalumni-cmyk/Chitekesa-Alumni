@@ -38,8 +38,8 @@ body { margin:0; font-family: 'Segoe UI', sans-serif; background:#f5f7fb; }
 
 <div class="filter-bar">
   <button class="filter-chip active" onclick="setFilter('All', this)">All</button>
-  <button class="filter-chip" onclick="setFilter('MSCE Past Paper', this)">MSCE Papers</button>
-  <button class="filter-chip" onclick="setFilter('JCE Past Paper', this)">JCE Papers</button>
+  <button class="filter-chip" onclick="setFilter('MSCE', this)">MSCE</button>
+  <button class="filter-chip" onclick="setFilter('JCE', this)">JCE</button>
   <button class="filter-chip" onclick="setFilter('Book', this)">Books</button>
   <button class="filter-chip" onclick="setFilter('Study Notes', this)">Notes</button>
   <button class="filter-chip" onclick="setFilter('Syllabus', this)">Syllabus</button>
@@ -65,7 +65,7 @@ body { margin:0; font-family: 'Segoe UI', sans-serif; background:#f5f7fb; }
 <div id="uploadModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000; overflow:auto; padding:20px;">
   <div style="background:white; padding:30px; border-radius:16px; width:95%; max-width:480px;">
     <h3>Share Resource (Admin)</h3>
-    <input id="resTitle" placeholder="Title e.g. Physics MSCE 2023" style="width:100%; padding:12px; margin:8px 0; border-radius:8px; border:1px solid #ddd;">
+    <input id="resTitle" placeholder="Title e.g. Physics MSCE Paper" style="width:100%; padding:12px; margin:8px 0; border-radius:8px; border:1px solid #ddd;">
     <div style="display:flex; gap:10px;">
       <select id="resType" style="flex:1; padding:12px; margin:8px 0; border-radius:8px; border:1px solid #ddd;">
         <option>MSCE Past Paper</option><option>JCE Past Paper</option><option>Book</option><option>Study Notes</option><option>Syllabus</option><option>University Guide</option><option>Career</option>
