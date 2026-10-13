@@ -49,10 +49,13 @@ body{font-family:Poppins,sans-serif;background:var(--bg);color:#1f2937}
 <div class="filters" id="filters">
   <button onclick="filterBy('all')" class="active" id="f-all">All</button>
   <button onclick="filterBy('past paper')" id="f-past">Past Papers</button>
+  <button onclick="filterBy('msce')" id="f-msce">MSCE</button>
+  <button onclick="filterBy('jce')" id="f-jce">JCE</button>
   <button onclick="filterBy('notes')" id="f-notes">Notes</button>
   <button onclick="filterBy('syllabus')" id="f-syllabus">Syllabus</button>
   <button onclick="filterBy('university')" id="f-university">University</button>
   <button onclick="filterBy('scholarships')" id="f-scholarships">Scholarships</button>
+  <button onclick="filterBy('books')" id="f-books">Books</button>
 </div>
 
 <div class="container">
@@ -75,7 +78,6 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 let allNotes=[];
 
-// converts any Drive link to real download
 function toDirectDownload(link){
   try{
     if(!link) return link;
@@ -99,11 +101,11 @@ function loadNotes(){
 
 function render(list){
   const box=document.getElementById("notesList");
-  if(list.length==0){box.innerHTML="<p style='text-align:center;color:#999;margin-top:30px'>No resources found.</p>";return;}
+  if(list.length==0){box.innerHTML="<p style='text-align:center;color:#999;margin-top:30px'>No resources found in this category.</p>";return;}
   box.innerHTML=list.map(n=>`
     <div class="card">
       <h3>${n.title||'Untitled'}</h3>
-      <p>${n.subject||''} • ${n.type||''} • ${n.year||''}</p>
+      <p>${n.subject||''} • ${n.type||''} • ${n.year||''} • ${n.level||''}</p>
       <p>${n.desc||''}</p>
       <a href="${toDirectDownload(n.link)}" target="_blank" class="btn btn-blue">📥 Download Real PDF</a>
       <a href="${n.link}" target="_blank" class="btn btn-outline">👁️ Preview</a>
@@ -115,10 +117,13 @@ function filterBy(cat){
   document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
   let btnId="f-all";
   if(cat=="past paper") btnId="f-past";
+  else if(cat=="msce") btnId="f-msce";
+  else if(cat=="jce") btnId="f-jce";
   else if(cat=="university") btnId="f-university";
   else if(cat=="scholarships") btnId="f-scholarships";
   else if(cat=="notes") btnId="f-notes";
   else if(cat=="syllabus") btnId="f-syllabus";
+  else if(cat=="books") btnId="f-books";
   if(document.getElementById(btnId)) document.getElementById(btnId).classList.add("active");
 
   if(cat==='university'){
@@ -127,7 +132,6 @@ function filterBy(cat){
     document.getElementById("trustedBox").innerHTML=`
       <div class="card" style="border:1.5px solid #0a3d6b">
         <h3>🎓 University Applications - Official Platforms</h3>
-        <p>Click to read full official info.</p>
         <div class="trusted-grid" style="margin-top:12px">
           <a href="https://www.nche.ac.mw" target="_blank" class="btn btn-blue">NCHE Malawi</a>
           <a href="https://www.education.gov.mw" target="_blank" class="btn btn-green">Ministry of Education</a>
@@ -144,7 +148,6 @@ function filterBy(cat){
     document.getElementById("trustedBox").innerHTML=`
       <div class="card" style="border:1.5px solid #0f6a3a">
         <h3>💰 Scholarships - Trusted Platforms</h3>
-        <p>Never pay anyone for scholarship.</p>
         <div class="trusted-grid" style="margin-top:12px">
           <a href="https://mastercardfdn.org/all/scholars/becoming-a-scholar/" target="_blank" class="btn btn-orange">Mastercard Foundation</a>
           <a href="https://cscuk.fcdo.gov.uk/scholarships/" target="_blank" class="btn btn-blue">Commonwealth UK</a>
@@ -155,29 +158,37 @@ function filterBy(cat){
         </div>
       </div>`; return;
   }
+
   document.getElementById("trustedBox").style.display="none";
   if(cat==='all'){render(allNotes);return;}
-  const filtered=allNotes.filter(n=> (n.type||"").toLowerCase().includes(cat) || (n.subject||"").toLowerCase().includes(cat) );
+  const filtered=allNotes.filter(n=> {
+    const hay = ((n.type||"")+" "+(n.subject||"")+" "+(n.level||"")+" "+(n.title||"")).toLowerCase();
+    return hay.includes(cat);
+  });
   render(filtered);
 }
+
 function doSearch(){
   const q=document.getElementById("searchInput").value.toLowerCase();
   const filtered=allNotes.filter(n=> JSON.stringify(n).toLowerCase().includes(q));
   document.getElementById("trustedBox").style.display="none";
   render(filtered);
 }
+
 function openShare(){
   const link=prompt("Paste your Google Drive link (Anyone with link):");
   if(!link) return;
-  const title=prompt("Title e.g. Biology Notes 2023");
+  const title=prompt("Title e.g. Biology MSCE 2023 or English Grammar Book");
+  const level=prompt("Level: MSCE / JCE / BOOKS? (type MSCE / JCE / BOOKS)");
   const subject=prompt("Subject e.g. Biology");
-  const type=prompt("Type: past paper / notes / syllabus / books");
+  const type=prompt("Type: past paper / notes / syllabus / books / university / scholarships");
   if(title && link){
     db.collection("education_resources").add({
-      title:title, subject:subject||"", type:type||"notes", link:link, desc:"Shared by Alumni", year:new Date().getFullYear().toString(), uploadedBy:"alumni", createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    }).then(()=>alert("✅ Shared! Will download as real PDF"));
+      title:title, subject:subject||"", level:(level||"").toUpperCase(), type:type||"books", link:link, desc:"Shared by Alumni", year:new Date().getFullYear().toString(), uploadedBy:"alumni", createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(()=>alert("✅ Shared!"));
   }
 }
+
 loadNotes();
 </script>
 </body>
