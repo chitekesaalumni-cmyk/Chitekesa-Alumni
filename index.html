@@ -1,107 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chitekesa CDSS Alumni Association</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root { --green:#0f2e1a; --green-light:#123d21; --blue:#003366; --blue-light:#004080; --orange:#FF7A00; --bg:#f5f7fb; --card:#ffffff; --text:#1f2937; --muted:#6b7280; --border:#e5e7eb; }
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{background:var(--bg);font-family:'Poppins',Arial,sans-serif;color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
-   .container{padding:0 18px;max-width:1000px;margin:0 auto}
-   .header{background:linear-gradient(135deg,var(--green) 0%, var(--green-light) 100%);padding:30px 15px;text-align:center;color:white;box-shadow:0 4px 20px rgba(0,0,0,0.15)}
-   .logo{width:95px;height:95px;background:white;border-radius:50%;margin:0 auto 12px;border:4px solid rgba(255,255,255,0.2);overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.2)}
-   .logo img{width:100%;height:100%;object-fit:cover}
-   .header h1{margin:0;font-size:22px;font-weight:700;letter-spacing:0.5px}
-   .header h4{font-style:italic;font-weight:400;opacity:0.9;margin-top:4px;font-size:14px}
-   .navbar{background:var(--blue);padding:0 12px;position:sticky;top:0;z-index:999;box-shadow:0 2px 10px rgba(0,0,0,0.2)}
-   .navbar-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 0}
-   .menu-toggle{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:white;font-size:14px;padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:600}
-   .menu{list-style:none;display:none;margin-top:10px;padding-bottom:10px}
-   .menu.active{display:block}
-   .menu li{margin:6px 0}
-   .menu a{color:rgba(255,255,255,0.95);text-decoration:none;font-weight:500;font-size:15px;padding:10px 14px;display:block;border-radius:8px;cursor:pointer;transition:all.2s}
-   .menu a:hover{background:rgba(255,255,255,0.12)}
-   .logout-btn{background:var(--orange);border:none;color:white;padding:9px 16px;border-radius:8px;font-weight:700;cursor:pointer;transition:0.2s}
-   .logout-btn:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(255,122,0,0.3)}
-    main{padding:35px 0}
-   .hero-card{background:var(--card);border-radius:16px;padding:24px;box-shadow:0 6px 24px rgba(0,0,0,0.06);border:1px solid var(--border);margin-bottom:24px}
-    h2{color:var(--blue);font-size:22px;margin-bottom:8px;font-weight:700}
-    h3{color:var(--green);font-size:18px;margin:24px 0 12px;font-weight:600}
-    h4{color:var(--white)}
-    h5{font-weight:400;color:var(--muted);margin-bottom:20px;font-size:15px}
-   .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 22px;border-radius:10px;text-decoration:none;font-weight:600;font-size:15px;border:none;cursor:pointer;transition:all 0.2s ease;margin:6px 5px;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
-   .btn:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,0.12)}
-   .btn-primary{background:linear-gradient(135deg,var(--orange),#ff9a2e);color:white}
-   .btn-whatsapp{background:#128C7E;color:white}
-   .btn-green{background:var(--green-light);color:white}
-   .btn-blue{background:var(--blue-light);color:white}
-   .collapsible{display:none;margin-top:16px;padding:22px;background:var(--card);border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,0.07);border:1px solid var(--border);animation:fadeIn.3s ease}
-   .collapsible.active{display:block}
-    @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-    form label{display:block;font-weight:600;margin-top:14px;margin-bottom:6px;font-size:14px;color:var(--text)}
-    form input,form select,form textarea{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:10px;font-family:'Poppins',sans-serif;font-size:14px;background:#fcfcfd;transition:all.2s}
-    form input:focus,form select:focus,form textarea:focus{outline:none;border-color:var(--blue-light);box-shadow:0 0 0 4px rgba(0,64,128,0.1);background:white}
-    form button[type="submit"]{background:var(--green-light);color:white;width:100%;margin-top:18px;padding:13px}
-   .executive{background:var(--card);padding:18px;border-radius:14px;text-align:center;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,0.06);border:1px solid var(--border);transition:.2s}
-   .executive:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,0.1)}
-   .executive img{width:92px;height:92px;border-radius:50%;object-fit:cover;border:3px solid var(--green);margin-bottom:10px}
-   .gallery img{width:100%;border-radius:14px;margin:10px 0;box-shadow:0 4px 18px rgba(0,0,0,0.08)}
-    footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;margin-top:50px;border-top:4px solid var(--green)}
-   .admin-tabs{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap}
-   .admin-tab{background:white;border:1px solid var(--border);color:var(--text);padding:10px 16px;border-radius:10px;cursor:pointer;font-weight:600;font-size:14px}
-   .admin-tab.active{background:var(--blue);color:white;border-color:var(--blue)}
-   .admin-content{display:none;background:white;padding:20px;border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,0.06)}
-   .admin-content.active{display:block}
-   .admin-table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13px}
-   .admin-table th,.admin-table td{border:1px solid var(--border);padding:10px;text-align:left}
-   .admin-table th{background:#f8fafc;color:var(--blue);font-weight:600}
-    #firebaseAuthModal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10, 25, 41, 0.75);backdrop-filter:blur(6px);display:none;justify-content:center;align-items:center;z-index:2000;padding:16px}
-   .auth-box{background:white;padding:28px 24px;border-radius:20px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,0.3);animation:modalPop.35s cubic-bezier(0.34, 1.56, 0.64, 1)}
-    @keyframes modalPop{from{opacity:0;transform:scale(0.9) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
-   .auth-box h2{font-size:22px;text-align:center;color:var(--blue);margin-bottom:6px}
-   .auth-subtitle{font-size:13px;color:var(--muted);text-align:center;margin-bottom:20px;line-height:1.5;background:#f8fafc;padding:10px;border-radius:10px}
-   .auth-field{margin-bottom:16px}
-   .auth-field label{display:block;font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px}
-   .auth-field input{width:100%;padding:13px 14px;border-radius:12px;border:1.5px solid var(--border);font-size:14px;background:#f9fafb;transition:.2s}
-   .auth-field input:focus{background:white;border-color:var(--blue-light);box-shadow:0 0 0 4px rgba(0,64,128,0.1);outline:none}
-   .auth-btn{width:100%;background:linear-gradient(135deg,var(--orange),#ff9a2e);color:white;border:none;padding:14px;border-radius:12px;font-weight:700;font-size:15px;cursor:pointer;margin-top:8px;box-shadow:0 6px 16px rgba(255,122,0,0.3);transition:.2s}
-   .auth-btn:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(255,122,0,0.4)}
-   .auth-links{text-align:center;margin-top:18px}
-   .auth-links a{color:var(--blue-light);font-weight:600;text-decoration:none;font-size:14px}
-   .auth-links a:hover{text-decoration:underline}
-   .auth-close{text-align:center;margin-top:12px}
-   .auth-close a{color:var(--muted);font-size:13px;text-decoration:none}
-   .user-badge{color:#fde68a;font-weight:700;margin-left:10px}
-    @media(min-width:768px){.menu-toggle{display:none}.menu{display:flex!important;gap:4px;align-items:center;margin-top:0;padding-bottom:0}.menu li{margin:0}.menu a{padding:8px 12px;font-size:14px}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHITEKESA CDSS ALUMNI GROUP</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root { --green:#0f2e1a; --green-light:#123d21; --blue:#003366; --blue-light:#004080; --orange:#FF7A00; --bg:#f5f7fb; --card:#ffffff; --text:#1f2937; --muted:#6b7280; --border:#e5e7eb; }
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);font-family:'Poppins',Arial,sans-serif;color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+.container{padding:0 18px;max-width:1000px;margin:0 auto}
+
+/* Header Green with Menu Button */
+.top-header{
+  background: linear-gradient(135deg, #0a2f1a, #144d28);
+  color:white; text-align:center; padding:25px 15px 20px;
+  position:relative; box-shadow:0 4px 20px rgba(0,0,0,0.15);
+}
+.top-header img{width:85px; height:85px; border-radius:50%; background:white; padding:4px; object-fit:cover; margin:0 auto 8px; display:block; border:3px solid rgba(255,255,255,0.3);}
+.top-header h1{font-size:22px; font-weight:700; letter-spacing:0.5px;}
+.top-header p{font-style:italic; opacity:.85; font-size:14px; margin-top:6px;}
+.menu-btn{
+  position:absolute; left:15px; top:50%; transform:translateY(-50%);
+  background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3);
+  color:white; padding:8px 14px; border-radius:20px; cursor:pointer;
+  backdrop-filter:blur(10px); font-weight:600; font-size:14px; z-index:10;
+}
+
+/* SIDE DRAWER - Professional Left 300px */
+.side-nav{
+  position:fixed; top:0; left:-100%; width:300px; height:100%;
+  background: linear-gradient(180deg, #12385f, #0f4c75);
+  z-index:9999; transition:0.35s ease;
+  padding:20px; display:flex; flex-direction:column;
+  box-shadow:4px 0 20px rgba(0,0,0,0.3); overflow-y:auto;
+}
+.side-nav.open{ left:0; }
+.nav-header{
+  display:flex; justify-content:space-between; align-items:center;
+  padding-bottom:20px; border-bottom:1px solid rgba(255,255,255,0.15); margin-bottom:10px;
+}
+.nav-header span{ color:white; font-weight:700; font-size:16px; }
+.close-btn{
+  background:rgba(255,255,255,0.12); border:none; color:white;
+  width:36px; height:36px; border-radius:50%; cursor:pointer;
+  font-size:18px; display:flex; align-items:center; justify-content:center;
+}
+.close-btn:hover{ background:rgba(255,255,255,0.25); }
+.nav-links{ list-style:none; margin-top:15px; flex:1; }
+.nav-links li{ margin:4px 0; }
+.nav-links a{
+  display:flex; align-items:center; gap:12px;
+  color:rgba(255,255,255,0.85); text-decoration:none;
+  padding:12px 14px; border-radius:10px; font-size:15px; font-weight:500;
+  transition:0.2s; text-align:left; cursor:pointer;
+}
+.nav-links a:hover{ background:rgba(255,255,255,0.12); color:white; transform:translateX(4px); }
+.nav-links a.active{ background:rgba(255,255,255,0.18); color:white; }
+.nav-footer{ margin-top:auto; display:flex; flex-direction:column; gap:10px; padding-top:15px; border-top:1px solid rgba(255,255,255,0.1);}
+.btn-login{ background:#16a085; color:white; padding:12px; border-radius:10px; border:none; font-weight:700; cursor:pointer; text-align:center; text-decoration:none; }
+.btn-logout{ background:#e67e22; color:white; padding:12px; border-radius:10px; border:none; font-weight:700; cursor:pointer; }
+.user-badge{color:#fde68a;font-weight:700;font-size:13px;text-align:center;padding:8px;background:rgba(255,255,255,0.1);border-radius:8px;}
+.overlay{
+  position:fixed; top:0; left:0; width:100%; height:100%;
+  background:rgba(0,0,0,0.45); backdrop-filter:blur(2px);
+  z-index:9998; display:none;
+}
+.overlay.show{ display:block; }
+
+main{padding:35px 0}
+.hero-card{background:var(--card);border-radius:16px;padding:24px;box-shadow:0 6px 24px rgba(0,0,0,0.06);border:1px solid var(--border);margin-bottom:24px}
+h2{color:var(--blue);font-size:22px;margin-bottom:8px;font-weight:700}
+h3{color:var(--green);font-size:18px;margin:24px 0 12px;font-weight:600}
+h5{font-weight:400;color:var(--muted);margin-bottom:20px;font-size:15px}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 22px;border-radius:10px;text-decoration:none;font-weight:600;font-size:15px;border:none;cursor:pointer;transition:all 0.2s ease;margin:6px 5px;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,0.12)}
+.btn-primary{background:linear-gradient(135deg,var(--orange),#ff9a2e);color:white}
+.btn-whatsapp{background:#128C7E;color:white}
+.btn-green{background:var(--green-light);color:white}
+.btn-blue{background:var(--blue-light);color:white}
+.collapsible{display:none;margin-top:16px;padding:22px;background:var(--card);border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,0.07);border:1px solid var(--border);animation:fadeIn.3s ease}
+.collapsible.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+form label{display:block;font-weight:600;margin-top:14px;margin-bottom:6px;font-size:14px;color:var(--text)}
+form input,form select,form textarea{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:10px;font-family:'Poppins',sans-serif;font-size:14px;background:#fcfcfd;transition:all.2s}
+form input:focus,form select:focus,form textarea:focus{outline:none;border-color:var(--blue-light);box-shadow:0 0 0 4px rgba(0,64,128,0.1);background:white}
+form button[type="submit"]{background:var(--green-light);color:white;width:100%;margin-top:18px;padding:13px}
+.executive{background:var(--card);padding:18px;border-radius:14px;text-align:center;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,0.06);border:1px solid var(--border);transition:.2s}
+.executive:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,0.1)}
+.executive img{width:92px;height:92px;border-radius:50%;object-fit:cover;border:3px solid var(--green);margin-bottom:10px}
+.gallery img{width:100%;border-radius:14px;margin:10px 0;box-shadow:0 4px 18px rgba(0,0,0,0.08)}
+footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;margin-top:50px;border-top:4px solid var(--green)}
+.admin-tabs{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap}
+.admin-tab{background:white;border:1px solid var(--border);color:var(--text);padding:10px 16px;border-radius:10px;cursor:pointer;font-weight:600;font-size:14px}
+.admin-tab.active{background:var(--blue);color:white;border-color:var(--blue)}
+.admin-content{display:none;background:white;padding:20px;border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,0.06)}
+.admin-content.active{display:block}
+.admin-table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13px}
+.admin-table th,.admin-table td{border:1px solid var(--border);padding:10px;text-align:left}
+.admin-table th{background:#f8fafc;color:var(--blue);font-weight:600}
+#firebaseAuthModal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10, 25, 41, 0.75);backdrop-filter:blur(6px);display:none;justify-content:center;align-items:center;z-index:20000;padding:16px}
+.auth-box{background:white;padding:28px 24px;border-radius:20px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,0.3);animation:modalPop.35s cubic-bezier(0.34, 1.56, 0.64, 1)}
+@keyframes modalPop{from{opacity:0;transform:scale(0.9) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.auth-box h2{font-size:22px;text-align:center;color:var(--blue);margin-bottom:6px}
+.auth-subtitle{font-size:13px;color:var(--muted);text-align:center;margin-bottom:20px;line-height:1.5;background:#f8fafc;padding:10px;border-radius:10px}
+.auth-field{margin-bottom:16px}
+.auth-field label{display:block;font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px}
+.auth-field input{width:100%;padding:13px 14px;border-radius:12px;border:1.5px solid var(--border);font-size:14px;background:#f9fafb;transition:.2s}
+.auth-field input:focus{background:white;border-color:var(--blue-light);box-shadow:0 0 0 4px rgba(0,64,128,0.1);outline:none}
+.auth-btn{width:100%;background:linear-gradient(135deg,var(--orange),#ff9a2e);color:white;border:none;padding:14px;border-radius:12px;font-weight:700;font-size:15px;cursor:pointer;margin-top:8px;box-shadow:0 6px 16px rgba(255,122,0,0.3);transition:.2s}
+.auth-btn:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(255,122,0,0.4)}
+.auth-links{text-align:center;margin-top:18px}
+.auth-links a{color:var(--blue-light);font-weight:600;text-decoration:none;font-size:14px}
+.auth-close{text-align:center;margin-top:12px}
+.auth-close a{color:var(--muted);font-size:13px;text-decoration:none}
+</style>
 </head>
 <body>
-  <header class="header">
-    <div class="logo"><img src="Alumni logo.png" alt="Chitekesa Alumni Logo"></div>
-    <h1>CHITEKESA CDSS ALUMNI GROUP</h1>
-    <h4>Together We Make The Difference</h4>
-  </header>
-  <nav class="navbar">
-    <div class="navbar-inner">
-      <button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
-      <ul id="menu" class="menu">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="Chitekesa about.html">About</a></li>
-        <li><a href="Chitekesa contact.html">Contact</a></li>
-        <li><a onclick="requireAuth('downloads.html')">Downloads</a></li>
-        <li><a onclick="requireAuth('find-classmates.html')">Classmates</a></li>
-        <li><a onclick="requireAuth('vacancies.html')">Vacancies</a></li>
-        <li><a onclick="requireAuth('education-corner.html')">Education</a></li>
-        <li id="userDisplayLi" style="display:none;"><span class="user-badge" id="userDisplay"></span></li>
-        <li id="logoutLi" style="display:none;"><button class="logout-btn" onclick="firebaseLogout()">Logout</button></li>
-        <li id="loginLi"><button class="logout-btn" style="background:#128C7E" onclick="openFirebaseAuth()">Login / Sign Up</button></li>
-        <li id="adminLogoutLi" style="display:none;"><button class="logout-btn" onclick="adminLogout()">Admin Logout</button></li>
-      </ul>
-    </div>
-  </nav>
-  <main class="container">
+
+<div class="top-header">
+  <button class="menu-btn" onclick="openNav()">☰ Menu</button>
+  <img src="Alumni logo.png" alt="CDSS Logo">
+  <h1>CHITEKESA CDSS ALUMNI GROUP</h1>
+  <p>Together We Make The Difference</p>
+</div>
+
+<div class="overlay" id="overlay" onclick="closeNav()"></div>
+
+<div class="side-nav" id="sideNav">
+  <div class="nav-header">
+    <span>📚 Navigation</span>
+    <button class="close-btn" onclick="closeNav()">❌</button>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">🏠 Home</a></li>
+    <li><a href="Chitekesa about.html">👥 About</a></li>
+    <li><a href="Chitekesa contact.html">📞 Contact</a></li>
+    <li><a onclick="closeNav(); requireAuth('downloads.html')">📥 Downloads</a></li>
+    <li><a onclick="closeNav(); requireAuth('find-classmates.html')">🎓 Classmates</a></li>
+    <li><a onclick="closeNav(); requireAuth('vacancies.html')">💼 Vacancies</a></li>
+    <li><a onclick="closeNav(); requireAuth('education-corner.html')">📚 Education</a></li>
+  </ul>
+  <div class="nav-footer">
+    <div id="userDisplayBox" style="display:none;"><div class="user-badge" id="userDisplay"></div></div>
+    <a href="#" id="loginBtn" class="btn-login" onclick="closeNav(); openFirebaseAuth(); return false;">Login / Sign Up</a>
+    <button id="logoutBtn" class="btn-logout" style="display:none;" onclick="firebaseLogout()">Logout</button>
+    <button id="adminLogoutBtn" class="btn-logout" style="display:none; background:#34495e;" onclick="adminLogout()">Admin Logout</button>
+  </div>
+</div>
+
+<main class="container">
     <div class="hero-card">
       <h2>Welcome to Chitekesa Alumni Platform 🎓</h2>
       <h4>Once Chitekesa • Always Chitekesa</h4>
@@ -163,21 +211,23 @@
     <div class="executive"><img src="Kaelama photo.jpg" alt="President"><h3>President: Francisco Kaelama, Class of 2021</h3><a href="https://wa.me/265882427151" class="btn btn-whatsapp" target="_blank">WhatsApp</a></div>
     <div class="executive"><img src="Chibisa photo.png" alt="Secretary"><h3>Secretary: Patrick Chibisa, Class of 2023</h3><a href="https://wa.me/265897105274" class="btn btn-whatsapp" target="_blank">WhatsApp</a></div>
     <div class="executive"><img src="My image.png" alt="Treasurer"><h3>Treasurer: Francis Junior Salima, Class of 2022</h3><a href="https://wa.me/265985583319" class="btn btn-whatsapp" target="_blank">WhatsApp</a></div>
-  </main>
-  <footer><p><strong>Location:</strong> Along Mwanga to Maliro Road, Near Chitekesa Police Unit, Phalombe</p><p>&copy; 2026 CHITEKESA ALUMNI ASSOCIATION. All Rights Reserved.</p></footer>
-  <div id="firebaseAuthModal">
-    <div class="auth-box">
-      <h2 id="authTitle">Create Account</h2>
-      <div class="auth-subtitle">🔒 Secure login required for Downloads, Classmates, Vacancies, Education Corner & Registration</div>
-      <div class="auth-field" id="nameField"><label>Full Name</label><input type="text" id="fbName" placeholder="e.g. Chitekesa Alumni"></div>
-      <div class="auth-field"><label>Email Address *</label><input type="email" id="fbEmail" placeholder="you@gmail.com"></div>
-      <div class="auth-field"><label>Password *</label><input type="password" id="fbPassword" placeholder="Minimum 6 characters"></div>
-      <button class="auth-btn" id="fbActionBtn" onclick="handleFirebaseAuth()">Create Account</button>
-      <p id="fbMsg" style="text-align:center;font-size:13px;margin-top:12px;font-weight:600"></p>
-      <div class="auth-links"><a href="#" onclick="toggleFbMode()" id="fbToggleText">Already have an account? Login</a></div>
-      <div class="auth-close"><a href="#" onclick="closeFirebaseAuth()">✕ Close</a></div>
-    </div>
+</main>
+<footer><p><strong>Location:</strong> Along Mwanga to Maliro Road, Near Chitekesa Police Unit, Phalombe</p><p>&copy; 2026 CHITEKESA ALUMNI ASSOCIATION. All Rights Reserved.</p></footer>
+
+<div id="firebaseAuthModal">
+  <div class="auth-box">
+    <h2 id="authTitle">Create Account</h2>
+    <div class="auth-subtitle">🔒 Secure login required for Downloads, Classmates, Vacancies, Education Corner & Registration</div>
+    <div class="auth-field" id="nameField"><label>Full Name</label><input type="text" id="fbName" placeholder="e.g. Chitekesa Alumni"></div>
+    <div class="auth-field"><label>Email Address *</label><input type="email" id="fbEmail" placeholder="you@gmail.com"></div>
+    <div class="auth-field"><label>Password *</label><input type="password" id="fbPassword" placeholder="Minimum 6 characters"></div>
+    <button class="auth-btn" id="fbActionBtn" onclick="handleFirebaseAuth()">Create Account</button>
+    <p id="fbMsg" style="text-align:center;font-size:13px;margin-top:12px;font-weight:600"></p>
+    <div class="auth-links"><a href="#" onclick="toggleFbMode(); return false;" id="fbToggleText">Already have an account? Login</a></div>
+    <div class="auth-close"><a href="#" onclick="closeFirebaseAuth(); return false;">✕ Close</a></div>
   </div>
+</div>
+
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
@@ -195,7 +245,11 @@
   const auth = firebase.auth();
   const db = firebase.firestore();
   let fbIsLogin=false; let pendingRedirect=null;
-  function openFirebaseAuth(redirectUrl=null){pendingRedirect=redirectUrl; document.getElementById('firebaseAuthModal').style.display='flex';}
+
+  function openNav(){ document.getElementById('sideNav').classList.add('open'); document.getElementById('overlay').classList.add('show'); }
+  function closeNav(){ document.getElementById('sideNav').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); }
+
+  function openFirebaseAuth(redirectUrl=null){pendingRedirect=redirectUrl; document.getElementById('firebaseAuthModal').style.display='flex'; closeNav();}
   function closeFirebaseAuth(){document.getElementById('firebaseAuthModal').style.display='none';}
   function toggleFbMode(){
     fbIsLogin=!fbIsLogin;
@@ -214,21 +268,15 @@
     if(!email||!pass){msg.style.color="red";msg.innerText="⚠️ Fill email and password";return}
     if(pass.length<6){msg.style.color="red";msg.innerText="⚠️ Password must be at least 6 characters";return}
     if(!fbIsLogin &&!name){msg.style.color="red";msg.innerText="⚠️ Enter your full name";return}
-    btn.disabled=true;
-    btn.innerText=fbIsLogin?"Logging in...":"Creating account...";
+    btn.disabled=true; btn.innerText=fbIsLogin?"Logging in...":"Creating account...";
     msg.style.color="#003366"; msg.innerText="Please wait...";
     try {
       if(fbIsLogin){
         const cred = await auth.signInWithEmailAndPassword(email,pass);
         const snap = await db.collection("users").where("uid","==",cred.user.uid).limit(1).get();
-        if(!snap.empty){
-          const data = snap.docs[0].data();
-          if(data.approved===false){
-            msg.style.color="#92400e";
-            msg.innerText="⏳ Account pending approval. Please send payment proof to Admin.";
-            btn.disabled=false; btn.innerText="Login Now";
-            return;
-          }
+        if(!snap.empty && snap.docs[0].data().approved===false){
+          msg.style.color="#92400e"; msg.innerText="⏳ Account pending approval. Please send payment proof to Admin.";
+          btn.disabled=false; btn.innerText="Login Now"; return;
         }
         msg.style.color="green";msg.innerText="✅ Login success!";
         setTimeout(()=>{closeFirebaseAuth(); if(pendingRedirect) window.location.href=pendingRedirect; else location.reload()},800);
@@ -236,36 +284,25 @@
         const cred = await auth.createUserWithEmailAndPassword(email,pass);
         await cred.user.updateProfile({displayName:name});
         await db.collection("users").add({
-          displayName: name,
-          fullName: name,
-          email: email.toLowerCase(),
-          uid: cred.user.uid,
-          approved: false,
+          displayName: name, fullName: name, email: email.toLowerCase(),
+          uid: cred.user.uid, approved: false,
           createdAt: firebase.firestore.FieldValue.serverTimestamp()
         });
-        msg.style.color="green";
-        msg.innerHTML="✅ Account created! <br>⏳ Pending approval. Send payment proof to <b>Admin</b>";
-        btn.disabled=false;
-        btn.innerText="Create Account";
+        msg.style.color="green"; msg.innerHTML="✅ Account created! <br>⏳ Pending approval. Send payment proof to <b>Admin</b>";
+        btn.disabled=false; btn.innerText="Create Account";
         setTimeout(()=>{closeFirebaseAuth(); location.reload();},2500);
       }
-    } catch(e){
-      msg.style.color="red";msg.innerText="❌ "+e.message; btn.disabled=false; btn.innerText=fbIsLogin?"Login Now":"Create Account";
-    }
+    } catch(e){ msg.style.color="red";msg.innerText="❌ "+e.message; btn.disabled=false; btn.innerText=fbIsLogin?"Login Now":"Create Account"; }
   }
   async function requireAuth(url){
     const user=auth.currentUser;
     if(!user){openFirebaseAuth(url); return;}
     try{
       const snap = await db.collection("users").where("uid","==",user.uid).limit(1).get();
-      if(!snap.empty){
-        const data = snap.docs[0].data();
-        if(data.approved===false){
-          document.getElementById('pendingBox').style.display='block';
-          document.getElementById('notLoggedBox').style.display='none';
-          alert("⏳ Your account is pending approval. Please send payment proof to Admin");
-          return;
-        }
+      if(!snap.empty && snap.docs[0].data().approved===false){
+        document.getElementById('pendingBox').style.display='block';
+        document.getElementById('notLoggedBox').style.display='none';
+        alert("⏳ Your account is pending approval. Please send payment proof to Admin"); return;
       }
     }catch(e){}
     window.location.href=url;
@@ -275,14 +312,10 @@
     if(!user){openFirebaseAuth(); return;}
     try{
       const snap = await db.collection("users").where("uid","==",user.uid).limit(1).get();
-      if(!snap.empty){
-        const data = snap.docs[0].data();
-        if(data.approved===false){
-          document.getElementById('pendingBox').style.display='block';
-          document.getElementById('notLoggedBox').style.display='none';
-          alert("⏳ Your account is pending approval. Please send payment proof to Admin before you can register.");
-          return;
-        }
+      if(!snap.empty && snap.docs[0].data().approved===false){
+        document.getElementById('pendingBox').style.display='block';
+        document.getElementById('notLoggedBox').style.display='none';
+        alert("⏳ Your account is pending approval. Please send payment proof to Admin before you can register."); return;
       }
     }catch(e){}
     toggleForm(formId);
@@ -292,112 +325,64 @@
     if(user){
       const box=document.getElementById('notLoggedBox'); if(box) box.style.display='none';
       document.getElementById('userDisplay').innerText="Hi, "+(user.displayName||user.email);
-      document.getElementById('userDisplayLi').style.display='inline-block';
-      document.getElementById('logoutLi').style.display='inline-block';
-      document.getElementById('loginLi').style.display='none';
+      document.getElementById('userDisplayBox').style.display='block';
+      document.getElementById('logoutBtn').style.display='block';
+      document.getElementById('loginBtn').style.display='none';
       try{
         const snap = await db.collection("users").where("uid","==",user.uid).limit(1).get();
-        if(!snap.empty){
-          const data = snap.docs[0].data();
-          if(data.approved===false){
-            document.getElementById('pendingBox').style.display='block';
-          }
-        }
+        if(!snap.empty && snap.docs[0].data().approved===false){ document.getElementById('pendingBox').style.display='block'; }
       }catch(e){}
     }
   });
 </script>
 <script>
   const WEB_APP_URL="https://script.google.com/macros/s/AKfycbxlg51F7IsuXJUr-kV9DFkhjpCcEHJH0VX6UuBZNaM3UXibPNnLemyNSMoSgwgpcMn5/exec";
-  function toggleMenu(){document.getElementById("menu").classList.toggle("active")}
   function toggleForm(id){document.getElementById(id).classList.toggle("active")}
   document.getElementById("donationForm").addEventListener("submit",function(e){
-    e.preventDefault();
-    const form=e.target;
-    document.getElementById("donationMsg").innerHTML="Submitting...";
+    e.preventDefault(); const form=e.target; document.getElementById("donationMsg").innerHTML="Submitting...";
     const data={type:"donation",name:form.fullName.value,gender:form.gender.value,donation:form.donationType.value,period:form.donationPeriod.value,phone:form.phone.value,email:form.email.value,location:form.location.value};
     fetch(WEB_APP_URL,{method:"POST",mode:"no-cors",body:JSON.stringify(data)})
    .then(()=>{document.getElementById("donationMsg").innerHTML="✅ Thank you!";form.reset();toggleForm('donateForm');loadDonations()})
    .catch(()=>{document.getElementById("donationMsg").innerHTML="❌ Error."})
   });
   document.getElementById("alumniForm").addEventListener("submit", async function(e){
-    e.preventDefault();
-    const user=firebase.auth().currentUser;
-    if(!user){openFirebaseAuth();return}
-    try{
-      const snap = await db.collection("users").where("uid","==",user.uid).where("approved","==",false).get();
-      if(!snap.empty){
-        document.getElementById("alumniMsg").innerHTML="⏳ Your account is pending approval. Please send payment proof to Admin before registering.";
-        return;
-      }
-    }catch(e){}
-    const form=e.target;
-    const msgEl=document.getElementById("alumniMsg");
-    msgEl.innerHTML="Submitting... Please wait...";
+    e.preventDefault(); const user=firebase.auth().currentUser; if(!user){openFirebaseAuth();return}
+    try{ const snap = await db.collection("users").where("uid","==",user.uid).where("approved","==",false).get(); if(!snap.empty){ document.getElementById("alumniMsg").innerHTML="⏳ Your account is pending approval. Please send payment proof to Admin before registering."; return; } }catch(e){}
+    const form=e.target; const msgEl=document.getElementById("alumniMsg"); msgEl.innerHTML="Submitting... Please wait...";
     const data={type:"alumni",name:form.fullName.value,gender:form.gender.value,year:form.gradYear.value,class:form.class.value,phone:form.phone.value,whatsapp:form.whatsapp.value,profession:form.profession.value,interest:form.interest.value,message:form.message.value,accountEmail:user.email};
     try{
       fetch(WEB_APP_URL,{method:"POST",mode:"no-cors",body:JSON.stringify(data)});
       await db.collection("users").add({
-        displayName: data.name,
-        fullName: data.name,
-        gradYear: data.year,
-        year: data.year,
-        class: data.class,
-        career: data.profession,
-        profession: data.profession,
-        phone: data.phone,
-        whatsapp: data.whatsapp,
-        interest: data.interest,
-        message: data.message,
-        email: user.email,
-        uid: user.uid,
-        approved: true,
+        displayName: data.name, fullName: data.name, gradYear: data.year, year: data.year,
+        class: data.class, career: data.profession, profession: data.profession,
+        phone: data.phone, whatsapp: data.whatsapp, interest: data.interest,
+        message: data.message, email: user.email, uid: user.uid, approved: true,
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       });
-      msgEl.innerHTML="✅ Welcome! You now appear in Find Classmate 👥";
-      form.reset();
+      msgEl.innerHTML="✅ Welcome! You now appear in Find Classmate 👥"; form.reset();
       setTimeout(()=>{ window.location.href="find-classmates.html"; },1500);
-    }catch(err){
-      console.error(err);
-      msgEl.innerHTML="❌ Error: "+err.message;
-    }
+    }catch(err){ msgEl.innerHTML="❌ Error: "+err.message; }
   });
   async function loadDonations(){const table=document.getElementById('donationTable');try{const res=await fetch(WEB_APP_URL+"?type=donation");const data=await res.json();table.innerHTML='<tr><th>Name</th><th>Donation</th><th>Period</th><th>Phone</th><th>Location</th></tr>';data.donations.forEach(d=>{table.innerHTML+=`<tr><td>${d.name||''}</td><td>${d.donation||''}</td><td>${d.period||''}</td><td>${d.phone||''}</td><td>${d.location||''}</td></tr>`})}catch(e){}}
   async function loadAlumni(){const table=document.getElementById('alumniTable');try{const res=await fetch(WEB_APP_URL+"?type=alumni");const data=await res.json();table.innerHTML='<tr><th>Name</th><th>Grad Year</th><th>Profession</th><th>Phone</th><th>Interest</th></tr>';data.alumni.forEach(a=>{table.innerHTML+=`<tr><td>${a.name||''}</td><td>${a.year||''}</td><td>${a.profession||''}</td><td>${a.phone||''}</td><td>${a.interest||''}</td></tr>`})}catch(e){}}
   async function loadPending(){
-    const table=document.getElementById('pendingTable');
-    table.innerHTML='<tr><th>Name</th><th>Email</th><th>Date</th><th>Action</th></tr>';
+    const table=document.getElementById('pendingTable'); table.innerHTML='<tr><th>Name</th><th>Email</th><th>Date</th><th>Action</th></tr>';
     try{
       const snap = await db.collection("users").where("approved","==",false).get();
       if(snap.empty){table.innerHTML+='<tr><td colspan="4" style="text-align:center;padding:20px;color:var(--muted)">No pending approvals 🎉</td></tr>'; return;}
       snap.forEach(doc=>{
-        const d=doc.data();
-        const date = d.createdAt? d.createdAt.toDate().toLocaleDateString() : 'N/A';
+        const d=doc.data(); const date = d.createdAt? d.createdAt.toDate().toLocaleDateString() : 'N/A';
         table.innerHTML+=`<tr><td>${d.displayName||d.fullName||''}</td><td>${d.email||''}</td><td>${date}</td><td><button class="btn btn-green" style="padding:6px 12px;font-size:12px" onclick="approveUser('${doc.id}')">✅ Approve</button> <button class="btn" style="background:#ef4444;color:white;padding:6px 12px;font-size:12px" onclick="rejectUser('${doc.id}')">❌ Reject</button></td></tr>`;
       });
     }catch(e){ table.innerHTML+='<tr><td colspan="4">Error: '+e.message+'</td></tr>'; }
   }
-  async function approveUser(docId){
-    if(!confirm("Approve this user after payment?")) return;
-    try{
-      await db.collection("users").doc(docId).update({approved:true, approvedAt: firebase.firestore.FieldValue.serverTimestamp()});
-      alert("✅ Approved!");
-      loadPending();
-    }catch(e){alert("Error: "+e.message)}
-  }
-  async function rejectUser(docId){
-    if(!confirm("Reject and delete this user?")) return;
-    try{
-      await db.collection("users").doc(docId).delete();
-      alert("Deleted");
-      loadPending();
-    }catch(e){alert("Error: "+e.message)}
-  }
+  async function approveUser(docId){ if(!confirm("Approve this user after payment?")) return; try{ await db.collection("users").doc(docId).update({approved:true, approvedAt: firebase.firestore.FieldValue.serverTimestamp()}); alert("✅ Approved!"); loadPending(); }catch(e){alert("Error: "+e.message)} }
+  async function rejectUser(docId){ if(!confirm("Reject and delete this user?")) return; try{ await db.collection("users").doc(docId).delete(); alert("Deleted"); loadPending(); }catch(e){alert("Error: "+e.message)} }
   function exportCSV(type){let table,filename;if(type==='donations'){table=document.getElementById('donationTable');filename='donations.csv'}else{table=document.getElementById('alumniTable');filename='alumni.csv'}let csv=[];for(let row of table.rows){csv.push([...row.cells].map(cell=>cell.innerText).join(','))}const blob=new Blob([csv.join('\n')],{type:'text/csv'});const url=window.URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click()}
-  function adminLogin(e){e.preventDefault();if(document.getElementById('adminUser').value==='chitekesa2026'&&document.getElementById('adminPass').value==='Chiteke@2026!'){localStorage.setItem('chitekesaAdmin','loggedIn');document.getElementById('adminDashboard').style.display='block';document.getElementById('adminLoginForm').classList.remove('active');document.getElementById('adminLogoutLi').style.display='inline-block';loadDonations();loadAlumni();loadPending();alert('Login Successful!')}else{alert('Invalid Username or Password')}}
-  function adminLogout(){localStorage.removeItem('chitekesaAdmin');document.getElementById('adminDashboard').style.display='none';document.getElementById('adminLogoutLi').style.display='none'}
+  function adminLogin(e){e.preventDefault();if(document.getElementById('adminUser').value==='chitekesa2026'&&document.getElementById('adminPass').value==='Chiteke@2026!'){localStorage.setItem('chitekesaAdmin','loggedIn');document.getElementById('adminDashboard').style.display='block';document.getElementById('adminLoginForm').classList.remove('active');document.getElementById('adminLogoutBtn').style.display='block';loadDonations();loadAlumni();loadPending();alert('Login Successful!')}else{alert('Invalid Username or Password')}}
+  function adminLogout(){localStorage.removeItem('chitekesaAdmin');document.getElementById('adminDashboard').style.display='none';document.getElementById('adminLogoutBtn').style.display='none'}
   function showAdminTab(tabId,event){document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.admin-content').forEach(c=>c.classList.remove('active'));event.target.classList.add('active');document.getElementById(tabId).classList.add('active'); if(tabId==='pendingApprovals') loadPending();}
-  window.onload=function(){if(localStorage.getItem('chitekesaAdmin')==='loggedIn'){document.getElementById('adminDashboard').style.display='block';document.getElementById('adminLogoutLi').style.display='inline-block';loadDonations();loadAlumni();loadPending();}}
+  window.onload=function(){if(localStorage.getItem('chitekesaAdmin')==='loggedIn'){document.getElementById('adminDashboard').style.display='block';document.getElementById('adminLogoutBtn').style.display='block';loadDonations();loadAlumni();loadPending();}}
 </script>
 </body>
-      </html>
+                                                                                                                                   </html>
