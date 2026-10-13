@@ -164,7 +164,6 @@
       <div class="auth-close"><a href="#" onclick="closeFirebaseAuth()">✕ Close</a></div>
     </div>
   </div>
-
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
@@ -182,7 +181,6 @@
   const auth = firebase.auth();
   const db = firebase.firestore();
   let fbIsLogin=false; let pendingRedirect=null;
-
   function openFirebaseAuth(redirectUrl=null){pendingRedirect=redirectUrl; document.getElementById('firebaseAuthModal').style.display='flex';}
   function closeFirebaseAuth(){document.getElementById('firebaseAuthModal').style.display='none';}
   function toggleFbMode(){
@@ -231,7 +229,6 @@
   const WEB_APP_URL="https://script.google.com/macros/s/AKfycbxlg51F7IsuXJUr-kV9DFkhjpCcEHJH0VX6UuBZNaM3UXibPNnLemyNSMoSgwgpcMn5/exec";
   function toggleMenu(){document.getElementById("menu").classList.toggle("active")}
   function toggleForm(id){document.getElementById(id).classList.toggle("active")}
-
   document.getElementById("donationForm").addEventListener("submit",function(e){
     e.preventDefault();
     const form=e.target;
@@ -241,8 +238,6 @@
     .then(()=>{document.getElementById("donationMsg").innerHTML="✅ Thank you!";form.reset();toggleForm('donateForm');loadDonations()})
     .catch(()=>{document.getElementById("donationMsg").innerHTML="❌ Error."})
   });
-
-  // FIXED: Now saves to Sheet + Firestore
   document.getElementById("alumniForm").addEventListener("submit", async function(e){
     e.preventDefault();
     const user=firebase.auth().currentUser;
@@ -271,13 +266,12 @@
       });
       msgEl.innerHTML="✅ Welcome! You now appear in Find Classmate 👥";
       form.reset();
-      setTimeout(()=>{ window.location.href="find-classmate.html"; },1500);
+      setTimeout(()=>{ window.location.href="find-classmates.html"; },1500);
     }catch(err){
       console.error(err);
       msgEl.innerHTML="❌ Error: "+err.message;
     }
   });
-
   async function loadDonations(){const table=document.getElementById('donationTable');try{const res=await fetch(WEB_APP_URL+"?type=donation");const data=await res.json();table.innerHTML='<tr><th>Name</th><th>Donation</th><th>Period</th><th>Phone</th><th>Location</th></tr>';data.donations.forEach(d=>{table.innerHTML+=`<tr><td>${d.name||''}</td><td>${d.donation||''}</td><td>${d.period||''}</td><td>${d.phone||''}</td><td>${d.location||''}</td></tr>`})}catch(e){}}
   async function loadAlumni(){const table=document.getElementById('alumniTable');try{const res=await fetch(WEB_APP_URL+"?type=alumni");const data=await res.json();table.innerHTML='<tr><th>Name</th><th>Grad Year</th><th>Profession</th><th>Phone</th><th>Interest</th></tr>';data.alumni.forEach(a=>{table.innerHTML+=`<tr><td>${a.name||''}</td><td>${a.year||''}</td><td>${a.profession||''}</td><td>${a.phone||''}</td><td>${a.interest||''}</td></tr>`})}catch(e){}}
   function exportCSV(type){let table,filename;if(type==='donations'){table=document.getElementById('donationTable');filename='donations.csv'}else{table=document.getElementById('alumniTable');filename='alumni.csv'}let csv=[];for(let row of table.rows){csv.push([...row.cells].map(cell=>cell.innerText).join(','))}const blob=new Blob([csv.join('\n')],{type:'text/csv'});const url=window.URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click()}
@@ -287,4 +281,4 @@
   window.onload=function(){if(localStorage.getItem('chitekesaAdmin')==='loggedIn'){document.getElementById('adminDashboard').style.display='block';document.getElementById('adminLogoutLi').style.display='inline-block';loadDonations();loadAlumni()}}
 </script>
 </body>
-                                                                            </html>
+                                                          </html>
