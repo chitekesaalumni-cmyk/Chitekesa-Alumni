@@ -9,77 +9,70 @@
     :root { --green:#0f2e1a; --green-light:#123d21; --blue:#003366; --blue-light:#004080; --orange:#FF7A00; --bg:#f5f7fb; --card:#ffffff; --text:#1f2937; --muted:#6b7280; --border:#e5e7eb; }
     *{box-sizing:border-box;margin:0;padding:0}
     body{background:var(--bg);font-family:'Poppins',Arial,sans-serif;color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
-   .container{padding:0 18px;max-width:1000px;margin:0 auto}
-   .header{background:linear-gradient(135deg,var(--green) 0%, var(--green-light) 100%);padding:30px 15px;text-align:center;color:white;box-shadow:0 4px 20px rgba(0,0,0,0.15)}
-   .logo{width:95px;height:95px;background:white;border-radius:50%;margin:0 auto 12px;border:4px solid rgba(255,255,255,0.2);overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.2)}
-   .logo img{width:100%;height:100%;object-fit:cover}
-   .header h1{margin:0;font-size:22px;font-weight:700;letter-spacing:0.5px}
-   .header h4{font-style:italic;font-weight:400;opacity:0.9;margin-top:4px;font-size:14px}
-   .navbar{background:var(--blue);padding:10px 12px;position:sticky;top:0;z-index:999;box-shadow:0 2px 10px rgba(0,0,0,0.2)}
-   .navbar-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0}
-   .menu-toggle{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:white;font-size:14px;padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:600}
+  .container{padding:0 18px;max-width:1000px;margin:0 auto}
+  .header{background:linear-gradient(135deg,var(--green) 0%, var(--green-light) 100%);padding:30px 15px;text-align:center;color:white;box-shadow:0 4px 20px rgba(0,0,0,0.15)}
+  .logo{width:95px;height:95px;background:white;border-radius:50%;margin:0 auto 12px;border:4px solid rgba(255,255,255,0.2);overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.2)}
+  .logo img{width:100%;height:100%;object-fit:cover}
+  .header h1{margin:0;font-size:22px;font-weight:700;letter-spacing:0.5px}
+  .header h4{font-style:italic;font-weight:400;opacity:0.9;margin-top:4px;font-size:14px}
+  .navbar{background:var(--blue);padding:10px 12px;position:sticky;top:0;z-index:999;box-shadow:0 2px 10px rgba(0,0,0,0.2)}
+  .navbar-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0}
+  .menu-toggle{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:white;font-size:14px;padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:600}
     #navOverlay{position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.45); backdrop-filter:blur(2px); z-index:998; display:none;}
     #navOverlay.show{ display:block; }
-   .menu{list-style:none; position:fixed; top:0; left:-100%; width:285px; height:100vh; background: linear-gradient(180deg, #002244, #003366); z-index:999; padding:22px 18px; display:flex; flex-direction:column; gap:2px; transition: left 0.35s cubic-bezier(0.4,0,0.2,1); box-shadow:4px 0 25px rgba(0,0,0,0.3); overflow-y:auto; margin-top:0;}
-   .menu.active{ left:0; }
-   .menu-header{display:flex; justify-content:space-between; align-items:center; padding-bottom:18px; border-bottom:1px solid rgba(255,255,255,0.12); margin-bottom:14px;}
-   .menu-header span{ color:white; font-weight:700; font-size:16px; }
-   .close-menu-btn{background:rgba(255,255,255,0.12); border:none; color:white; width:36px; height:36px; border-radius:50%; cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center;}
-   .close-menu-btn:hover{ background:rgba(255,255,255,0.22); }
-   .menu li{margin:3px 0}
-   .menu a{color:rgba(255,255,255,0.88); text-decoration:none; font-weight:500; font-size:14.5px; padding:11px 14px; display:flex; align-items:center; gap:10px; border-radius:10px; cursor:pointer; transition:all.2s; text-align:left; justify-content:flex-start;}
-   .menu a:hover{background:rgba(255,255,255,0.10); color:white; transform:translateX(4px)}
-   .logout-btn{background:var(--orange);border:none;color:white;padding:9px 16px;border-radius:8px;font-weight:700;cursor:pointer;transition:0.2s; width:100%; margin-top:6px;}
-   .logout-btn:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(255,122,0,0.3)}
-   .user-badge{color:#fde68a;font-weight:700; font-size:13px; padding:8px 14px; display:block;}
+  .menu{list-style:none; position:fixed; top:0; left:-100%; width:285px; height:100vh; background: linear-gradient(180deg, #002244, #003366); z-index:999; padding:22px 18px; display:flex; flex-direction:column; gap:2px; transition: left 0.35s cubic-bezier(0.4,0,0.2,1); box-shadow:4px 0 25px rgba(0,0,0,0.3); overflow-y:auto; margin-top:0;}
+  .menu.active{ left:0; }
+  .menu-header{display:flex; justify-content:space-between; align-items:center; padding-bottom:18px; border-bottom:1px solid rgba(255,255,255,0.12); margin-bottom:14px;}
+  .menu-header span{ color:white; font-weight:700; font-size:16px; }
+  .close-menu-btn{background:rgba(255,255,255,0.12); border:none; color:white; width:36px; height:36px; border-radius:50%; cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center;}
+  .menu li{margin:3px 0}
+  .menu a{color:rgba(255,255,255,0.88); text-decoration:none; font-weight:500; font-size:14.5px; padding:11px 14px; display:flex; align-items:center; gap:10px; border-radius:10px; cursor:pointer; transition:all.2s; text-align:left; justify-content:flex-start;}
+  .menu a:hover{background:rgba(255,255,255,0.10); color:white; transform:translateX(4px)}
+  .logout-btn{background:var(--orange);border:none;color:white;padding:9px 16px;border-radius:8px;font-weight:700;cursor:pointer;transition:0.2s; width:100%; margin-top:6px;}
+  .user-badge{color:#fde68a;font-weight:700; font-size:13px; padding:8px 14px; display:block;}
     main{padding:35px 0}
-   .hero-card{background:var(--card);border-radius:16px;padding:24px;box-shadow:0 6px 24px rgba(0,0,0,0.06);border:1px solid var(--border);margin-bottom:24px}
+  .hero-card{background:var(--card);border-radius:16px;padding:24px;box-shadow:0 6px 24px rgba(0,0,0,0.06);border:1px solid var(--border);margin-bottom:24px}
     h2{color:var(--blue);font-size:22px;margin-bottom:8px;font-weight:700}
     h3{color:var(--green);font-size:18px;margin:24px 0 12px;font-weight:600}
-    h4{color:var(--white)}
     h5{font-weight:400;color:var(--muted);margin-bottom:20px;font-size:15px}
-   .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 22px;border-radius:10px;text-decoration:none;font-weight:600;font-size:15px;border:none;cursor:pointer;transition:all 0.2s ease;margin:6px 5px;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
-   .btn:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,0.12)}
-   .btn-primary{background:linear-gradient(135deg,var(--orange),#ff9a2e);color:white}
-   .btn-whatsapp{background:#128C7E;color:white}
-   .btn-green{background:var(--green-light);color:white}
-   .btn-blue{background:var(--blue-light);color:white}
-   .collapsible{display:none;margin-top:16px;padding:22px;background:var(--card);border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,0.07);border:1px solid var(--border);animation:fadeIn.3s ease}
-   .collapsible.active{display:block}
+  .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 22px;border-radius:10px;text-decoration:none;font-weight:600;font-size:15px;border:none;cursor:pointer;transition:all 0.2s ease;margin:6px 5px;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+  .btn-primary{background:linear-gradient(135deg,var(--orange),#ff9a2e);color:white}
+  .btn-whatsapp{background:#128C7E;color:white}
+  .btn-green{background:var(--green-light);color:white}
+  .btn-blue{background:var(--blue-light);color:white}
+  .collapsible{display:none;margin-top:16px;padding:22px;background:var(--card);border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,0.07);border:1px solid var(--border);animation:fadeIn.3s ease}
+  .collapsible.active{display:block}
     @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
     form label{display:block;font-weight:600;margin-top:14px;margin-bottom:6px;font-size:14px;color:var(--text)}
     form input,form select,form textarea{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:10px;font-family:'Poppins',sans-serif;font-size:14px;background:#fcfcfd;transition:all.2s}
     form input:focus,form select:focus,form textarea:focus{outline:none;border-color:var(--blue-light);box-shadow:0 0 0 4px rgba(0,64,128,0.1);background:white}
     form button[type="submit"]{background:var(--green-light);color:white;width:100%;margin-top:18px;padding:13px}
-   .executive{background:var(--card);padding:18px;border-radius:14px;text-align:center;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,0.06);border:1px solid var(--border);transition:.2s}
-   .executive:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,0.1)}
-   .executive img{width:92px;height:92px;border-radius:50%;object-fit:cover;border:3px solid var(--green);margin-bottom:10px}
-   .gallery img{width:100%;border-radius:14px;margin:10px 0;box-shadow:0 4px 18px rgba(0,0,0,0.08)}
+  .executive{background:var(--card);padding:18px;border-radius:14px;text-align:center;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,0.06);border:1px solid var(--border);transition:.2s}
+  .executive img{width:92px;height:92px;border-radius:50%;object-fit:cover;border:3px solid var(--green);margin-bottom:10px}
+  .gallery img{width:100%;border-radius:14px;margin:10px 0;box-shadow:0 4px 18px rgba(0,0,0,0.08)}
     footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;margin-top:50px;border-top:4px solid var(--green)}
-   .admin-tabs{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap}
-   .admin-tab{background:white;border:1px solid var(--border);color:var(--text);padding:10px 16px;border-radius:10px;cursor:pointer;font-weight:600;font-size:14px}
-   .admin-tab.active{background:var(--blue);color:white;border-color:var(--blue)}
-   .admin-content{display:none;background:white;padding:20px;border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,0.06)}
-   .admin-content.active{display:block}
-   .admin-table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13px}
-   .admin-table th,.admin-table td{border:1px solid var(--border);padding:10px;text-align:left}
-   .admin-table th{background:#f8fafc;color:var(--blue);font-weight:600}
+  .admin-tabs{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap}
+  .admin-tab{background:white;border:1px solid var(--border);color:var(--text);padding:10px 16px;border-radius:10px;cursor:pointer;font-weight:600;font-size:14px}
+  .admin-tab.active{background:var(--blue);color:white;border-color:var(--blue)}
+  .admin-content{display:none;background:white;padding:20px;border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,0.06)}
+  .admin-content.active{display:block}
+  .admin-table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13px}
+  .admin-table th,.admin-table td{border:1px solid var(--border);padding:10px;text-align:left}
+  .admin-table th{background:#f8fafc;color:var(--blue);font-weight:600}
     #firebaseAuthModal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10, 25, 41, 0.75);backdrop-filter:blur(6px);display:none;justify-content:center;align-items:center;z-index:2000;padding:16px}
-   .auth-box{background:white;padding:28px 24px;border-radius:20px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,0.3);animation:modalPop.35s cubic-bezier(0.34, 1.56, 0.64, 1)}
+  .auth-box{background:white;padding:28px 24px;border-radius:20px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,0.3);animation:modalPop.35s cubic-bezier(0.34, 1.56, 0.64, 1)}
     @keyframes modalPop{from{opacity:0;transform:scale(0.9) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
-   .auth-box h2{font-size:22px;text-align:center;color:var(--blue);margin-bottom:6px}
-   .auth-subtitle{font-size:13px;color:var(--muted);text-align:center;margin-bottom:20px;line-height:1.5;background:#f8fafc;padding:10px;border-radius:10px}
-   .auth-field{margin-bottom:16px}
-   .auth-field label{display:block;font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px}
-   .auth-field input{width:100%;padding:13px 14px;border-radius:12px;border:1.5px solid var(--border);font-size:14px;background:#f9fafb;transition:.2s}
-   .auth-field input:focus{background:white;border-color:var(--blue-light);box-shadow:0 0 0 4px rgba(0,64,128,0.1);outline:none}
-   .auth-btn{width:100%;background:linear-gradient(135deg,var(--orange),#ff9a2e);color:white;border:none;padding:14px;border-radius:12px;font-weight:700;font-size:15px;cursor:pointer;margin-top:8px;box-shadow:0 6px 16px rgba(255,122,0,0.3);transition:.2s}
-   .auth-btn:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(255,122,0,0.4)}
-   .auth-links{text-align:center;margin-top:18px}
-   .auth-links a{color:var(--blue-light);font-weight:600;text-decoration:none;font-size:14px}
-   .auth-links a:hover{text-decoration:underline}
-   .auth-close{text-align:center;margin-top:12px}
-   .auth-close a{color:var(--muted);font-size:13px;text-decoration:none}
+  .auth-box h2{font-size:22px;text-align:center;color:var(--blue);margin-bottom:6px}
+  .auth-subtitle{font-size:13px;color:var(--muted);text-align:center;margin-bottom:20px;line-height:1.5;background:#f8fafc;padding:10px;border-radius:10px}
+  .auth-field{margin-bottom:16px}
+  .auth-field label{display:block;font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px}
+  .auth-field input{width:100%;padding:13px 14px;border-radius:12px;border:1.5px solid var(--border);font-size:14px;background:#f9fafb;transition:.2s}
+  .auth-field input:focus{background:white;border-color:var(--blue-light);box-shadow:0 0 0 4px rgba(0,64,128,0.1);outline:none}
+  .auth-btn{width:100%;background:linear-gradient(135deg,var(--orange),#ff9a2e);color:white;border:none;padding:14px;border-radius:12px;font-weight:700;font-size:15px;cursor:pointer;margin-top:8px;box-shadow:0 6px 16px rgba(255,122,0,0.3);transition:.2s}
+  .auth-links{text-align:center;margin-top:18px}
+  .auth-links a{color:var(--blue-light);font-weight:600;text-decoration:none;font-size:14px}
+  .auth-close{text-align:center;margin-top:12px}
+  .auth-close a{color:var(--muted);font-size:13px;text-decoration:none}
   </style>
 </head>
 <body>
@@ -96,10 +89,7 @@
   </nav>
   <div id="navOverlay" onclick="toggleMenu()"></div>
   <ul id="menu" class="menu">
-    <li class="menu-header">
-      <span>📚 Navigation</span>
-      <button class="close-menu-btn" onclick="toggleMenu()">❌</button>
-    </li>
+    <li class="menu-header"><span>📚 Navigation</span><button class="close-menu-btn" onclick="toggleMenu()">❌</button></li>
     <li><a href="index.html">🏠 Home</a></li>
     <li><a href="Chitekesa about.html">👥 About</a></li>
     <li><a href="Chitekesa contact.html">📞 Contact</a></li>
@@ -174,8 +164,8 @@
       <div class="auth-field"><label>Registration Code *</label><input type="text" id="fbRegCode" placeholder="e.g. CHT-R-26-001" style="text-transform:uppercase; letter-spacing:1px; font-weight:600;"></div>
       <button class="auth-btn" id="fbActionBtn" onclick="handleFirebaseAuth()">Create Account</button>
       <p id="fbMsg" style="text-align:center;font-size:13px;margin-top:12px;font-weight:600"></p>
-      <div class="auth-links"><a href="#" onclick="toggleFbMode()" id="fbToggleText">Already have an account? Login</a></div>
-      <div class="auth-close"><a href="#" onclick="closeFirebaseAuth()">✕ Close</a></div>
+      <div class="auth-links"><a href="#" onclick="toggleFbMode(); return false;" id="fbToggleText">Already have an account? Login</a></div>
+      <div class="auth-close"><a href="#" onclick="closeFirebaseAuth(); return false;">✕ Close</a></div>
     </div>
   </div>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
@@ -209,55 +199,68 @@
     const pass=document.getElementById('fbPassword').value.trim();
     const name=document.getElementById('fbName').value.trim();
     const regCodeEl=document.getElementById('fbRegCode');
-    const regCode=regCodeEl? regCodeEl.value.trim().toUpperCase() : "";
+    const raw=regCodeEl?regCodeEl.value:"";
+    const regCode=raw.trim().toUpperCase();
     const msg=document.getElementById('fbMsg');
+    const btn=document.getElementById('fbActionBtn');
     if(!email||!pass){msg.style.color="red";msg.innerText="⚠️ Fill email and password";return}
     if(!regCode){msg.style.color="red";msg.innerText="⚠️ Enter Registration Code given after payment";return}
     msg.style.color="#003366"; msg.innerText="Verifying registration code...";
+    btn.disabled=true; btn.innerText="Checking...";
     try{
-      const codeSnap = await db.collection("registration_codes").where("code","==",regCode).get();
-      if(codeSnap.empty){
-        msg.style.color="red";msg.innerText="❌ Invalid Registration Code. Contact Admin.";
-        return;
+      let codeDoc=null; let codeData=null;
+      try{
+        const d=await db.collection("registration_codes").doc(regCode).get();
+        if(d.exists){codeDoc=d; codeData=d.data();}
+      }catch(e){}
+      if(!codeData){
+        try{
+          const s=await db.collection("registration_codes").where("code","==",regCode).limit(1).get();
+          if(!s.empty){codeDoc=s.docs[0]; codeData=s.docs[0].data();}
+        }catch(e){}
       }
-      const codeDoc = codeSnap.docs[0];
-      const codeData = codeDoc.data();
-      if(codeData.used===true && codeData.usedBy && codeData.usedBy.toLowerCase()!==email.toLowerCase()){
-        msg.style.color="red";msg.innerText="❌ This code already used by another member.";
-        return;
+      if(!codeData){
+        try{
+          const all=await db.collection("registration_codes").get();
+          all.forEach(doc=>{
+            const v=(doc.data().code||"").toString().trim().toUpperCase();
+            if(v===regCode){codeDoc=doc; codeData=doc.data();}
+          });
+        }catch(e){}
       }
-      msg.style.color="#003366"; msg.innerText="Please wait...";
-      if(fbIsLogin){
-        await auth.signInWithEmailAndPassword(email,pass);
-        if(!codeData.used){
-          await codeDoc.ref.update({ used:true, usedBy:email, usedAt: firebase.firestore.FieldValue.serverTimestamp() });
+      if(!codeData){
+        msg.style.color="red";msg.innerText="❌ Invalid Registration Code: "+regCode+" not found. Contact Admin.";
+        btn.disabled=false; btn.innerText=fbIsLogin?"Login Now":"Create Account"; return;
+      }
+      if(codeData.used===true){
+        const usedBy=(codeData.usedBy||"").toLowerCase();
+        if(usedBy && usedBy!==email.toLowerCase()){
+          msg.style.color="red";msg.innerText="❌ This code already used by another member.";
+          btn.disabled=false; btn.innerText=fbIsLogin?"Login Now":"Create Account"; return;
         }
+      }
+      if(fbIsLogin){
+        msg.innerText="Logging in...";
+        await auth.signInWithEmailAndPassword(email,pass);
+        if(!codeData.used){await codeDoc.ref.update({used:true, usedBy:email, usedAt: firebase.firestore.FieldValue.serverTimestamp()});}
         msg.style.color="green";msg.innerText="✅ Login success! Code verified.";
         setTimeout(()=>{closeFirebaseAuth(); if(pendingRedirect) window.location.href=pendingRedirect; else location.reload()},800);
-      } else {
-        if(!name){msg.style.color="red";msg.innerText="⚠️ Enter your full name";return}
-        const cred = await auth.createUserWithEmailAndPassword(email,pass);
+      }else{
+        if(!name){msg.style.color="red";msg.innerText="⚠️ Enter your full name"; btn.disabled=false; btn.innerText="Create Account"; return}
+        msg.innerText="Creating account...";
+        const cred=await auth.createUserWithEmailAndPassword(email,pass);
         await cred.user.updateProfile({displayName:name});
-        await db.collection("registration_codes").doc(codeDoc.id).update({
-          used:true, usedBy:email, usedByName:name, usedAt: firebase.firestore.FieldValue.serverTimestamp()
-        });
+        await codeDoc.ref.update({used:true, usedBy:email, usedByName:name, usedAt: firebase.firestore.FieldValue.serverTimestamp()});
         msg.style.color="green";msg.innerText="✅ Account created! Code verified.";
         setTimeout(()=>{closeFirebaseAuth(); if(pendingRedirect) window.location.href=pendingRedirect; else location.reload()},800);
       }
     }catch(e){
       msg.style.color="red";msg.innerText="❌ "+e.message;
+      btn.disabled=false; btn.innerText=fbIsLogin?"Login Now":"Create Account";
     }
   }
-  function requireAuth(url){
-    const user=auth.currentUser;
-    if(!user){openFirebaseAuth(url); return;}
-    window.location.href=url;
-  }
-  function handleProtectedClick(formId){
-    const user=auth.currentUser;
-    if(!user){openFirebaseAuth(); return;}
-    toggleForm(formId);
-  }
+  function requireAuth(url){const user=auth.currentUser; if(!user){openFirebaseAuth(url); return;} window.location.href=url;}
+  function handleProtectedClick(formId){const user=auth.currentUser; if(!user){openFirebaseAuth(); return;} toggleForm(formId);}
   function firebaseLogout(){auth.signOut().then(()=>location.reload())}
   auth.onAuthStateChanged(user=>{
     if(user){
@@ -271,53 +274,22 @@
 </script>
 <script>
   const WEB_APP_URL="https://script.google.com/macros/s/AKfycbxlg51F7IsuXJUr-kV9DFkhjpCcEHJH0VX6UuBZNaM3UXibPNnLemyNSMoSgwgpcMn5/exec";
-  function toggleMenu(){
-    document.getElementById("menu").classList.toggle("active");
-    document.getElementById("navOverlay").classList.toggle("show");
-  }
+  function toggleMenu(){document.getElementById("menu").classList.toggle("active");document.getElementById("navOverlay").classList.toggle("show");}
   function toggleForm(id){document.getElementById(id).classList.toggle("active")}
   document.getElementById("donationForm").addEventListener("submit",function(e){
-    e.preventDefault();
-    const form=e.target;
-    document.getElementById("donationMsg").innerHTML="Submitting...";
+    e.preventDefault();const form=e.target;document.getElementById("donationMsg").innerHTML="Submitting...";
     const data={type:"donation",name:form.fullName.value,gender:form.gender.value,donation:form.donationType.value,period:form.donationPeriod.value,phone:form.phone.value,email:form.email.value,location:form.location.value};
-    fetch(WEB_APP_URL,{method:"POST",mode:"no-cors",body:JSON.stringify(data)})
-   .then(()=>{document.getElementById("donationMsg").innerHTML="✅ Thank you!";form.reset();toggleForm('donateForm');loadDonations()})
-   .catch(()=>{document.getElementById("donationMsg").innerHTML="❌ Error."})
+    fetch(WEB_APP_URL,{method:"POST",mode:"no-cors",body:JSON.stringify(data)}).then(()=>{document.getElementById("donationMsg").innerHTML="✅ Thank you!";form.reset();toggleForm('donateForm');loadDonations()}).catch(()=>{document.getElementById("donationMsg").innerHTML="❌ Error."})
   });
   document.getElementById("alumniForm").addEventListener("submit", async function(e){
-    e.preventDefault();
-    const user=firebase.auth().currentUser;
-    if(!user){openFirebaseAuth();return}
-    const form=e.target;
-    const msgEl=document.getElementById("alumniMsg");
-    msgEl.innerHTML="Submitting... Please wait...";
+    e.preventDefault();const user=firebase.auth().currentUser; if(!user){openFirebaseAuth();return}
+    const form=e.target;const msgEl=document.getElementById("alumniMsg");msgEl.innerHTML="Submitting... Please wait...";
     const data={type:"alumni",name:form.fullName.value,gender:form.gender.value,year:form.gradYear.value,class:form.class.value,phone:form.phone.value,whatsapp:form.whatsapp.value,profession:form.profession.value,interest:form.interest.value,message:form.message.value,accountEmail:user.email};
     try{
       fetch(WEB_APP_URL,{method:"POST",mode:"no-cors",body:JSON.stringify(data)});
-      await db.collection("users").add({
-        displayName: data.name,
-        fullName: data.name,
-        gradYear: data.year,
-        year: data.year,
-        class: data.class,
-        career: data.profession,
-        profession: data.profession,
-        phone: data.phone,
-        whatsapp: data.whatsapp,
-        interest: data.interest,
-        message: data.message,
-        email: user.email,
-        uid: user.uid,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-      msgEl.innerHTML="✅ Welcome! You now appear in Find Classmate 👥";
-      form.reset();
-      setTimeout(()=>{ window.location.href="find-classmates.html"; },1500);
-    }catch(err){
-      console.error(err);
-      msgEl.innerHTML="❌ Error: "+err.message;
-    }
+      await db.collection("users").add({displayName:data.name,fullName:data.name,gradYear:data.year,year:data.year,class:data.class,career:data.profession,profession:data.profession,phone:data.phone,whatsapp:data.whatsapp,interest:data.interest,message:data.message,email:user.email,uid:user.uid,createdAt: firebase.firestore.FieldValue.serverTimestamp()});
+      msgEl.innerHTML="✅ Welcome! You now appear in Find Classmate 👥";form.reset();setTimeout(()=>{window.location.href="find-classmates.html";},1500);
+    }catch(err){msgEl.innerHTML="❌ Error: "+err.message;}
   });
   async function loadDonations(){const table=document.getElementById('donationTable');try{const res=await fetch(WEB_APP_URL+"?type=donation");const data=await res.json();table.innerHTML='<tr><th>Name</th><th>Donation</th><th>Period</th><th>Phone</th><th>Location</th></tr>';data.donations.forEach(d=>{table.innerHTML+=`<tr><td>${d.name||''}</td><td>${d.donation||''}</td><td>${d.period||''}</td><td>${d.phone||''}</td><td>${d.location||''}</td></tr>`})}catch(e){}}
   async function loadAlumni(){const table=document.getElementById('alumniTable');try{const res=await fetch(WEB_APP_URL+"?type=alumni");const data=await res.json();table.innerHTML='<tr><th>Name</th><th>Grad Year</th><th>Profession</th><th>Phone</th><th>Interest</th></tr>';data.alumni.forEach(a=>{table.innerHTML+=`<tr><td>${a.name||''}</td><td>${a.year||''}</td><td>${a.profession||''}</td><td>${a.phone||''}</td><td>${a.interest||''}</td></tr>`})}catch(e){}}
@@ -328,4 +300,4 @@
   window.onload=function(){if(localStorage.getItem('chitekesaAdmin')==='loggedIn'){document.getElementById('adminDashboard').style.display='block';document.getElementById('adminLogoutLi').style.display='block';loadDonations();loadAlumni()}}
 </script>
 </body>
-                                                                                                                                                                                       </html>
+                                                                                                                                                                                                           </html>
