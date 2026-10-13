@@ -4,21 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Education Corner - Chitekesa Alumni</title>
-<link rel="stylesheet" href="style.css">
 <style>
-.education-hero { background: linear-gradient(135deg, #0f4c75, #3282b8); color:white; padding:60px 20px; text-align:center; position:relative; }
-.admin-bar { position:absolute; top:15px; right:15px; }
-.admin-btn { background:rgba(255,255,255,0.2); color:white; border:1px solid white; padding:8px 15px; border-radius:20px; cursor:pointer; font-size:12px; }
-#shareBtnMain { display:none; }
-.search-box { max-width:600px; margin:25px auto 0; display:flex; gap:10px; }
-.search-box input { flex:1; padding:14px 20px; border-radius:30px; border:none; outline:none; }
-.filter-bar { display:flex; gap:10px; overflow-x:auto; padding:20px; max-width:1200px; margin:auto; }
+body { margin:0; font-family: 'Segoe UI', sans-serif; background:#f5f7fb; }
+.education-hero { background: linear-gradient(135deg, #0f4c75, #3282b8); color:white; padding:70px 20px 40px; text-align:center; position:relative; }
+.admin-bar { position:absolute; top:15px; right:15px; display:flex; align-items:center; gap:8px; }
+.admin-btn { background:rgba(255,255,255,0.2); color:white; border:1px solid white; padding:8px 15px; border-radius:20px; cursor:pointer; font-size:12px; backdrop-filter:blur(5px); }
+.admin-btn:hover { background:white; color:#0f4c75; }
+#shareBtnMain { display:none; background:white; color:#0f4c75; padding:14px 25px; border-radius:30px; border:none; font-weight:bold; cursor:pointer; }
+.search-box { max-width:600px; margin:25px auto 0; display:flex; gap:10px; justify-content:center; }
+.search-box input { flex:1; max-width:400px; padding:14px 20px; border-radius:30px; border:none; outline:none; }
+.filter-bar { display:flex; gap:10px; overflow-x:auto; padding:20px; max-width:1200px; margin:auto; scrollbar-width:none; }
 .filter-chip { white-space:nowrap; padding:8px 18px; border-radius:30px; border:2px solid #0f4c75; background:white; color:#0f4c75; font-weight:bold; cursor:pointer; }
 .filter-chip.active { background:#0f4c75; color:white; }
-.edu-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px; padding:20px 30px 40px; max-width:1200px; margin:auto; }
+.edu-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px; padding:20px 30px 60px; max-width:1200px; margin:auto; }
 .edu-card { background:white; border-radius:16px; padding:22px; box-shadow:0 10px 25px rgba(0,0,0,0.08); border-top:4px solid #3282b8; display:flex; flex-direction:column; }
-.edu-tag { display:inline-block; background:#e3f2fd; color:#0f4c75; padding:4px 12px; border-radius:20px; font-size:11px; font-weight:bold; margin-bottom:8px; }
+.edu-tag { display:inline-block; background:#e3f2fd; color:#0f4c75; padding:4px 12px; border-radius:20px; font-size:11px; font-weight:bold; margin-bottom:10px; }
 .btn-download { margin-top:auto; display:inline-block; background:#0f4c75; color:white; padding:10px 20px; border-radius:8px; text-decoration:none; text-align:center; font-weight:bold; }
+.btn-download:hover { background:#08304d; }
 </style>
 </head>
 <body>
@@ -26,13 +28,13 @@
   <div class="admin-bar">
     <button id="adminLoginBtn" class="admin-btn" onclick="openAdminLogin()">🔐 Admin Login</button>
     <button id="adminLogoutBtn" class="admin-btn" onclick="adminLogout()" style="display:none;">Logout</button>
-    <span id="adminStatus" style="font-size:11px; margin-left:8px;"></span>
+    <span id="adminStatus" style="font-size:11px;"></span>
   </div>
   <h1>📚 Education Corner</h1>
   <p>Past Papers, Books, Notes & Career Resources by Alumni</p>
   <div class="search-box">
     <input id="searchInput" placeholder="Search e.g. Biology 2023..." onkeyup="filterCards()">
-    <button id="shareBtnMain" onclick="document.getElementById('uploadModal').style.display='flex'" style="padding:14px 25px; border-radius:30px; border:none; background:white; color:#0f4c75; font-weight:bold; cursor:pointer;">+ Share (Admin)</button>
+    <button id="shareBtnMain" onclick="document.getElementById('uploadModal').style.display='flex'">+ Share (Admin)</button>
   </div>
 </div>
 
@@ -49,19 +51,21 @@
 
 <div class="edu-grid" id="eduGrid"><p style="grid-column:1/-1; text-align:center;">Loading resources...</p></div>
 
+<!-- Admin Login Modal -->
 <div id="adminLoginModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:2000;">
   <div style="background:white; padding:30px; border-radius:16px; width:90%; max-width:380px;">
     <h3>🔐 Admin Login</h3>
     <input id="adminEmail" type="email" placeholder="Admin Email" value="chitekesaalumni@gmail.com" style="width:100%; padding:12px; margin:10px 0; border-radius:8px; border:1px solid #ddd;">
     <input id="adminPass" type="password" placeholder="Password" style="width:100%; padding:12px; margin:10px 0; border-radius:8px; border:1px solid #ddd;">
-    <button onclick="adminLogin()" style="width:100%; padding:12px; background:#0f4c75; color:white; border:none; border-radius:8px; font-weight:bold;">Login</button>
-    <button onclick="document.getElementById('adminLoginModal').style.display='none'" style="width:100%; padding:10px; margin-top:10px; background:#eee; border:none; border-radius:8px;">Cancel</button>
+    <button onclick="adminLogin()" style="width:100%; padding:12px; background:#0f4c75; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Login</button>
+    <button onclick="document.getElementById('adminLoginModal').style.display='none'" style="width:100%; padding:10px; margin-top:10px; background:#eee; border:none; border-radius:8px; cursor:pointer;">Cancel</button>
   </div>
 </div>
 
+<!-- Upload Modal -->
 <div id="uploadModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000; overflow:auto; padding:20px;">
   <div style="background:white; padding:30px; border-radius:16px; width:95%; max-width:450px;">
-    <h3>Share Resource (Admin)</h3>
+    <h3>Share Resource (Admin Only)</h3>
     <input id="resTitle" placeholder="Title e.g. Biology MSCE 2023" style="width:100%; padding:12px; margin:8px 0; border-radius:8px; border:1px solid #ddd;">
     <div style="display:flex; gap:10px;">
       <select id="resType" style="flex:1; padding:12px; margin:8px 0; border-radius:8px; border:1px solid #ddd;">
@@ -78,8 +82,8 @@
     <input id="resLink" placeholder="Google Drive link" style="width:100%; padding:12px; margin:8px 0; border-radius:8px; border:1px solid #ddd;">
     <textarea id="resDesc" placeholder="Short description" style="width:100%; padding:12px; margin:8px 0; border-radius:8px; border:1px solid #ddd; height:60px;"></textarea>
     <div id="uploadProgress" style="display:none; font-size:12px; color:#0f4c75; text-align:center; margin:8px 0;">Uploading... please wait</div>
-    <button onclick="saveResource()" id="publishBtn" style="width:100%; padding:13px; background:#0f4c75; color:white; border:none; border-radius:8px; font-weight:bold;">Publish Resource</button>
-    <button onclick="document.getElementById('uploadModal').style.display='none'" style="width:100%; padding:10px; margin-top:10px; background:#eee; border:none; border-radius:8px;">Cancel</button>
+    <button onclick="saveResource()" id="publishBtn" style="width:100%; padding:13px; background:#0f4c75; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Publish Resource</button>
+    <button onclick="document.getElementById('uploadModal').style.display='none'" style="width:100%; padding:10px; margin-top:10px; background:#eee; border:none; border-radius:8px; cursor:pointer;">Cancel</button>
   </div>
 </div>
 
@@ -132,9 +136,13 @@ onAuthStateChanged(auth, (user)=>{
 
 window.openAdminLogin = ()=> document.getElementById('adminLoginModal').style.display='flex';
 window.adminLogin = async ()=>{
-  const email = document.getElementById('adminEmail').value;
+  const email = document.getElementById('adminEmail').value.trim();
   const pass = document.getElementById('adminPass').value;
-  try{ await signInWithEmailAndPassword(auth, email, pass); document.getElementById('adminLoginModal').style.display='none'; alert("Welcome Admin!"); }
+  try{
+    await signInWithEmailAndPassword(auth, email, pass);
+    document.getElementById('adminLoginModal').style.display='none';
+    alert("Welcome Admin! ✅");
+  }
   catch(e){ alert("Login failed: " + e.message); }
 };
 window.adminLogout = async ()=>{ await signOut(auth); alert("Logged out"); };
@@ -143,8 +151,9 @@ async function loadResources(){
   try{
     const q = query(collection(db, "education_resources"), orderBy("createdAt","desc"));
     const snap = await getDocs(q);
-    allResources = []; snap.forEach(d=>allResources.push({id:d.id,...d.data()}));
-  }catch(e){}
+    allResources = [];
+    snap.forEach(d=>allResources.push({id:d.id,...d.data()}));
+  }catch(e){ console.log(e); }
   if(allResources.length===0){
     allResources = [
       {title:"Biology MSCE 2023 Past Paper", type:"MSCE Past Paper", subject:"Biology", year:"2023", link:"#", desc:"Full past paper with marking key."},
@@ -159,15 +168,15 @@ function render(){
   const search = document.getElementById('searchInput').value.toLowerCase();
   let filtered = allResources.filter(r=>{
     const matchFilter = currentFilter==="All" || r.type===currentFilter;
-    const matchSearch = (r.title+" "+r.subject+" "+r.year).toLowerCase().includes(search);
+    const matchSearch = (r.title+" "+(r.subject||"")+" "+(r.year||"")).toLowerCase().includes(search);
     return matchFilter && matchSearch;
   });
-  if(filtered.length===0){ grid.innerHTML='<p style="grid-column:1/-1; text-align:center;">No resources yet.</p>'; return; }
+  if(filtered.length===0){ grid.innerHTML='<p style="grid-column:1/-1; text-align:center; padding:40px;">No resources found.</p>'; return; }
   grid.innerHTML = filtered.map(r=>`
     <div class="edu-card">
       <span class="edu-tag">${r.type} • ${r.subject||'General'} ${r.year||''}</span>
-      <h3>${r.title}</h3>
-      <p style="font-size:14px; color:#555; margin:8px 0;">${r.desc||''}</p>
+      <h3 style="margin:5px 0;">${r.title}</h3>
+      <p style="font-size:14px; color:#555; margin:8px 0 15px;">${r.desc||''}</p>
       <a href="${r.link}" target="_blank" class="btn-download">Download / View</a>
     </div>
   `).join('');
@@ -175,7 +184,8 @@ function render(){
 window.setFilter = (type, btn)=>{
   currentFilter = type;
   document.querySelectorAll('.filter-chip').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active'); render();
+  btn.classList.add('active');
+  render();
 };
 window.filterCards = render;
 
@@ -186,13 +196,20 @@ window.saveResource = async ()=>{
   const btn = document.getElementById('publishBtn');
   let finalLink = document.getElementById('resLink').value.trim();
   if(fileInput.files.length>0){
-    progress.style.display='block'; btn.disabled=true; btn.textContent='Uploading...';
+    progress.style.display='block';
+    btn.disabled=true;
+    btn.textContent='Uploading...';
     try{
       const file = fileInput.files[0];
       const storageRef = ref(storage, 'education/'+ Date.now() + '_' + file.name);
       await uploadBytes(storageRef, file);
       finalLink = await getDownloadURL(storageRef);
-    }catch(e){ progress.style.display='none'; btn.disabled=false; btn.textContent='Publish Resource'; return alert("Upload failed: "+e.message); }
+    }catch(e){
+      progress.style.display='none';
+      btn.disabled=false;
+      btn.textContent='Publish Resource';
+      return alert("Upload failed: "+e.message);
+    }
   }
   const data = {
     title: document.getElementById('resTitle').value.trim(),
@@ -204,10 +221,20 @@ window.saveResource = async ()=>{
     createdAt: new Date(),
     uploadedBy: auth.currentUser.email
   };
-  if(!data.title ||!data.link) { btn.disabled=false; btn.textContent='Publish Resource'; progress.style.display='none'; return alert("Title and file/link required!"); }
-  await addDoc(collection(db, "education_resources"), data);
-  progress.style.display='none'; btn.disabled=false;
-  alert("Published! ✅"); document.getElementById('uploadModal').style.display='none'; loadResources();
+  if(!data.title ||!data.link) {
+    btn.disabled=false;
+    btn.textContent='Publish Resource';
+    progress.style.display='none';
+    return alert("Title and file/link required!");
+  }
+  try{
+    await addDoc(collection(db, "education_resources"), data);
+    progress.style.display='none';
+    btn.disabled=false;
+    alert("Published! ✅");
+    document.getElementById('uploadModal').style.display='none';
+    loadResources();
+  }catch(e){ alert("Error: "+e.message); btn.disabled=false; progress.style.display='none'; }
 };
 loadResources();
 </script>
