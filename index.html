@@ -219,7 +219,6 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
     document.getElementById('nameField').style.display=fbIsLogin?"none":"block";
     document.getElementById('fbMsg').innerText="";
   }
-  // === FIXED: No tampering, only logic fix ===
   async function handleFirebaseAuth(){
     const email=document.getElementById('fbEmail').value.trim();
     const pass=document.getElementById('fbPassword').value.trim();
@@ -236,29 +235,30 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
         const cred = await auth.signInWithEmailAndPassword(email,pass);
         const docRef = await db.collection("users").doc(cred.user.uid).get();
         if(docRef.exists && docRef.data().approved===false){
-          msg.style.color="#92400e"; msg.innerText="⏳ Account pending approval. Please send payment proof to Admin.";
-          btn.disabled=false; btn.innerText="Login Now"; return;
+          msg.style.color="#92400e"; msg.innerText="⏳ Your account is pending. Please send payment proof to Admin. Logging out...";
+          btn.disabled=false; btn.innerText="Login Now";
+          setTimeout(async ()=>{ await auth.signOut(); closeFirebaseAuth(); document.getElementById('pendingBox').style.display='block'; document.getElementById('notLoggedBox').style.display='none'; location.reload(); }, 2000);
+          return;
         }
         msg.style.color="green";msg.innerText="✅ Login success!";
         setTimeout(()=>{closeFirebaseAuth(); if(pendingRedirect) window.location.href=pendingRedirect; else location.reload()},800);
       } else {
         const cred = await auth.createUserWithEmailAndPassword(email,pass);
         await cred.user.updateProfile({displayName:name});
-        // FIXED: doc(uid).set instead of add() - fixes Missing permissions
         await db.collection("users").doc(cred.user.uid).set({
           displayName: name, fullName: name, email: email.toLowerCase(),
           uid: cred.user.uid, approved: false,
           createdAt: firebase.firestore.FieldValue.serverTimestamp()
         }, {merge:true});
-        msg.style.color="green"; msg.innerHTML="✅ Account created! <br>⏳ Pending approval. Send payment proof to <b>Admin</b>";
-        btn.disabled=false; btn.innerText="Create Account";
-        setTimeout(()=>{closeFirebaseAuth(); location.reload();},2500);
+        msg.style.color="green"; msg.innerHTML="✅ Account created! <br>⏳ Your account is pending. Send payment proof to Admin. Logging out...";
+        btn.disabled=false; btn.innerText="Account Created";
+        setTimeout(async ()=>{ await auth.signOut(); closeFirebaseAuth(); location.reload(); }, 2500);
       }
     } catch(e){ 
-      // FIXED: Show pending message instead of permission error
       if(e.code==='permission-denied' || e.message.includes('Missing or insufficient permissions')){
         msg.style.color="#92400e";
         msg.innerHTML="⏳ Your account is pending. Please send payment proof to Admin.";
+        setTimeout(async ()=>{ try{await auth.signOut();}catch(_){} closeFirebaseAuth(); document.getElementById('pendingBox').style.display='block'; }, 1500);
       } else {
         msg.style.color="red";msg.innerText="❌ "+e.message; 
       }
@@ -272,12 +272,18 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
       const docRef = await db.collection("users").doc(user.uid).get();
       if(docRef.exists && docRef.data().approved===false){
         document.getElementById('pendingBox').style.display='block';
-        alert("⏳ Your account is pending approval. Please send payment proof to Admin"); return;
+        alert("⏳ Your account is pending approval. Please send payment proof to Admin");
+        await auth.signOut();
+        location.reload();
+        return;
       }
     }catch(e){
       if(e.code==='permission-denied'){
         document.getElementById('pendingBox').style.display='block';
-        alert("⏳ Your account is pending approval. Please send payment proof to Admin"); return;
+        alert("⏳ Your account is pending approval. Please send payment proof to Admin");
+        await auth.signOut();
+        location.reload();
+        return;
       }
     }
     window.location.href=url;
@@ -289,12 +295,18 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
       const docRef = await db.collection("users").doc(user.uid).get();
       if(docRef.exists && docRef.data().approved===false){
         document.getElementById('pendingBox').style.display='block';
-        alert("⏳ Your account is pending approval."); return;
+        alert("⏳ Your account is pending approval.");
+        await auth.signOut();
+        location.reload();
+        return;
       }
     }catch(e){
       if(e.code==='permission-denied'){
         document.getElementById('pendingBox').style.display='block';
-        alert("⏳ Your account is pending approval."); return;
+        alert("⏳ Your account is pending approval.");
+        await auth.signOut();
+        location.reload();
+        return;
       }
     }
     toggleForm(formId);
@@ -309,9 +321,12 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
       document.getElementById('loginBtn').style.display='none';
       try{
         const docRef = await db.collection("users").doc(user.uid).get();
-        if(docRef.exists && docRef.data().approved===false){ document.getElementById('pendingBox').style.display='block'; }
+        if(docRef.exists && docRef.data().approved===false){ 
+          document.getElementById('pendingBox').style.display='block';
+          document.getElementById('notLoggedBox').style.display='none';
+        }
       }catch(e){
-        if(e.code==='permission-denied'){ document.getElementById('pendingBox').style.display='block'; }
+        if(e.code==='permission-denied'){ document.getElementById('pendingBox').style.display='block'; document.getElementById('notLoggedBox').style.display='none'; }
       }
     }
   });
@@ -339,7 +354,6 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
     const data={type:"alumni",name:form.fullName.value,gender:form.gender.value,year:form.gradYear.value,class:form.class.value,phone:form.phone.value,whatsapp:form.whatsapp.value,profession:form.profession.value,interest:form.interest.value,message:form.message.value,accountEmail:user.email};
     try{
       fetch(WEB_APP_URL,{method:"POST",mode:"no-cors",body:JSON.stringify(data)});
-      // FIXED: Keep approved=false until admin approves, don't auto-approve
       const existingDoc = await db.collection("users").doc(user.uid).get();
       const wasApproved = existingDoc.exists ? existingDoc.data().approved : false;
       await db.collection("users").doc(user.uid).set({
@@ -387,4 +401,4 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
   window.onload=function(){if(localStorage.getItem('chitekesaAdmin')==='loggedIn'){document.getElementById('adminDashboard').style.display='block';document.getElementById('adminLogoutBtn').style.display='block';loadDonations();loadAlumni();loadPending();}}
 </script>
 </body>
-  </html>
+                                                                    </html>
