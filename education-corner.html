@@ -29,7 +29,6 @@ body { margin:0; font-family: 'Segoe UI', sans-serif; background:#f5f7fb; }
   <div class="admin-bar">
     <button id="adminLoginBtn" class="admin-btn" onclick="openAdminLogin()">🔐 Admin Login</button>
     <button id="adminLogoutBtn" class="admin-btn" onclick="adminLogout()" style="display:none;">Logout</button>
-    <span id="adminStatus" style="font-size:11px;"></span>
   </div>
   <h1>📚 Education Corner</h1>
   <p>Past Papers, Books, Notes & Career Resources by Alumni</p>
@@ -46,13 +45,13 @@ body { margin:0; font-family: 'Segoe UI', sans-serif; background:#f5f7fb; }
   <button class="filter-chip" onclick="setFilter('Past Paper', this)">Past Papers</button>
   <button class="filter-chip" onclick="setFilter('Study Notes', this)">Notes</button>
   <button class="filter-chip" onclick="setFilter('Book', this)">Books</button>
+  <button class="filter-chip" onclick="setFilter('Syllabus', this)">Syllabus</button>
   <button class="filter-chip" onclick="setFilter('University', this)">University</button>
   <button class="filter-chip" onclick="setFilter('Scholarship', this)">Scholarship</button>
 </div>
 
-<div class="edu-grid" id="eduGrid"><p style="grid-column:1/-1; text-align:center;">Loading resources...</p></div>
+<div class="edu-grid" id="eduGrid"></div>
 
-<!-- Admin Login - NO PREFILLED EMAIL -->
 <div id="adminLoginModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:2000;">
   <div style="background:white; padding:30px; border-radius:16px; width:90%; max-width:380px;">
     <h3>🔐 Admin Login</h3>
@@ -63,14 +62,20 @@ body { margin:0; font-family: 'Segoe UI', sans-serif; background:#f5f7fb; }
   </div>
 </div>
 
-<!-- SHARE RESOURCE MODAL -->
 <div id="uploadModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000; overflow:auto; padding:20px;">
   <div style="background:white; padding:28px; border-radius:18px; width:95%; max-width:420px;">
     <h3 style="margin:0 0 16px 0; font-size:20px; font-weight:700;">Share Resource</h3>
     <input id="resTitle" placeholder="Title e.g. Biology MSCE 2023" style="width:100%; padding:13px 14px; margin:8px 0; border-radius:10px; border:1px solid #ddd; background:#f9fafb;">
     <div style="display:flex; gap:10px;">
       <select id="resType" style="flex:1; padding:13px; margin:8px 0; border-radius:10px; border:1px solid #ddd; background:#f9fafb;">
-        <option>MSCE Past Paper</option><option>JCE Past Paper</option><option>Study Notes</option><option>Book</option><option>Syllabus</option><option>University Guide</option><option>Career</option>
+        <option>MSCE Past Paper</option>
+        <option>JCE Past Paper</option>
+        <option>Study Notes</option>
+        <option>Book</option>
+        <option>Syllabus</option>
+        <option>University Guide</option>
+        <option>Career</option>
+        <option>Scholarship</option>
       </select>
       <select id="resSubject" style="flex:1; padding:13px; margin:8px 0; border-radius:10px; border:1px solid #ddd; background:#f9fafb;">
         <option>Biology</option><option>Maths</option><option>English</option><option>Physics</option><option>Chemistry</option><option>History</option><option>Geography</option><option>General</option>
@@ -89,7 +94,7 @@ body { margin:0; font-family: 'Segoe UI', sans-serif; background:#f5f7fb; }
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 const firebaseConfig = {
@@ -109,25 +114,23 @@ let isAdmin = false;
 let allResources = [];
 let currentFilter = "All";
 
-// === TRUSTED SOURCES - NEW ===
 const TRUSTED_UNIVERSITIES = [
-  { title: "NCHE - Public University Selection (Official)", tag: "University • Official Portal", desc: "National Council for Higher Education - Apply & check selection for UNIMA, MUBAS, LUANAR, MZUNI, MUST, KUHeS.", link: "https://www.nche.ac.mw/", preview: "https://www.nche.ac.mw/", badge: "✓ Verified Official" },
-  { title: "UNIMA - University of Malawi", tag: "University • UNIMA", desc: "Official UNIMA website - programmes, application, fees.", link: "https://www.unima.ac.mw/", preview: "https://www.unima.ac.mw/", badge: "✓ Verified Official" },
-  { title: "MUBAS - Malawi University of Business", tag: "University • MUBAS", desc: "Former Poly - Engineering, business, built environment.", link: "https://www.mubas.ac.mw/", preview: "https://www.mubas.ac.mw/", badge: "✓ Verified Official" },
-  { title: "LUANAR - Agriculture & Natural Resources", tag: "University • LUANAR", desc: "Official LUANAR portal - agriculture, aquaculture, environment.", link: "https://www.luanar.ac.mw/", preview: "https://www.luanar.ac.mw/", badge: "✓ Verified Official" },
-  { title: "MZUNI - Mzuzu University", tag: "University • MZUNI", desc: "Official MZUNI - education, health sciences, tourism.", link: "https://www.mzuni.ac.mw/", preview: "https://www.mzuni.ac.mw/", badge: "✓ Verified Official" },
-  { title: "MUST - Malawi University of Science", tag: "University • MUST", desc: "Official MUST portal - innovation, engineering, science.", link: "https://www.must.ac.mw/", preview: "https://www.must.ac.mw/", badge: "✓ Verified Official" }
-  { title: "KUHeS - Kamuzu University of Health Sciences", tag: "University • KUHeS", desc: "Official KUHeS - Medicine, Pharmacy, Nursing, Public Health, former College of Medicine & KCN.", link: "https://www.kuhes.ac.mw/", preview: "https://www.kuhes.ac.mw/", badge: "✓ Verified Official" },
-];
+  { title: "NCHE - Official University Selection Portal", tag: "University • Official Malawi Govt", desc: "Apply & check public university selection for all 6 public universities.", link: "https://www.nche.ac.mw/", badge: "✓ Govt Official" },
+  { title: "UNIMA - University of Malawi", tag: "University • UNIMA", desc: "Official UNIMA - programmes, application, fees.", link: "https://www.unima.ac.mw/", badge: "✓ Verified Official" },
+  { title: "MUBAS - Malawi University of Business & Applied Sciences", tag: "University • MUBAS", desc: "Official MUBAS - Engineering, business, built environment.", link: "https://www.mubas.ac.mw/", badge: "✓ Verified Official" },
+  { title: "LUANAR - Lilongwe University of Agriculture", tag: "University • LUANAR", desc: "Official LUANAR - agriculture, aquaculture, environment.", link: "https://www.luanar.ac.mw/", badge: "✓ Verified Official" },
+  { title: "MZUNI - Mzuzu University", tag: "University • MZUNI", desc: "Official MZUNI - education, health, tourism, sciences.", link: "https://www.mzuni.ac.mw/", badge: "✓ Verified Official" },
+  { title: "MUST - Malawi University of Science & Technology", tag: "University • MUST", desc: "Official MUST - innovation, engineering, science.", link: "https://www.must.ac.mw/", badge: "✓ Verified Official" },
+  { title: "KUHeS - Kamuzu University of Health Sciences", tag: "University • KUHeS", desc: "Official KUHeS - Medicine, Pharmacy, Nursing, Public Health.", link: "https://www.kuhes.ac.mw/", badge: "✓ Verified Official" }
 ];
 
 const TRUSTED_SCHOLARSHIPS = [
-  { title: "Ministry of Education - Malawi Scholarships", tag: "Scholarship • Government", desc: "Official MoE Malawi - local & bilateral scholarships list. Always check here first.", link: "https://www.education.gov.mw/", preview: "https://www.education.gov.mw/", badge: "✓ Government Source" },
-  { title: "HESLGB - Higher Education Students Loans", tag: "Scholarship • HESLGB", desc: "Official Higher Education Students Loans & Grants Board - loans for public university students.", link: "https://www.heslgb.mw/", preview: "https://www.heslgb.mw/", badge: "✓ Government Source" },
-  { title: "Commonwealth Scholarships - UK", tag: "Scholarship • International", desc: "UK Commonwealth Scholarship Commission - Masters & PhD for Malawi.", link: "https://cscuk.fcdo.gov.uk/scholarships/", preview: "https://cscuk.fcdo.gov.uk/scholarships/", badge: "✓ Trusted International" },
-  { title: "DAAD Scholarships - Germany", tag: "Scholarship • International", desc: "German Academic Exchange Service - fully funded Masters/PhD.", link: "https://www.daad.de/en/", preview: "https://www.daad.de/en/", badge: "✓ Trusted International" },
-  { title: "Mastercard Foundation Scholars Program", tag: "Scholarship • Africa", desc: "Fully funded undergrad & masters in Africa & abroad - for African youth.", link: "https://mastercardfdn.org/all/scholars/", preview: "https://mastercardfdn.org/all/scholars/", badge: "✓ Trusted Foundation" },
-  { title: "Scholarships.com.mw / Opportunities Malawi", tag: "Scholarship • Aggregator", desc: "Verified aggregator for Malawi scholarships - always verify on official site before applying.", link: "https://www.opportunitiesforyoungmalawians.com/", preview: "https://www.opportunitiesforyoungmalawians.com/", badge: "✓ Curated List" }
+  { title: "Ministry of Education - Malawi Scholarships", tag: "Scholarship • Government", desc: "Official MoE - local & bilateral scholarships.", link: "https://www.education.gov.mw/", badge: "✓ Govt Official" },
+  { title: "HESLGB - Students Loans & Grants", tag: "Scholarship • HESLGB", desc: "Official loans board for public university students.", link: "https://www.heslgb.mw/", badge: "✓ Govt Official" },
+  { title: "Commonwealth Scholarships - UK", tag: "Scholarship • UK Fully Funded", desc: "Masters & PhD for Malawians in UK.", link: "https://cscuk.fcdo.gov.uk/scholarships/", badge: "✓ Trusted International" },
+  { title: "DAAD Scholarships - Germany", tag: "Scholarship • Germany Fully Funded", desc: "Fully funded Masters/PhD in Germany.", link: "https://www.daad.de/en/", badge: "✓ Trusted International" },
+  { title: "Mastercard Foundation Scholars", tag: "Scholarship • Africa Fully Funded", desc: "Fully funded undergrad & masters for African youth.", link: "https://mastercardfdn.org/all/scholars/", badge: "✓ Trusted Foundation" },
+  { title: "Erasmus Mundus - Europe", tag: "Scholarship • EU Fully Funded", desc: "EU Joint Masters across Europe, fully funded.", link: "https://erasmus-plus.ec.europa.eu/opportunities/opportunities-for-individuals/students/erasmus-mundus-joint-masters", badge: "✓ EU Official" }
 ];
 
 function toDirectDownload(link){
@@ -142,6 +145,21 @@ function toDirectDownload(link){
     if(id && id.length>10) return "https://drive.google.com/uc?export=download&id="+id;
   }catch(e){}
   return link;
+}
+
+function renderTrustedCard(r){
+  return `
+    <div class="edu-card" style="border-top-color:#2e7d32;">
+      <span class="trusted-badge">${r.badge}</span>
+      <span class="edu-tag">${r.tag}</span>
+      <h3 style="margin:5px 0;">${r.title}</h3>
+      <p style="font-size:14px; color:#555; margin:8px 0 15px;">${r.desc}</p>
+      <div class="btn-row">
+        <a href="${r.link}" target="_blank" rel="noopener noreferrer" class="btn-download">🔗 Visit Official Site</a>
+        <a href="${r.link}" target="_blank" rel="noopener noreferrer" class="btn-preview">👁️ Open</a>
+      </div>
+    </div>
+  `;
 }
 
 onAuthStateChanged(auth, (user)=>{
@@ -171,70 +189,60 @@ window.adminLogin = async ()=>{
 window.adminLogout = async ()=>{ await signOut(auth); alert("Logged out"); };
 
 async function loadResources(){
+  render(); // instant render to fix stuck
   try{
-    const q = query(collection(db, "education_resources"), orderBy("createdAt","desc"));
-    const snap = await getDocs(q);
+    const snap = await getDocs(collection(db, "education_resources"));
     allResources = [];
     snap.forEach(d=>allResources.push({id:d.id,...d.data()}));
-  }catch(e){ console.log(e); }
+    // Sort by newest first so your recent uploads appear top
+    allResources.sort((a,b)=>{
+      const ta = a.createdAt?.seconds || a.createdAt?.getTime?.() || 0;
+      const tb = b.createdAt?.seconds || b.createdAt?.getTime?.() || 0;
+      return tb - ta;
+    });
+  }catch(e){ console.log("Firebase error:", e); }
   render();
-}
-
-function renderTrustedCard(r){
-  return `
-    <div class="edu-card" style="border-top-color:#2e7d32;">
-      <span class="trusted-badge">${r.badge}</span>
-      <span class="edu-tag">${r.tag}</span>
-      <h3 style="margin:5px 0;">${r.title}</h3>
-      <p style="font-size:14px; color:#555; margin:8px 0 15px;">${r.desc}</p>
-      <div class="btn-row">
-        <a href="${r.link}" target="_blank" rel="noopener noreferrer" class="btn-download">🔗 Visit Official Site</a>
-        <a href="${r.preview}" target="_blank" rel="noopener noreferrer" class="btn-preview">👁️ Open</a>
-      </div>
-    </div>
-  `;
 }
 
 function render(){
   const grid = document.getElementById('eduGrid');
   const search = document.getElementById('searchInput').value.toLowerCase();
-
-  // FILTER LOGIC
-  let filtered = allResources.filter(r=>{
-    let matchFilter = false;
-    if(currentFilter==="All") matchFilter=true;
-    else if(currentFilter==="MSCE") matchFilter = (r.type||"").toLowerCase().includes("msce");
-    else if(currentFilter==="JCE") matchFilter = (r.type||"").toLowerCase().includes("jce");
-    else if(currentFilter==="Past Paper") matchFilter = (r.type||"").toLowerCase().includes("past paper");
-    else if(currentFilter==="University") matchFilter = (r.type||"").toLowerCase().includes("university") || (r.type||"").toLowerCase().includes("guide");
-    else if(currentFilter==="Scholarship") matchFilter = (r.type||"").toLowerCase().includes("scholarship") || (r.type||"").toLowerCase().includes("career");
-    else matchFilter = r.type===currentFilter;
-    const matchSearch = (r.title+" "+(r.subject||"")+" "+(r.year||"")).toLowerCase().includes(search);
-    return matchFilter && matchSearch;
-  });
-
   let html = "";
 
-  // INJECT TRUSTED SOURCES
-  if(currentFilter==="University" || currentFilter==="All"){
-    const uniFiltered = TRUSTED_UNIVERSITIES.filter(u => (u.title+" "+u.tag).toLowerCase().includes(search));
-    if(currentFilter==="University" || search.length>0 || allResources.length===0){
-      html += uniFiltered.map(r=>renderTrustedCard(r)).join('');
-    } else if(currentFilter==="All"){
-      html += uniFiltered.slice(0,2).map(r=>renderTrustedCard(r)).join(''); // show 2 in All
-    }
+  // Show trusted for University / Scholarship filters
+  if(currentFilter==="University"){
+    let list = TRUSTED_UNIVERSITIES.filter(u => (u.title+" "+u.desc).toLowerCase().includes(search));
+    html += list.map(r=>renderTrustedCard(r)).join('');
+  }
+  if(currentFilter==="Scholarship"){
+    let list = TRUSTED_SCHOLARSHIPS.filter(u => (u.title+" "+u.desc).toLowerCase().includes(search));
+    html += list.map(r=>renderTrustedCard(r)).join('');
+  }
+  if(currentFilter==="All"){
+    let uni = TRUSTED_UNIVERSITIES.filter(u => (u.title+" "+u.desc).toLowerCase().includes(search)).slice(0,2);
+    let sch = TRUSTED_SCHOLARSHIPS.filter(u => (u.title+" "+u.desc).toLowerCase().includes(search)).slice(0,2);
+    html += uni.map(r=>renderTrustedCard(r)).join('');
+    html += sch.map(r=>renderTrustedCard(r)).join('');
   }
 
-  if(currentFilter==="Scholarship" || currentFilter==="All"){
-    const schFiltered = TRUSTED_SCHOLARSHIPS.filter(u => (u.title+" "+u.tag).toLowerCase().includes(search));
-    if(currentFilter==="Scholarship" || search.length>0 || allResources.length===0){
-      html += schFiltered.map(r=>renderTrustedCard(r)).join('');
-    } else if(currentFilter==="All"){
-      html += schFiltered.slice(0,2).map(r=>renderTrustedCard(r)).join(''); // show 2 in All
-    }
-  }
+  // YOUR RECENTLY UPLOADED RESOURCES - fixed mapping for all 8 types
+  let filtered = allResources.filter(r=>{
+    const t = (r.type||"").toLowerCase();
+    let match = false;
+    if(currentFilter==="All") match = true;
+    else if(currentFilter==="MSCE") match = t.includes("msce");
+    else if(currentFilter==="JCE") match = t.includes("jce");
+    else if(currentFilter==="Past Paper") match = t.includes("past paper");
+    else if(currentFilter==="Study Notes") match = t.includes("study") || t.includes("notes") || t.includes("note");
+    else if(currentFilter==="Book") match = t.includes("book");
+    else if(currentFilter==="Syllabus") match = t.includes("syllabus");
+    else if(currentFilter==="University") match = t.includes("university");
+    else if(currentFilter==="Scholarship") match = t.includes("scholarship") || t.includes("career");
+    else match = true;
+    const searchMatch = (r.title+" "+(r.subject||"")+" "+(r.year||"")).toLowerCase().includes(search);
+    return match && searchMatch;
+  });
 
-  // ADD USER UPLOADED RESOURCES
   if(filtered.length>0){
     html += filtered.map(r=>`
       <div class="edu-card">
@@ -251,7 +259,7 @@ function render(){
   }
 
   if(html===""){
-    grid.innerHTML='<p style="grid-column:1/-1; text-align:center; padding:40px;">No resources found for this filter.</p>';
+    grid.innerHTML = `<p style="grid-column:1/-1; text-align:center; padding:40px;">No resources for ${currentFilter} yet. Your recent uploads will appear here once published.<br><br>Try All to see University & Scholarship trusted links + all uploaded resources.</p>`;
   } else {
     grid.innerHTML = html;
   }
