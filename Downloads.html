@@ -3,162 +3,75 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Downloads - Chitekesa CDSS Alumni</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>Contact Us - Chitekesa CDSS Alumni</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --green: #123d21;
-      --blue: #004080;
-      --orange: #FF8C00;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    
-    body {
-      background: linear-gradient(135deg, #f0f8ff 0%, #e6f2ff 100%);
-      font-family: 'Poppins', Arial, sans-serif;
-      color: #333;
-      line-height: 1.6;
-    }
-    .container { padding: 0 16px; max-width: 900px; margin: 0 auto; }
-
-    .header {
-      background-color: var(--green);
-      padding: 25px 15px;
-      text-align: center;
-      color: white;
-    }
-    .logo {
-      width: 100px; height: 100px;
-      background-color: white;
-      border-radius: 50%;
-      margin: 0 auto 10px;
-      border: 3px solid var(--blue);
-      overflow: hidden;
-    }
-    .logo img { width: 100%; height: 100%; object-fit: cover; }
-    .header h1 { margin: 0; font-size: 20px; font-family: 'Times New Roman', serif; }
-    .header h4 { font-style: italic; font-family: 'Times New Roman', serif; font-weight: 400; }
-
-    .navbar {
-      background-color: var(--blue);
-      padding: 10px;
-      text-align: left;
-      position: sticky;
-      top: 0;
-      z-index: 999;
-    }
-    .menu-toggle {
-      background: none;
-      border: 2px solid white;
-      color: white;
-      font-size: 22px;
-      padding: 5px 12px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .menu { list-style: none; display: none; margin-top: 10px; }
-    .menu.active { display: block; }
-    .menu li { margin: 8px 0; }
-    .menu a {
-      color: white;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 16px;
-      padding: 8px 15px;
-      display: inline-block;
-    }
-    .menu a:hover { background: rgba(255,255,255,0.1); border-radius: 5px; }
-
-    main { padding: 30px 0; }
-    .page-title { text-align: center; color: var(--blue); margin-bottom: 25px; }
-    
-    .download-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 20px;
-    }
-    .download-card {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      transition: transform 0.3s;
-    }
+    :root { --green:#0f2e1a; --green-light:#123d21; --blue:#003366; --blue-light:#004080; --orange:#FF7A00; --whatsapp:#25D366; --fb:#1877F2; --bg:#f5f7fb; --card:#ffffff; --text:#1f2937; --muted:#6b7280; --border:#e5e7eb; }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:var(--bg);font-family:'Poppins',Arial,sans-serif;color:var(--text);line-height:1.6}
+    .container{padding:0 18px;max-width:1000px;margin:0 auto}
+    .header{background:linear-gradient(135deg,var(--green) 0%, var(--green-light) 100%);padding:30px 15px;text-align:center;color:white;box-shadow:0 4px 20px rgba(0,0,0,0.15)}
+    .logo{width:95px;height:95px;background:white;border-radius:50%;margin:0 auto 12px;border:4px solid rgba(255,255,255,0.2);overflow:hidden}
+    .logo img{width:100%;height:100%;object-fit:cover}
+    .header h1{margin:0;font-size:22px;font-weight:700}
+    .header h4{font-style:italic;font-weight:400;opacity:0.9;margin-top:4px;font-size:14px}
+    .navbar{background:var(--blue);padding:0 12px;position:sticky;top:0;z-index:999;box-shadow:0 2px 10px rgba(0,0,0,0.2)}
+    .navbar-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 0}
+    .menu-toggle{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:white;font-size:14px;padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:600}
+    #navOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.45);backdrop-filter:blur(2px);z-index:998;display:none}
+    #navOverlay.show{display:block}
+    .menu{list-style:none;position:fixed;top:0;left:-100%;width:285px;height:100vh;background:linear-gradient(180deg,#002244,#003366);z-index:999;padding:22px 18px;display:flex;flex-direction:column;gap:2px;transition:left 0.35s cubic-bezier(0.4,0,0.2,1);box-shadow:4px 0 25px rgba(0,0,0,0.3);overflow-y:auto}
+    .menu.active{left:0}
+    .menu-header{display:flex;justify-content:space-between;align-items:center;padding-bottom:18px;border-bottom:1px solid rgba(255,255,255,0.12);margin-bottom:14px}
+    .menu-header span{color:white;font-weight:700;font-size:16px}
+    .close-menu-btn{background:rgba(255,255,255,0.12);border:none;color:white;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center}
+    .menu li{margin:3px 0}
+    .menu a{color:rgba(255,255,255,0.88);text-decoration:none;font-weight:500;font-size:14.5px;padding:11px 14px;display:flex;align-items:center;gap:10px;border-radius:10px;cursor:pointer;transition:all .2s;text-align:left;justify-content:flex-start}
+    .menu a:hover{background:rgba(255,255,255,0.10);color:white;transform:translateX(4px)}
+    .logout-btn{background:var(--orange);border:none;color:white;padding:9px 16px;border-radius:8px;font-weight:700;cursor:pointer;width:100%;margin-top:6px}
+    .user-badge{color:#fde68a;font-weight:700;font-size:13px;padding:8px 14px;display:block}
+    .download-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+    .download-card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 15px; transition: transform 0.3s; }
     .download-card:hover { transform: translateY(-3px); }
     .download-icon { font-size: 40px; }
     .download-info { flex: 1; }
     .download-info h3 { color: var(--green); margin-bottom: 5px; }
     .download-info p { font-size: 14px; color: #666; }
-    .btn-download {
-      background: var(--orange);
-      color: white;
-      padding: 10px 18px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 700;
-      white-space: nowrap;
-    }
+    .btn-download { background: var(--orange); color: white; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 700; white-space: nowrap; }
     .btn-download:hover { background: #e67e00; }
-
-    footer {
-      background: #222;
-      color: white;
-      text-align: center;
-      padding: 30px 20px;
-      margin-top: 40px;
-    }
-    footer p { margin: 10px 0; }
-    .footer-social {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .footer-social a {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: white;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    .footer-social img { width: 28px; height: 28px; object-fit: contain; }
-
-    @media (min-width: 768px) {
-      .menu-toggle { display: none; }
-      .menu { display: block; }
-      .menu li { display: inline-block; margin: 0 10px; }
-      .download-grid { grid-template-columns: 1fr 1fr; }
-    }
+    main{padding:35px 0}
+    .page-title{text-align:center; color:var(--blue); margin-bottom:8px; font-size:24px; font-weight:700;}
+    footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;margin-top:50px;border-top:4px solid var(--green)}
+    .footer-social{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap}
+    .footer-social a{display:flex;align-items:center;gap:8px;color:white;text-decoration:none;font-weight:600}
+    .footer-social img{width:28px;height:28px;object-fit:contain}
   </style>
 </head>
 <body>
-
-  <!-- HEADER -->
   <header class="header">
     <div class="logo"><img src="Alumni logo.png" alt="Chitekesa Alumni Logo"></div>
     <h1>CHITEKESA CDSS ALUMNI GROUP</h1>
     <h4>Together We Make The Difference</h4>
   </header>
-
-  <!-- NAVBAR -->
   <nav class="navbar">
-    <button class="menu-toggle" onclick="document.getElementById('menu').classList.toggle('active')">☰ Menu</button>
-    <ul id="menu" class="menu">
-       <li><a href="index.html">Home</a></li>
-      <li><a href="Chitekesa about.html">About</a></li>
-      <li><a href="Chitekesa contact.html">Contact Us</a></li>
-      <li><a href="downloads.html">Downloads</a></li>
-      <li><a href="find-classmate.html">Find Classmate</a></li>
-      <li><a href="vacancies.html">Vacancies/Blog</a></li>
-    </ul>
+    <div class="navbar-inner">
+      <button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
+      <div style="color:rgba(255,255,255,0.7); font-size:12px;">Members Downloads</div>
+    </div>
   </nav>
-
-  <!-- MAIN -->
+  <div id="navOverlay" onclick="toggleMenu()"></div>
+  <ul id="menu" class="menu">
+    <li class="menu-header"><span>📚 Navigation</span><button class="close-menu-btn" onclick="toggleMenu()">❌</button></li>
+    <li><a href="index.html">🏠 Home</a></li>
+    <li><a href="Chitekesa about.html">👥 About</a></li>
+    <li><a href="Chitekesa contact.html">📞 Contact Us</a></li>
+    <li><a href="downloads.html">📥 Downloads</a></li>
+    <li><a href="find-classmates.html">🎓 Classmates</a></li>
+    <li><a href="vacancies.html">💼 Vacancies</a></li>
+    <li><a href="education-corner.html">📚 Education</a></li>
+    <li><button class="logout-btn" onclick="logout()">Logout</button></li>
+  </ul>
+  
   <main class="container">
     <h2 class="page-title">Members Downloads</h2>
     <p style="text-align:center; margin-bottom: 25px;">Access important documents, photos, and resources.</p>
@@ -202,10 +115,8 @@
     </div>
   </main>
 
-  <!-- FOOTER -->
   <footer>
     <p><strong>Location:</strong> Along Mwanga to Maliro Road, Near Chitekesa Police Unit, Phalombe</p>
-    
     <div class="footer-social">
       <span><strong>Facebook:</strong></span>
       <a href="https://www.facebook.com/share/19DZppzrht/" target="_blank">
@@ -213,9 +124,20 @@
         CHITEKESA CDSS ALUMNI
       </a>
     </div>
-    
     <p>&copy; 2026 CHITEKESA ALUMNI ASSOCIATION. All Rights Reserved.</p>
   </footer>
 
+<script>
+function toggleMenu(){
+  const menu = document.getElementById('menu');
+  const overlay = document.getElementById('navOverlay');
+  menu.classList.toggle('active');
+  overlay.classList.toggle('show');
+}
+function logout(){
+  window.location.href='index.html';
+}
+</script>
+
 </body>
-        </html>
+</html>
