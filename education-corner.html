@@ -21,6 +21,7 @@ body { margin:0; font-family: 'Segoe UI', sans-serif; background:#f5f7fb; }
 .btn-row{ display:flex; gap:8px; margin-top:auto; }
 .btn-download { flex:1; display:inline-block; background:#0f4c75; color:white; padding:10px 15px; border-radius:8px; text-decoration:none; text-align:center; font-weight:bold; font-size:13px; }
 .btn-preview { flex:1; display:inline-block; background:white; color:#0f4c75; border:1.5px solid #0f4c75; padding:10px 15px; border-radius:8px; text-decoration:none; text-align:center; font-weight:bold; font-size:13px; }
+.trusted-badge { display:inline-block; background:#e8f5e9; color:#2e7d32; padding:3px 10px; border-radius:20px; font-size:10px; font-weight:700; margin-bottom:8px; border:1px solid #c8e6c9; }
 </style>
 </head>
 <body>
@@ -45,8 +46,8 @@ body { margin:0; font-family: 'Segoe UI', sans-serif; background:#f5f7fb; }
   <button class="filter-chip" onclick="setFilter('Past Paper', this)">Past Papers</button>
   <button class="filter-chip" onclick="setFilter('Study Notes', this)">Notes</button>
   <button class="filter-chip" onclick="setFilter('Book', this)">Books</button>
-  <button class="filter-chip active" onclick="setFilter('University', this)">University</button>
-  <button class="filter-chip active" onclick="setFilter('Scholarship', this)">Scholarship</button>
+  <button class="filter-chip" onclick="setFilter('University', this)">University</button>
+  <button class="filter-chip" onclick="setFilter('Scholarship', this)">Scholarship</button>
 </div>
 
 <div class="edu-grid" id="eduGrid"><p style="grid-column:1/-1; text-align:center;">Loading resources...</p></div>
@@ -62,7 +63,7 @@ body { margin:0; font-family: 'Segoe UI', sans-serif; background:#f5f7fb; }
   </div>
 </div>
 
-<!-- SHARE RESOURCE MODAL - EXACTLY LIKE YOUR SCREENSHOT -->
+<!-- SHARE RESOURCE MODAL -->
 <div id="uploadModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000; overflow:auto; padding:20px;">
   <div style="background:white; padding:28px; border-radius:18px; width:95%; max-width:420px;">
     <h3 style="margin:0 0 16px 0; font-size:20px; font-weight:700;">Share Resource</h3>
@@ -107,6 +108,25 @@ const ADMIN_EMAILS = ["chitekesaalumni@gmail.com"];
 let isAdmin = false;
 let allResources = [];
 let currentFilter = "All";
+
+// === TRUSTED SOURCES - NEW ===
+const TRUSTED_UNIVERSITIES = [
+  { title: "NCHE - Public University Selection (Official)", tag: "University • Official Portal", desc: "National Council for Higher Education - Apply & check selection for UNIMA, MUBAS, LUANAR, MZUNI, MUST, KUHeS.", link: "https://www.nche.ac.mw/", preview: "https://www.nche.ac.mw/", badge: "✓ Verified Official" },
+  { title: "UNIMA - University of Malawi", tag: "University • UNIMA", desc: "Official UNIMA website - programmes, application, fees.", link: "https://www.unima.ac.mw/", preview: "https://www.unima.ac.mw/", badge: "✓ Verified Official" },
+  { title: "MUBAS - Malawi University of Business", tag: "University • MUBAS", desc: "Former Poly - Engineering, business, built environment.", link: "https://www.mubas.ac.mw/", preview: "https://www.mubas.ac.mw/", badge: "✓ Verified Official" },
+  { title: "LUANAR - Agriculture & Natural Resources", tag: "University • LUANAR", desc: "Official LUANAR portal - agriculture, aquaculture, environment.", link: "https://www.luanar.ac.mw/", preview: "https://www.luanar.ac.mw/", badge: "✓ Verified Official" },
+  { title: "MZUNI - Mzuzu University", tag: "University • MZUNI", desc: "Official MZUNI - education, health sciences, tourism.", link: "https://www.mzuni.ac.mw/", preview: "https://www.mzuni.ac.mw/", badge: "✓ Verified Official" },
+  { title: "MUST - Malawi University of Science", tag: "University • MUST", desc: "Official MUST portal - innovation, engineering, science.", link: "https://www.must.ac.mw/", preview: "https://www.must.ac.mw/", badge: "✓ Verified Official" }
+];
+
+const TRUSTED_SCHOLARSHIPS = [
+  { title: "Ministry of Education - Malawi Scholarships", tag: "Scholarship • Government", desc: "Official MoE Malawi - local & bilateral scholarships list. Always check here first.", link: "https://www.education.gov.mw/", preview: "https://www.education.gov.mw/", badge: "✓ Government Source" },
+  { title: "HESLGB - Higher Education Students Loans", tag: "Scholarship • HESLGB", desc: "Official Higher Education Students Loans & Grants Board - loans for public university students.", link: "https://www.heslgb.mw/", preview: "https://www.heslgb.mw/", badge: "✓ Government Source" },
+  { title: "Commonwealth Scholarships - UK", tag: "Scholarship • International", desc: "UK Commonwealth Scholarship Commission - Masters & PhD for Malawi.", link: "https://cscuk.fcdo.gov.uk/scholarships/", preview: "https://cscuk.fcdo.gov.uk/scholarships/", badge: "✓ Trusted International" },
+  { title: "DAAD Scholarships - Germany", tag: "Scholarship • International", desc: "German Academic Exchange Service - fully funded Masters/PhD.", link: "https://www.daad.de/en/", preview: "https://www.daad.de/en/", badge: "✓ Trusted International" },
+  { title: "Mastercard Foundation Scholars Program", tag: "Scholarship • Africa", desc: "Fully funded undergrad & masters in Africa & abroad - for African youth.", link: "https://mastercardfdn.org/all/scholars/", preview: "https://mastercardfdn.org/all/scholars/", badge: "✓ Trusted Foundation" },
+  { title: "Scholarships.com.mw / Opportunities Malawi", tag: "Scholarship • Aggregator", desc: "Verified aggregator for Malawi scholarships - always verify on official site before applying.", link: "https://www.opportunitiesforyoungmalawians.com/", preview: "https://www.opportunitiesforyoungmalawians.com/", badge: "✓ Curated List" }
+];
 
 function toDirectDownload(link){
   if(!link) return "#";
@@ -158,32 +178,81 @@ async function loadResources(){
   render();
 }
 
+function renderTrustedCard(r){
+  return `
+    <div class="edu-card" style="border-top-color:#2e7d32;">
+      <span class="trusted-badge">${r.badge}</span>
+      <span class="edu-tag">${r.tag}</span>
+      <h3 style="margin:5px 0;">${r.title}</h3>
+      <p style="font-size:14px; color:#555; margin:8px 0 15px;">${r.desc}</p>
+      <div class="btn-row">
+        <a href="${r.link}" target="_blank" rel="noopener noreferrer" class="btn-download">🔗 Visit Official Site</a>
+        <a href="${r.preview}" target="_blank" rel="noopener noreferrer" class="btn-preview">👁️ Open</a>
+      </div>
+    </div>
+  `;
+}
+
 function render(){
   const grid = document.getElementById('eduGrid');
   const search = document.getElementById('searchInput').value.toLowerCase();
+
+  // FILTER LOGIC
   let filtered = allResources.filter(r=>{
     let matchFilter = false;
     if(currentFilter==="All") matchFilter=true;
     else if(currentFilter==="MSCE") matchFilter = (r.type||"").toLowerCase().includes("msce");
     else if(currentFilter==="JCE") matchFilter = (r.type||"").toLowerCase().includes("jce");
     else if(currentFilter==="Past Paper") matchFilter = (r.type||"").toLowerCase().includes("past paper");
+    else if(currentFilter==="University") matchFilter = (r.type||"").toLowerCase().includes("university") || (r.type||"").toLowerCase().includes("guide");
+    else if(currentFilter==="Scholarship") matchFilter = (r.type||"").toLowerCase().includes("scholarship") || (r.type||"").toLowerCase().includes("career");
     else matchFilter = r.type===currentFilter;
     const matchSearch = (r.title+" "+(r.subject||"")+" "+(r.year||"")).toLowerCase().includes(search);
     return matchFilter && matchSearch;
   });
-  if(filtered.length===0){ grid.innerHTML='<p style="grid-column:1/-1; text-align:center; padding:40px;">No resources yet. Admin needs to upload.</p>'; return; }
-  grid.innerHTML = filtered.map(r=>`
-    <div class="edu-card">
-      <span class="edu-tag">${r.type} • ${r.subject||'General'} ${r.year||''}</span>
-      <h3 style="margin:5px 0;">${r.title}</h3>
-      <p style="font-size:13px; color:#888; margin:4px 0;">By: ${r.uploaderName||'Alumni'}</p>
-      <p style="font-size:14px; color:#555; margin:8px 0 15px;">${r.desc||''}</p>
-      <div class="btn-row">
-        <a href="${toDirectDownload(r.link)}" target="_blank" class="btn-download">📥 Download</a>
-        <a href="${r.link}" target="_blank" class="btn-preview">👁️ Preview</a>
+
+  let html = "";
+
+  // INJECT TRUSTED SOURCES
+  if(currentFilter==="University" || currentFilter==="All"){
+    const uniFiltered = TRUSTED_UNIVERSITIES.filter(u => (u.title+" "+u.tag).toLowerCase().includes(search));
+    if(currentFilter==="University" || search.length>0 || allResources.length===0){
+      html += uniFiltered.map(r=>renderTrustedCard(r)).join('');
+    } else if(currentFilter==="All"){
+      html += uniFiltered.slice(0,2).map(r=>renderTrustedCard(r)).join(''); // show 2 in All
+    }
+  }
+
+  if(currentFilter==="Scholarship" || currentFilter==="All"){
+    const schFiltered = TRUSTED_SCHOLARSHIPS.filter(u => (u.title+" "+u.tag).toLowerCase().includes(search));
+    if(currentFilter==="Scholarship" || search.length>0 || allResources.length===0){
+      html += schFiltered.map(r=>renderTrustedCard(r)).join('');
+    } else if(currentFilter==="All"){
+      html += schFiltered.slice(0,2).map(r=>renderTrustedCard(r)).join(''); // show 2 in All
+    }
+  }
+
+  // ADD USER UPLOADED RESOURCES
+  if(filtered.length>0){
+    html += filtered.map(r=>`
+      <div class="edu-card">
+        <span class="edu-tag">${r.type} • ${r.subject||'General'} ${r.year||''}</span>
+        <h3 style="margin:5px 0;">${r.title}</h3>
+        <p style="font-size:13px; color:#888; margin:4px 0;">By: ${r.uploaderName||'Alumni'}</p>
+        <p style="font-size:14px; color:#555; margin:8px 0 15px;">${r.desc||''}</p>
+        <div class="btn-row">
+          <a href="${toDirectDownload(r.link)}" target="_blank" class="btn-download">📥 Download</a>
+          <a href="${r.link}" target="_blank" class="btn-preview">👁️ Preview</a>
+        </div>
       </div>
-    </div>
-  `).join('');
+    `).join('');
+  }
+
+  if(html===""){
+    grid.innerHTML='<p style="grid-column:1/-1; text-align:center; padding:40px;">No resources found for this filter.</p>';
+  } else {
+    grid.innerHTML = html;
+  }
 }
 
 window.setFilter = (type, btn)=>{
