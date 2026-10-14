@@ -81,23 +81,20 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
 .auth-links a{color:#004080;font-weight:600;text-decoration:none;font-size:14px}
 .auth-close{text-align:center;margin-top:12px}
 .auth-close a{color:#6b7280;font-size:13px;text-decoration:none}
+#pendingScreen{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(255,255,255,0.96);z-index:30000;display:none;justify-content:center;align-items:center;padding:20px}
 </style>
 </head>
 <body>
-
 <div class="top-header">
   <img src="Alumni logo.png" alt="CDSS Logo">
   <h1>CHITEKESA CDSS ALUMNI GROUP</h1>
   <p>Together We Make The Difference</p>
 </div>
-
 <div class="sub-nav">
   <button class="menu-btn" onclick="openNav()">☰ Menu</button>
   <a href="Chitekesa about.html">Welcome Alumni</a>
 </div>
-
 <div class="overlay" id="overlay" onclick="closeNav()"></div>
-
 <div class="side-nav" id="sideNav">
   <div class="nav-header">
     <span>📚 Navigation</span>
@@ -119,9 +116,7 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
     <button id="adminLogoutBtn" class="btn-logout-full" style="display:none; background:#34495e; margin-top:10px;" onclick="adminLogout()">Admin Logout</button>
   </div>
 </div>
-
 <main class="container">
-    <!-- OLD TEXTS - WELCOME CARD -->
     <div class="hero-card">
       <h2>Welcome to Chitekesa Alumni Platform 🎓</h2>
       <h4>Once Chitekesa • Always Chitekesa</h4>
@@ -134,9 +129,9 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
       <div id="pendingBox" style="display:none;background:linear-gradient(135deg,#fef3c7,#fde68a);border:1.5px solid #fbbf24;padding:16px;border-radius:12px;margin-top:16px">
         <h3 style="margin-top:0;color:#92400e">⏳ Payment Verification Pending</h3>
         <p style="font-size:14px;color:#78350f">Your account is created but not yet approved. Please send payment proof to Admin.</p>
+        <p style="font-size:13px;margin-top:10px"><strong>WhatsApp Admin:</strong> +265 985 583 319<br><strong>Email:</strong> chitekesaalumni@gmail.com</p>
       </div>
     </div>
-
     <h3>Admin Portal</h3>
     <button class="btn btn-green" onclick="toggleForm('adminLoginForm')">Admin Login</button>
     <div id="adminLoginForm" class="collapsible">
@@ -157,7 +152,6 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
       <div id="donations" class="admin-content"><h3>Donation Submissions</h3><button class="btn btn-blue" onclick="exportCSV('donations')">📥 Export CSV</button><table class="admin-table" id="donationTable"><tr><th>Name</th><th>Donation</th><th>Period</th><th>Phone</th><th>Location</th></tr></table></div>
       <div id="alumni" class="admin-content"><h3>Alumni Registrations</h3><button class="btn btn-blue" onclick="exportCSV('alumni')">📥 Export CSV</button><table class="admin-table" id="alumniTable"><tr><th>Name</th><th>Grad Year</th><th>Profession</th><th>Phone</th><th>Interest</th></tr></table></div>
     </div>
-
     <div class="hero-card">
       <h3 style="margin-top:0">Help Us Grow</h3>
       <button class="btn btn-primary" onclick="toggleForm('donateForm')">Donate Now</button>
@@ -165,7 +159,6 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
         <form id="donationForm"><label>Full Name *</label><input type="text" name="fullName" required><label>Gender *</label><select name="gender" required><option value="">select</option><option value="Male">Male</option><option value="Female">Female</option></select><label>What would you like to donate? *</label><input type="text" name="donationType" required><label>Donation Period *</label><select name="donationPeriod" required><option value="">Select</option><option value="one-time">Only this time</option><option value="3months">About 3 months</option><option value="6months">About 6 months</option><option value="1year">1 year</option><option value="ongoing">More than a year</option></select><label>Phone Number *</label><input type="tel" name="phone" required><label>Email Address</label><input type="email" name="email"><label>Current Location *</label><input type="text" name="location" required><button type="submit" class="btn btn-primary">Donate Now</button><p id="donationMsg"></p></form>
       </div>
     </div>
-
     <div class="hero-card">
       <h3 style="margin-top:0">Join Alumni Team</h3>
       <button class="btn btn-primary" onclick="handleProtectedClick('signupForm')">Sign Up</button>
@@ -173,7 +166,6 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
         <form id="alumniForm"><label>Full Name *</label><input type="text" name="fullName" required><label>Gender *</label><select name="gender" required><option value="">select</option><option value="Male">Male</option><option value="Female">Female</option></select><label>Year Graduated *</label><input type="number" name="gradYear" min="1990" max="2026" required><label>Class/Stream</label><input type="text" name="class"><label>Phone Number *</label><input type="tel" name="phone" required><label>WhatsApp Number</label><input type="tel" name="whatsapp"><label>Profession *</label><input type="text" name="profession" required><label>How would you like to get involved? *</label><select name="interest" required><option value="">Select</option><option value="Membership">Membership</option><option value="Events & Reunions">Events & Reunions</option><option value="Mentorship">Mentorship</option><option value="Donations/Fundraising">Donations & Fundraising</option><option value="Networking">Networking Only</option></select><label>Short Message</label><textarea name="message" rows="3"></textarea><label style="display:flex;gap:8px;align-items:center"><input type="checkbox" name="directoryConsent" required style="width:auto"> I agree to be in the alumni directory *</label><button type="submit" class="btn btn-primary">Join Chitekesa Alumni</button><p id="alumniMsg"></p></form>
       </div>
     </div>
-
     <h3>🔒 Protected Features</h3>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
       <div class="executive"><h3>Downloads</h3><button class="btn btn-blue" onclick="requireAuth('downloads.html')">Open</button></div>
@@ -181,16 +173,26 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
       <div class="executive"><h3>Vacancies</h3><button class="btn btn-blue" onclick="requireAuth('vacancies.html')">Open</button></div>
       <div class="executive" style="border:1.5px solid #0f2e1a"><h3>Education Corner</h3><button class="btn btn-green" onclick="requireAuth('education-corner.html')">Open</button></div>
     </div>
-
     <h3>Our School</h3><div class="gallery"><img src="Chitekesa photo.jpg" alt="Chitekesa School Photo"></div>
     <h2>Meet Your Alumni Executive</h2>
     <div class="executive"><img src="Kaelama photo.jpg" alt="President"><h3>President: Francisco Kaelama, Class of 2021</h3><a href="https://wa.me/265882427151" class="btn btn-whatsapp" target="_blank">WhatsApp</a></div>
     <div class="executive"><img src="Chibisa photo.png" alt="Secretary"><h3>Secretary: Patrick Chibisa, Class of 2023</h3><a href="https://wa.me/265897105274" class="btn btn-whatsapp" target="_blank">WhatsApp</a></div>
     <div class="executive"><img src="My image.png" alt="Treasurer"><h3>Treasurer: Francis Junior Salima, Class of 2022</h3><a href="https://wa.me/265985583319" class="btn btn-whatsapp" target="_blank">WhatsApp</a></div>
 </main>
-
 <footer><p><strong>Location:</strong> Along Mwanga to Maliro Road, Near Chitekesa Police Unit, Phalombe</p><p>&copy; 2026 CHITEKESA ALUMNI ASSOCIATION. All Rights Reserved.</p></footer>
-
+<div id="pendingScreen">
+  <div style="text-align:center; padding:40px; background:#fff; border:3px solid #f59e0b; border-radius:20px; max-width:480px; margin:0 auto; box-shadow:0 20px 60px rgba(0,0,0,0.2)">
+    <div style="font-size:50px">⏳</div>
+    <h2 style="color:#92400e; margin:15px 0">Account Pending Approval</h2>
+    <p style="font-size:16px; margin:15px 0; line-height:1.6">Your account is pending.<br>Please send payment proof to Admin.</p>
+    <div style="background:#fef3c7; padding:15px; border-radius:12px; margin:20px 0; text-align:left">
+      <p style="font-size:14px"><strong>WhatsApp Admin:</strong> +265 985 583 319</p>
+      <p style="font-size:14px"><strong>Email:</strong> chitekesaalumni@gmail.com</p>
+      <p style="font-size:13px; margin-top:10px; color:#78350f">Send screenshot of your payment + your full name. Admin will approve within 24hrs.</p>
+    </div>
+    <button onclick="firebase.auth().signOut().then(()=>location.reload())" style="padding:12px 24px; background:#0F4C75; color:white; border:none; border-radius:10px; font-weight:700; cursor:pointer; width:100%">Logout & Return to Home</button>
+  </div>
+</div>
 <div id="firebaseAuthModal">
   <div class="auth-box">
     <h2 id="authTitle">Create Account</h2>
@@ -204,7 +206,6 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
     <div class="auth-close"><a href="#" onclick="closeFirebaseAuth(); return false;">✕ Close</a></div>
   </div>
 </div>
-
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
@@ -247,50 +248,77 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
     try {
       if(fbIsLogin){
         const cred = await auth.signInWithEmailAndPassword(email,pass);
-        const snap = await db.collection("users").where("uid","==",cred.user.uid).limit(1).get();
-        if(!snap.empty && snap.docs[0].data().approved===false){
-          msg.style.color="#92400e"; msg.innerText="⏳ Account pending approval. Please send payment proof to Admin.";
-          btn.disabled=false; btn.innerText="Login Now"; return;
+        const docRef = await db.collection("users").doc(cred.user.uid).get();
+        if(docRef.exists && docRef.data().approved===false){
+          msg.style.color="#92400e"; 
+          msg.innerHTML="⏳ Account pending approval.<br>Please send payment proof to Admin.<br><br>WhatsApp: +265 985 583 319";
+          btn.disabled=false; btn.innerText="Login Now"; 
+          setTimeout(()=>{ closeFirebaseAuth(); showFullPendingScreen(); }, 1500);
+          return;
         }
         msg.style.color="green";msg.innerText="✅ Login success!";
         setTimeout(()=>{closeFirebaseAuth(); if(pendingRedirect) window.location.href=pendingRedirect; else location.reload()},800);
       } else {
         const cred = await auth.createUserWithEmailAndPassword(email,pass);
         await cred.user.updateProfile({displayName:name});
-        await db.collection("users").add({
+        await db.collection("users").doc(cred.user.uid).set({
           displayName: name, fullName: name, email: email.toLowerCase(),
           uid: cred.user.uid, approved: false,
           createdAt: firebase.firestore.FieldValue.serverTimestamp()
-        });
-        msg.style.color="green"; msg.innerHTML="✅ Account created! <br>⏳ Pending approval. Send payment proof to <b>Admin</b>";
-        btn.disabled=false; btn.innerText="Create Account";
-        setTimeout(()=>{closeFirebaseAuth(); location.reload();},2500);
+        }, {merge:true});
+        msg.style.color="green"; 
+        msg.innerHTML="✅ Account created! <br><br>⏳ <b>Your account is pending.</b><br>Please send payment proof to Admin<br>WhatsApp: +265 985 583 319<br><br>You will be approved within 24hrs.";
+        btn.disabled=false; btn.innerText="Account Created";
+        setTimeout(()=>{ closeFirebaseAuth(); showFullPendingScreen(); }, 2500);
       }
-    } catch(e){ msg.style.color="red";msg.innerText="❌ "+e.message; btn.disabled=false; btn.innerText=fbIsLogin?"Login Now":"Create Account"; }
+    } catch(e){ 
+      console.error(e);
+      if(e.code === 'permission-denied' || e.message.includes('Missing or insufficient permissions')){
+        msg.style.color="#92400e";
+        msg.innerHTML="⏳ Account is pending.<br>Please send payment proof to Admin.<br>WhatsApp: +265 985 583 319";
+        btn.disabled=false; btn.innerText=fbIsLogin?"Login Now":"Create Account";
+        setTimeout(()=>{ closeFirebaseAuth(); showFullPendingScreen(); }, 2000);
+      } else {
+        msg.style.color="red";msg.innerText="❌ "+e.message; btn.disabled=false; btn.innerText=fbIsLogin?"Login Now":"Create Account"; 
+      }
+    }
   }
   async function requireAuth(url){
     const user=auth.currentUser;
     if(!user){openFirebaseAuth(url); return;}
     try{
-      const snap = await db.collection("users").where("uid","==",user.uid).limit(1).get();
-      if(!snap.empty && snap.docs[0].data().approved===false){
-        document.getElementById('pendingBox').style.display='block';
-        alert("⏳ Your account is pending approval. Please send payment proof to Admin"); return;
+      const docRef = await db.collection("users").doc(user.uid).get();
+      if(docRef.exists && docRef.data().approved===false){
+        showFullPendingScreen();
+        return;
       }
-    }catch(e){}
+    }catch(e){
+      if(e.code === 'permission-denied'){
+        showFullPendingScreen();
+        return;
+      }
+    }
     window.location.href=url;
   }
   async function handleProtectedClick(formId){
     const user=auth.currentUser;
     if(!user){openFirebaseAuth(); return;}
     try{
-      const snap = await db.collection("users").where("uid","==",user.uid).limit(1).get();
-      if(!snap.empty && snap.docs[0].data().approved===false){
-        document.getElementById('pendingBox').style.display='block';
-        alert("⏳ Your account is pending approval."); return;
+      const docRef = await db.collection("users").doc(user.uid).get();
+      if(docRef.exists && docRef.data().approved===false){
+        showFullPendingScreen();
+        return;
       }
-    }catch(e){}
+    }catch(e){
+      if(e.code === 'permission-denied'){
+        showFullPendingScreen(); return;
+      }
+    }
     toggleForm(formId);
+  }
+  function showFullPendingScreen(){
+    document.getElementById('pendingScreen').style.display='flex';
+    document.getElementById('pendingBox').style.display='block';
   }
   function firebaseLogout(){auth.signOut().then(()=>location.reload())}
   auth.onAuthStateChanged(async user=>{
@@ -301,9 +329,15 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
       document.getElementById('logoutBtn').style.display='block';
       document.getElementById('loginBtn').style.display='none';
       try{
-        const snap = await db.collection("users").where("uid","==",user.uid).limit(1).get();
-        if(!snap.empty && snap.docs[0].data().approved===false){ document.getElementById('pendingBox').style.display='block'; }
-      }catch(e){}
+        const docRef = await db.collection("users").doc(user.uid).get();
+        if(docRef.exists && docRef.data().approved===false){ 
+          document.getElementById('pendingBox').style.display='block'; 
+        }
+      }catch(e){
+        if(e.code === 'permission-denied'){
+          document.getElementById('pendingBox').style.display='block';
+        }
+      }
     }
   });
 </script>
@@ -318,21 +352,38 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
 .catch(()=>{document.getElementById("donationMsg").innerHTML="❌ Error."})
   });
   document.getElementById("alumniForm").addEventListener("submit", async function(e){
-    e.preventDefault(); const user=firebase.auth().currentUser; if(!user){openFirebaseAuth();return}
-    try{ const snap = await db.collection("users").where("uid","==",user.uid).where("approved","==",false).get(); if(!snap.empty){ document.getElementById("alumniMsg").innerHTML="⏳ Pending approval."; return; } }catch(e){}
+    e.preventDefault(); const user=auth.currentUser; if(!user){openFirebaseAuth();return}
+    try{ 
+      const docRef = await db.collection("users").doc(user.uid).get();
+      if(docRef.exists && docRef.data().approved===false){
+        document.getElementById("alumniMsg").innerHTML="⏳ Your account is pending approval. Please send payment proof first.";
+        showFullPendingScreen();
+        return; 
+      }
+    }catch(e){}
     const form=e.target; const msgEl=document.getElementById("alumniMsg"); msgEl.innerHTML="Submitting...";
     const data={type:"alumni",name:form.fullName.value,gender:form.gender.value,year:form.gradYear.value,class:form.class.value,phone:form.phone.value,whatsapp:form.whatsapp.value,profession:form.profession.value,interest:form.interest.value,message:form.message.value,accountEmail:user.email};
     try{
       fetch(WEB_APP_URL,{method:"POST",mode:"no-cors",body:JSON.stringify(data)});
-      await db.collection("users").add({
+      const existingDoc = await db.collection("users").doc(user.uid).get();
+      const wasApproved = existingDoc.exists ? existingDoc.data().approved : false;
+      await db.collection("users").doc(user.uid).set({
         displayName: data.name, fullName: data.name, gradYear: data.year, year: data.year,
         class: data.class, career: data.profession, profession: data.profession,
         phone: data.phone, whatsapp: data.whatsapp, interest: data.interest,
-        message: data.message, email: user.email, uid: user.uid, approved: true,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-      msgEl.innerHTML="✅ Welcome!"; form.reset();
-      setTimeout(()=>{ window.location.href="find-classmates.html"; },1500);
+        message: data.message, email: user.email, uid: user.uid, 
+        approved: wasApproved,
+        alumniRegistered: true,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      }, {merge:true});
+      if(wasApproved){
+        msgEl.innerHTML="✅ Welcome!"; 
+        setTimeout(()=>{ window.location.href="find-classmates.html"; },1500);
+      } else {
+        msgEl.innerHTML="✅ Profile saved! Pending approval.";
+        showFullPendingScreen();
+      }
+      form.reset();
     }catch(err){ msgEl.innerHTML="❌ Error: "+err.message; }
   });
   async function loadDonations(){const table=document.getElementById('donationTable');try{const res=await fetch(WEB_APP_URL+"?type=donation");const data=await res.json();table.innerHTML='<tr><th>Name</th><th>Donation</th><th>Period</th><th>Phone</th><th>Location</th></tr>';data.donations.forEach(d=>{table.innerHTML+=`<tr><td>${d.name||''}</td><td>${d.donation||''}</td><td>${d.period||''}</td><td>${d.phone||''}</td><td>${d.location||''}</td></tr>`})}catch(e){}}
@@ -346,7 +397,13 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
         const d=doc.data(); const date = d.createdAt? d.createdAt.toDate().toLocaleDateString() : 'N/A';
         table.innerHTML+=`<tr><td>${d.displayName||d.fullName||''}</td><td>${d.email||''}</td><td>${date}</td><td><button class="btn btn-green" style="padding:6px 12px;font-size:12px" onclick="approveUser('${doc.id}')">✅ Approve</button> <button class="btn" style="background:#ef4444;color:white;padding:6px 12px;font-size:12px" onclick="rejectUser('${doc.id}')">❌ Reject</button></td></tr>`;
       });
-    }catch(e){ table.innerHTML+='<tr><td colspan="4">Error: '+e.message+'</td></tr>'; }
+    }catch(e){ 
+      if(e.code === 'permission-denied' || e.message.includes('Missing or insufficient permissions')){
+        table.innerHTML+='<tr><td colspan="4" style="color:#92400e; padding:15px; text-align:center">⚠️ Permission error - Please update Firestore Rules in Firebase Console.<br>Go to Firestore -> Rules -> Paste new rules -> Publish</td></tr>';
+      } else {
+        table.innerHTML+='<tr><td colspan="4">Error: '+e.message+'</td></tr>'; 
+      }
+    }
   }
   async function approveUser(docId){ if(!confirm("Approve this user after payment?")) return; try{ await db.collection("users").doc(docId).update({approved:true, approvedAt: firebase.firestore.FieldValue.serverTimestamp()}); alert("✅ Approved!"); loadPending(); }catch(e){alert("Error: "+e.message)} }
   async function rejectUser(docId){ if(!confirm("Reject and delete this user?")) return; try{ await db.collection("users").doc(docId).delete(); alert("Deleted"); loadPending(); }catch(e){alert("Error: "+e.message)} }
@@ -357,4 +414,4 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
   window.onload=function(){if(localStorage.getItem('chitekesaAdmin')==='loggedIn'){document.getElementById('adminDashboard').style.display='block';document.getElementById('adminLogoutBtn').style.display='block';loadDonations();loadAlumni();loadPending();}}
 </script>
 </body>
-          </html>
+  </html>
