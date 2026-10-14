@@ -6,7 +6,7 @@
   <title>Members Downloads - Chitekesa CDSS Alumni</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root { --green:#0f2e1a; --green-light:#123d21; --blue:#003366; --blue-light:#004080; --orange:#FF7A00; --whatsapp:#25D366; --fb:#1877F2; --bg:#f5f7fb; --card:#ffffff; --text:#1f2937; --muted:#6b7280; --border:#e5e7eb; }
+    :root { --green:#0f2e1a; --green-light:#123d21; --blue:#003366; --orange:#FF7A00; --bg:#f5f7fb; --text:#1f2937; }
     *{box-sizing:border-box;margin:0;padding:0}
     body{background:var(--bg);font-family:'Poppins',Arial,sans-serif;color:var(--text);line-height:1.6}
     .container{padding:0 18px;max-width:1000px;margin:0 auto}
@@ -15,30 +15,27 @@
     .logo img{width:100%;height:100%;object-fit:cover}
     .header h1{margin:0;font-size:22px;font-weight:700}
     .header h4{font-style:italic;font-weight:400;opacity:0.9;margin-top:4px;font-size:14px}
-    .navbar{background:var(--blue);padding:0 12px;position:sticky;top:0;z-index:999;box-shadow:0 2px 10px rgba(0,0,0,0.2)}
+    .navbar{background:var(--blue);padding:0 12px;position:sticky;top:0;z-index:1000;box-shadow:0 2px 10px rgba(0,0,0,0.2)}
     .navbar-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 0}
-    .menu-toggle{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:white;font-size:14px;padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:600}
+    .menu-toggle{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:white;font-size:14px;padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:600;position:relative;z-index:1001}
     #navOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.45);backdrop-filter:blur(2px);z-index:998;display:none}
     #navOverlay.show{display:block}
-    .menu{list-style:none;position:fixed;top:0;left:-100%;width:285px;height:100vh;background:linear-gradient(180deg,#002244,#003366);z-index:999;padding:22px 18px;display:flex;flex-direction:column;gap:2px;transition:left 0.35s cubic-bezier(0.4,0,0.2,1);box-shadow:4px 0 25px rgba(0,0,0,0.3);overflow-y:auto}
-    .menu.active{left:0}
+    .menu{list-style:none;position:fixed;top:0;left:-100%;width:285px;height:100vh;background:linear-gradient(180deg,#002244,#003366);z-index:999;padding:22px 18px;display:flex;flex-direction:column;gap:2px;transition:left 0.35s ease;box-shadow:4px 0 25px rgba(0,0,0,0.3);overflow-y:auto}
+    .menu.active{left:0 !important}
     .menu-header{display:flex;justify-content:space-between;align-items:center;padding-bottom:18px;border-bottom:1px solid rgba(255,255,255,0.12);margin-bottom:14px}
     .menu-header span{color:white;font-weight:700;font-size:16px}
     .close-menu-btn{background:rgba(255,255,255,0.12);border:none;color:white;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center}
     .menu li{margin:3px 0}
-    .menu a{color:rgba(255,255,255,0.88);text-decoration:none;font-weight:500;font-size:14.5px;padding:11px 14px;display:flex;align-items:center;gap:10px;border-radius:10px;cursor:pointer;transition:all .2s;text-align:left;justify-content:flex-start}
-    .menu a:hover{background:rgba(255,255,255,0.10);color:white;transform:translateX(4px)}
+    .menu a{color:rgba(255,255,255,0.88);text-decoration:none;font-weight:500;font-size:14.5px;padding:11px 14px;display:flex;align-items:center;gap:10px;border-radius:10px;cursor:pointer}
+    .menu a:hover{background:rgba(255,255,255,0.10);color:white}
     .logout-btn{background:var(--orange);border:none;color:white;padding:9px 16px;border-radius:8px;font-weight:700;cursor:pointer;width:100%;margin-top:6px}
-    .user-badge{color:#fde68a;font-weight:700;font-size:13px;padding:8px 14px;display:block}
     .download-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
-    .download-card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 15px; transition: transform 0.3s; }
-    .download-card:hover { transform: translateY(-3px); }
+    .download-card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 15px; }
     .download-icon { font-size: 40px; }
     .download-info { flex: 1; }
     .download-info h3 { color: var(--green); margin-bottom: 5px; }
     .download-info p { font-size: 14px; color: #666; }
     .btn-download { background: var(--orange); color: white; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 700; white-space: nowrap; }
-    .btn-download:hover { background: #e67e00; }
     main{padding:35px 0}
     .page-title{text-align:center; color:var(--blue); margin-bottom:8px; font-size:24px; font-weight:700;}
     footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;margin-top:50px;border-top:4px solid var(--green)}
@@ -53,15 +50,18 @@
     <h1>CHITEKESA CDSS ALUMNI GROUP</h1>
     <h4>Together We Make The Difference</h4>
   </header>
+
   <nav class="navbar">
     <div class="navbar-inner">
-      <button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
+      <button type="button" class="menu-toggle" id="menuBtn">☰ Menu</button>
       <div style="color:rgba(255,255,255,0.7); font-size:12px;">Members Downloads</div>
     </div>
   </nav>
-  <div id="navOverlay" onclick="toggleMenu()"></div>
+
+  <div id="navOverlay"></div>
+
   <ul id="menu" class="menu">
-    <li class="menu-header"><span>📚 Navigation</span><button class="close-menu-btn" onclick="toggleMenu()">❌</button></li>
+    <li class="menu-header"><span>📚 Navigation</span><button type="button" class="close-menu-btn" id="closeBtn">❌</button></li>
     <li><a href="index.html">🏠 Home</a></li>
     <li><a href="Chitekesa about.html">👥 About</a></li>
     <li><a href="Chitekesa contact.html">📞 Contact Us</a></li>
@@ -69,7 +69,7 @@
     <li><a href="find-classmates.html">🎓 Classmates</a></li>
     <li><a href="vacancies.html">💼 Vacancies</a></li>
     <li><a href="education-corner.html">📚 Education</a></li>
-    <li><button class="logout-btn" onclick="logout()">Logout</button></li>
+    <li><button type="button" class="logout-btn" onclick="window.location.href='index.html'">Logout</button></li>
   </ul>
   
   <main class="container">
@@ -77,66 +77,49 @@
     <p style="text-align:center; margin-bottom: 25px;">Access important documents, photos, and resources.</p>
 
     <div class="download-grid">
-      <div class="download-card">
-        <div class="download-icon">📄</div>
-        <div class="download-info">
-          <h3>Alumni Constitution</h3>
-          <p>PDF - 590KB</p>
-        </div>
-        <a href="CHITEKESA CDSS ALUMNI CONSTITUTION.pdf" download class="btn-download">Download</a>
-      </div>
-
-      <div class="download-card">
-        <div class="download-icon">📊</div>
-        <div class="download-info">
-          <h3>Meeting Minutes</h3>
-          <p>PDF - 158KB</p>
-        </div>
-        <a href="Chitekesa_CDSS_Alumni_Meeting_Minutes.pdf" download class="btn-download">Download</a>
-      </div>
-
-      <div class="download-card">
-        <div class="download-icon">🖼️</div>
-        <div class="download-info">
-          <h3>Reunion Photos 2025</h3>
-          <p>ZIP - 45MB - 120 Photos</p>
-        </div>
-        <a href="files/photos.zip" download class="btn-download">Download</a>
-      </div>
-
-      <div class="download-card">
-        <div class="download-icon">📝</div>
-        <div class="download-info">
-          <h3>Membership Form</h3>
-          <p>DOCX - 120KB - Fill and submit</p>
-        </div>
-        <a href="files/membership.docx" download class="btn-download">Download</a>
-      </div>
+      <div class="download-card"><div class="download-icon">📄</div><div class="download-info"><h3>Alumni Constitution</h3><p>PDF - 590KB</p></div><a href="CHITEKESA CDSS ALUMNI CONSTITUTION.pdf" download class="btn-download">Download</a></div>
+      <div class="download-card"><div class="download-icon">📊</div><div class="download-info"><h3>Meeting Minutes</h3><p>PDF - 158KB</p></div><a href="Chitekesa_CDSS_Alumni_Meeting_Minutes.pdf" download class="btn-download">Download</a></div>
+      <div class="download-card"><div class="download-icon">🖼️</div><div class="download-info"><h3>Reunion Photos 2025</h3><p>ZIP - 45MB - 120 Photos</p></div><a href="files/photos.zip" download class="btn-download">Download</a></div>
+      <div class="download-card"><div class="download-icon">📝</div><div class="download-info"><h3>Membership Form</h3><p>DOCX - 120KB - Fill and submit</p></div><a href="files/membership.docx" download class="btn-download">Download</a></div>
     </div>
   </main>
 
   <footer>
     <p><strong>Location:</strong> Along Mwanga to Maliro Road, Near Chitekesa Police Unit, Phalombe</p>
-    <div class="footer-social">
-      <span><strong>Facebook:</strong></span>
-      <a href="https://www.facebook.com/share/19DZppzrht/" target="_blank">
-        <img src="Facebook icon.png" alt="Facebook">
-        CHITEKESA CDSS ALUMNI
-      </a>
-    </div>
+    <div class="footer-social"><span><strong>Facebook:</strong></span><a href="https://www.facebook.com/share/19DZppzrht/" target="_blank"><img src="Facebook icon.png" alt="Facebook">CHITEKESA CDSS ALUMNI</a></div>
     <p>&copy; 2026 CHITEKESA ALUMNI ASSOCIATION. All Rights Reserved.</p>
   </footer>
 
 <script>
-function toggleMenu(){
+// Bulletproof menu fix
+(function(){
   const menu = document.getElementById('menu');
   const overlay = document.getElementById('navOverlay');
-  menu.classList.toggle('active');
-  overlay.classList.toggle('show');
-}
-function logout(){
-  window.location.href='index.html';
-}
+  const btn = document.getElementById('menuBtn');
+  const closeBtn = document.getElementById('closeBtn');
+
+  function openMenu(){
+    menu.classList.add('active');
+    overlay.classList.add('show');
+  }
+  function closeMenu(){
+    menu.classList.remove('active');
+    overlay.classList.remove('show');
+  }
+  function toggleMenu(){
+    if(menu.classList.contains('active')){ closeMenu(); } else { openMenu(); }
+  }
+
+  // Attach events
+  btn.addEventListener('click', toggleMenu);
+  closeBtn.addEventListener('click', closeMenu);
+  overlay.addEventListener('click', closeMenu);
+
+  // Keep old function names for compatibility
+  window.toggleMenu = toggleMenu;
+  window.openNav = openMenu;
+  window.closeNav = closeMenu;
+})();
 </script>
 
 </body>
