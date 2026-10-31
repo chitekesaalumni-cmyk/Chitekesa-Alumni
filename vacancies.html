@@ -27,9 +27,11 @@ body { margin:0; font-family: 'Segoe UI', sans-serif; background:#f5f7fb; }
 .tag-announce { background:#ffebee; color:#c62828; }
 .tag-trusted { background:#e8f5e9; color:#2e7d32; border:1px solid #c8e6c9; }
 .btn-row{ display:flex; gap:8px; margin-top:auto; }
-.btn-apply { flex:1; display:inline-block; background:#0f4c75; color:white; padding:11px 15px; border-radius:8px; text-decoration:none; text-align:center; font-weight:bold; font-size:13px; }
-.btn-details { flex:1; display:inline-block; background:white; color:#0f4c75; border:1.5px solid #0f4c75; padding:11px 15px; border-radius:8px; text-decoration:none; text-align:center; font-weight:bold; font-size:13px; }
+.btn-apply { flex:1; display:inline-block; background:#0f4c75; color:white; padding:11px 15px; border-radius:8px; text-decoration:none; text-align:center; font-weight:bold; font-size:13px; border:none; cursor:pointer; }
+.btn-details { flex:1; display:inline-block; background:white; color:#0f4c75; border:1.5px solid #0f4c75; padding:11px 15px; border-radius:8px; text-decoration:none; text-align:center; font-weight:bold; font-size:13px; cursor:pointer; }
 .deadline { font-size:12px; color:#e74c3c; font-weight:700; margin:6px 0; }
+#annModal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.65); backdrop-filter:blur(4px); z-index:5000; justify-content:center; align-items:center; padding:16px; }
+#annModalBox { background:white; width:100%; max-width:620px; max-height:88vh; overflow-y:auto; border-radius:18px; padding:26px; position:relative; box-shadow:0 20px 60px rgba(0,0,0,0.3); }
 </style>
 </head>
 <body>
@@ -59,7 +61,6 @@ body { margin:0; font-family: 'Segoe UI', sans-serif; background:#f5f7fb; }
 
 <div class="vac-grid" id="vacGrid"></div>
 
-<!-- Admin Login -->
 <div id="adminLoginModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:2000;">
   <div style="background:white; padding:30px; border-radius:16px; width:90%; max-width:380px;">
     <h3>🔐 Admin Login</h3>
@@ -70,7 +71,6 @@ body { margin:0; font-family: 'Segoe UI', sans-serif; background:#f5f7fb; }
   </div>
 </div>
 
-<!-- Upload Modal -->
 <div id="uploadModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000; overflow:auto; padding:20px;">
   <div style="background:white; padding:28px; border-radius:18px; width:95%; max-width:480px;">
     <h3 style="margin:0 0 16px 0; font-size:20px; font-weight:700;">Post Vacancy / Announcement</h3>
@@ -96,6 +96,22 @@ body { margin:0; font-family: 'Segoe UI', sans-serif; background:#f5f7fb; }
     <button onclick="saveVacancy()" style="width:100%; padding:14px; background:#0f4c75; color:white; border:none; border-radius:12px; font-weight:700; cursor:pointer; margin-top:10px;">Publish Vacancy</button>
     <button onclick="document.getElementById('uploadModal').style.display='none'" style="width:100%; padding:12px; margin-top:10px; background:#f1f5f9; border:none; border-radius:12px; cursor:pointer; font-weight:600;">Cancel</button>
     <p style="font-size:11px; color:#888; text-align:center; margin-top:10px;">⚠️ Only post verified vacancies. No fake jobs.</p>
+  </div>
+</div>
+
+<!-- ONLY ANNOUNCEMENT MODAL -->
+<div id="annModal" onclick="if(event.target===this) closeAnnModal()">
+  <div id="annModalBox">
+    <button onclick="closeAnnModal()" style="position:absolute; top:12px; right:12px; background:#ef4444; color:white; border:none; width:36px; height:36px; border-radius:50%; font-weight:800; cursor:pointer; font-size:16px;">✕</button>
+    <span id="annModalTag" class="vac-tag tag-announce" style="margin-bottom:12px;"></span>
+    <h2 id="annModalTitle" style="margin:8px 0; color:#0f4c75; font-size:20px; line-height:1.3;"></h2>
+    <p id="annModalMeta" style="font-size:13px; color:#666; margin-bottom:10px;"></p>
+    <p id="annModalDeadline" style="font-size:13px; color:#c0392b; font-weight:700; margin-bottom:12px;"></p>
+    <div id="annModalDesc" style="font-size:15px; line-height:1.8; color:#1f2937; white-space:pre-line; background:#f8fafc; padding:16px; border-radius:12px; border:1px solid #e5e7eb;"></div>
+    <div style="display:flex; gap:10px; margin-top:18px;">
+      <a id="annModalLink" href="#" target="_blank" style="flex:1; background:#0f4c75; color:white; padding:12px; border-radius:10px; text-align:center; text-decoration:none; font-weight:700; display:none;">🔗 Open Link</a>
+      <button onclick="closeAnnModal()" style="flex:1; background:#f1f5f9; border:none; padding:12px; border-radius:10px; font-weight:700; cursor:pointer;">Close</button>
+    </div>
   </div>
 </div>
 
@@ -173,6 +189,22 @@ window.adminLogin = async ()=>{
 };
 window.adminLogout = async ()=>{ await signOut(auth); alert("Logged out"); };
 
+window.viewAnnouncement = (id)=>{
+  const v = allVacancies.find(x=>x.id===id);
+  if(!v) return;
+  document.getElementById('annModalTag').innerText = v.type + (v.deadline? ' • Deadline: '+v.deadline : '');
+  document.getElementById('annModalTitle').innerText = v.title;
+  document.getElementById('annModalMeta').innerText = '🏢 ' + (v.organization||'Chitekesa Alumni') + ' • 📍 ' + (v.location||'Malawi');
+  document.getElementById('annModalDeadline').innerText = v.deadline? '⏰ Deadline: '+v.deadline : '';
+  document.getElementById('annModalDesc').innerText = v.desc || 'No details provided.';
+  const linkEl = document.getElementById('annModalLink');
+  if(v.link){ linkEl.href = v.link; linkEl.style.display='block'; } else { linkEl.style.display='none'; }
+  document.getElementById('annModal').style.display='flex';
+};
+window.closeAnnModal = ()=>{
+  document.getElementById('annModal').style.display='none';
+};
+
 async function loadVacancies(){
   render();
   try{
@@ -219,6 +251,17 @@ function render(){
     html += filtered.map(v=>{
       const isAnn = (v.type||"").toLowerCase().includes("announce");
       const isExpired = v.deadline && new Date(v.deadline) < new Date();
+      const actionButtons = isAnn ? `
+          <div class="btn-row">
+            <button onclick="viewAnnouncement('${v.id}')" class="btn-apply" style="background:#c0392b;">📢 View Details</button>
+            <button onclick="viewAnnouncement('${v.id}')" class="btn-details" style="border-color:#c0392b; color:#c0392b;">📖 Read More</button>
+          </div>
+        ` : `
+          <div class="btn-row">
+            <a href="${v.link||'#'}" target="_blank" class="btn-apply">📨 Apply Now</a>
+            <a href="${v.link||'#'}" target="_blank" class="btn-details">👁️ Details</a>
+          </div>
+        `;
       return `
         <div class="vac-card ${isAnn? 'urgent':''}" style="${isExpired? 'opacity:0.6':''}">
           <span class="vac-tag ${isAnn? 'tag-announce': v.type?.toLowerCase().includes('intern')? 'tag-intern':'tag-job'}">${v.type} ${isExpired? '• EXPIRED':''}</span>
@@ -226,10 +269,7 @@ function render(){
           <p style="font-size:13px; color:#666; margin:2px 0;">🏢 ${v.organization||'Chitekesa Alumni'} • 📍 ${v.location||'Malawi'}</p>
           ${v.deadline? `<p class="deadline">⏰ Deadline: ${v.deadline}</p>`:''}
           <p style="font-size:14px; color:#444; margin:8px 0 15px;">${(v.desc||'').substring(0,180)}${(v.desc||'').length>180?'...':''}</p>
-          <div class="btn-row">
-            <a href="${v.link||'#'}" target="_blank" class="btn-apply">${isAnn? '📢 View Details':'📨 Apply Now'}</a>
-            <a href="${v.link||'#'}" target="_blank" class="btn-details">👁️ Details</a>
-          </div>
+          ${actionButtons}
         </div>
       `;
     }).join('');
@@ -277,4 +317,4 @@ window.saveVacancy = async ()=>{
 loadVacancies();
 </script>
 </body>
-</html>
+      </html>
