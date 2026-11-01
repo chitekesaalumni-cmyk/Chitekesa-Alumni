@@ -129,7 +129,6 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
       <div id="pendingBox" style="display:none;background:linear-gradient(135deg,#fef3c7,#fde68a);border:1.5px solid #fbbf24;padding:18px;border-radius:12px;margin-top:16px">
         <h3 style="margin-top:0;color:#92400e">⏳ Payment Verification Pending</h3>
         <p style="font-size:14px;color:#78350f">Your account is created! Upload your payment proof below so Admin can approve you.</p>
-        <!-- FIXED PROOF AREA ONLY - START -->
         <div class="proof-box">
           <label style="font-weight:700;font-size:14px;">📸 Upload Payment Proof (Screenshot) *</label>
           <input type="file" id="proofFile" accept="image/*" style="margin-top:8px;">
@@ -145,7 +144,6 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
         </div>
         <p style="font-size:12px;color:#78350f;margin-top:10px;">After upload, Admin will verify within 24hrs. You will be auto-logged out.</p>
         <button class="btn" style="background:#78350f;color:white;width:100%;margin-top:10px;" onclick="firebaseLogout()">Logout Now</button>
-        <!-- FIXED PROOF AREA ONLY - END -->
       </div>
     </div>
     <h3>Admin Portal</h3>
@@ -196,6 +194,16 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
     <div class="executive"><img src="My image.png" alt="Treasurer"><h3>Treasurer: Francis Junior Salima, Class of 2022</h3><a href="https://wa.me/265985583319" class="btn btn-whatsapp" target="_blank">WhatsApp</a></div>
 </main>
 <footer><p><strong>Location:</strong> Along Mwanga to Maliro Road, Near Chitekesa Police Unit, Phalombe</p><p>&copy; 2026 CHITEKESA ALUMNI ASSOCIATION. All Rights Reserved.</p></footer>
+
+<!-- FIX: MODAL FOR PROOF VIEW - PREVENTS BLANK SCREEN -->
+<div id="proofModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:30000;justify-content:center;align-items:center;padding:20px;" onclick="closeProof()">
+  <div style="position:relative;max-width:95%;max-height:95%;" onclick="event.stopPropagation()">
+    <button onclick="closeProof()" style="position:absolute;top:-40px;right:0;background:#ff5a5a;color:white;border:none;padding:8px 14px;border-radius:8px;font-weight:700;cursor:pointer;">✕ Close</button>
+    <img id="proofModalImg" src="" style="max-width:100%;max-height:85vh;border-radius:12px;border:3px solid white;box-shadow:0 10px 40px rgba(0,0,0,0.5);display:block;">
+    <p id="proofModalInfo" style="color:white;text-align:center;margin-top:10px;font-weight:600;font-size:13px;"></p>
+  </div>
+</div>
+
 <div id="firebaseAuthModal">
   <div class="auth-box">
     <h2 id="authTitle">Create Account</h2>
@@ -282,7 +290,6 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
       btn.disabled=false; btn.innerText=fbIsLogin?"Login Now":"Create Account"; 
     }
   }
-  // FIXED PROOF FUNCTIONS - NO STORAGE NEEDED
   async function uploadProof(){
     const user = auth.currentUser;
     const fileInput = document.getElementById('proofFile');
@@ -336,11 +343,19 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
       if(!doc.exists) return;
       const d=doc.data();
       if(d.proofBase64){
-        document.getElementById('myProofPreview').innerHTML = `<p style="font-size:12px;">You uploaded: <b>${d.proofTxn||''}</b></p><img src="${d.proofBase64}" style="width:100%;max-width:320px;border-radius:12px;border:1px solid #ddd;margin-top:8px;">`;
+        document.getElementById('myProofPreview').innerHTML = `<p style="font-size:12px;">You uploaded: <b>${d.proofTxn||''}</b></p><img src="${d.proofBase64}" style="width:100%;max-width:320px;border-radius:12px;border:1px solid #ddd;margin-top:8px;cursor:pointer;" onclick="openProofFromMy()">`;
         document.getElementById('proofMsg').style.color="green";
         document.getElementById('proofMsg').innerText="✅ Already uploaded. Waiting for approval.";
+        window.myProofCache = d.proofBase64;
       }
     }catch(e){}
+  }
+  function openProofFromMy(){
+    if(window.myProofCache){
+      document.getElementById('proofModalImg').src = window.myProofCache;
+      document.getElementById('proofModalInfo').innerText = "Your Uploaded Proof";
+      document.getElementById('proofModal').style.display = "flex";
+    }
   }
   async function requireAuth(url){
     const user=auth.currentUser;
@@ -424,20 +439,38 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
   });
   async function loadDonations(){const table=document.getElementById('donationTable');try{const res=await fetch(WEB_APP_URL+"?type=donation");const data=await res.json();table.innerHTML='<tr><th>Name</th><th>Donation</th><th>Period</th><th>Phone</th><th>Location</th></tr>';data.donations.forEach(d=>{table.innerHTML+=`<tr><td>${d.name||''}</td><td>${d.donation||''}</td><td>${d.period||''}</td><td>${d.phone||''}</td><td>${d.location||''}</td></tr>`})}catch(e){}}
   async function loadAlumni(){const table=document.getElementById('alumniTable');try{const res=await fetch(WEB_APP_URL+"?type=alumni");const data=await res.json();table.innerHTML='<tr><th>Name</th><th>Grad Year</th><th>Profession</th><th>Phone</th><th>Interest</th></tr>';data.alumni.forEach(a=>{table.innerHTML+=`<tr><td>${a.name||''}</td><td>${a.year||''}</td><td>${a.profession||''}</td><td>${a.phone||''}</td><td>${a.interest||''}</td></tr>`})}catch(e){}}
+  let proofCache = {};
   async function loadPending(){
-    const table=document.getElementById('pendingTable'); table.innerHTML='<tr><th>Name</th><th>Email</th><th>Proof</th><th>Date</th><th>Action</th></tr>';
+    const table=document.getElementById('pendingTable'); 
+    table.innerHTML='<tr><th>Name</th><th>Email</th><th>Proof</th><th>Date</th><th>Action</th></tr>';
+    proofCache = {};
     try{
       const snap = await db.collection("users").where("approved","==",false).get();
       if(snap.empty){table.innerHTML+='<tr><td colspan="5" style="text-align:center;padding:20px;color:#6b7280">No pending approvals 🎉</td></tr>'; return;}
       snap.forEach(doc=>{
-        const d=doc.data(); const date = d.createdAt? d.createdAt.toDate().toLocaleDateString() : 'N/A';
+        const d=doc.data(); 
+        const date = d.createdAt? d.createdAt.toDate().toLocaleDateString() : 'N/A';
+        if(d.proofBase64){ proofCache[doc.id] = d.proofBase64; }
         let proofHtml = '<span style="color:red;">❌ No proof</span>';
-        if(d.proofBase64){ proofHtml = `<a href="${d.proofBase64}" target="_blank"><img src="${d.proofBase64}" style="width:80px;height:80px;object-fit:cover;border-radius:8px;border:1px solid #ddd;"></a><br><small>${d.proofTxn||''}<br>${d.proofMethod||''}</small>`; }
+        if(d.proofBase64){ 
+          proofHtml = `<img src="${d.proofBase64}" style="width:80px;height:80px;object-fit:cover;border-radius:8px;border:1px solid #ddd;cursor:pointer;" onclick="openProof('${doc.id}')"><br><small>${d.proofTxn||''}<br>${d.proofMethod||''}</small><br><span style="font-size:11px;color:#004080;font-weight:700;cursor:pointer;" onclick="openProof('${doc.id}')">👁️ View Full</span>`; 
+        }
         table.innerHTML+=`<tr><td>${d.displayName||d.fullName||''}</td><td>${d.email||''}</td><td>${proofHtml}</td><td>${date}</td><td><button class="btn btn-green" style="padding:6px 12px;font-size:12px" onclick="approveUser('${doc.id}')">✅ Approve</button> <button class="btn" style="background:#ef4444;color:white;padding:6px 12px;font-size:12px" onclick="rejectUser('${doc.id}')">❌ Reject</button></td></tr>`;
       });
     }catch(e){ 
       table.innerHTML+='<tr><td colspan="5">Error: '+e.message+'</td></tr>'; 
     }
+  }
+  function openProof(docId){
+    const base64 = proofCache[docId];
+    if(!base64){ alert("No proof image found"); return; }
+    document.getElementById('proofModalImg').src = base64;
+    document.getElementById('proofModalInfo').innerText = "Proof - Click outside to close";
+    document.getElementById('proofModal').style.display = "flex";
+  }
+  function closeProof(){
+    document.getElementById('proofModal').style.display = "none";
+    document.getElementById('proofModalImg').src = "";
   }
   async function approveUser(docId){ if(!confirm("Approve this user after payment?")) return; try{ await db.collection("users").doc(docId).update({approved:true, approvedAt: firebase.firestore.FieldValue.serverTimestamp()}); alert("✅ Approved!"); loadPending(); }catch(e){alert("Error: "+e.message)} }
   async function rejectUser(docId){ if(!confirm("Reject and delete this user?")) return; try{ await db.collection("users").doc(docId).delete(); alert("Deleted"); loadPending(); }catch(e){alert("Error: "+e.message)} }
@@ -448,4 +481,4 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
   window.onload=function(){if(localStorage.getItem('chitekesaAdmin')==='loggedIn'){document.getElementById('adminDashboard').style.display='block';document.getElementById('adminLogoutBtn').style.display='block';loadDonations();loadAlumni();loadPending();}}
 </script>
 </body>
-  </html>
+            </html>
