@@ -8,24 +8,14 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:Poppins,sans-serif; background:#f5f7fb; color:#1f2937; line-height:1.7;}
-.top-header{
-  background: linear-gradient(180deg, #123d21, #0a2f1a);
-  color:white; text-align:center; padding:28px 15px 22px;
-}
+.top-header{ background: linear-gradient(180deg, #123d21, #0a2f1a); color:white; text-align:center; padding:28px 15px 22px; }
 .top-header img{width:95px; height:95px; border-radius:50%; background:white; padding:5px;}
 .top-header h1{font-size:20px; margin-top:14px; font-weight:700;}
 .top-header p{font-style:italic; opacity:.85; font-size:14px; margin-top:8px;}
-.sub-nav{
-  background:#eaf0f8; padding:10px 16px; display:flex; justify-content:space-between; align-items:center;
-  border-bottom:1px solid #dbe4f0;
-}
+.sub-nav{ background:#eaf0f8; padding:10px 16px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #dbe4f0; }
 .menu-btn{ background:#2f4056; color:white; padding:8px 18px; border-radius:8px; border:none; cursor:pointer; font-weight:600; font-size:14px;}
 .sub-nav a{ color:#1e3a5f; text-decoration:none; font-weight:500; font-size:14px; }
-.side-nav{
-  position:fixed; top:0; left:-100%; width:72%; max-width:300px; height:100%;
-  background: linear-gradient(180deg, #0f365f, #12385f);
-  z-index:9999; transition:0.35s ease; padding:18px; display:flex; flex-direction:column; box-shadow:4px 0 25px rgba(0,0,0,0.4);
-}
+.side-nav{ position:fixed; top:0; left:-100%; width:72%; max-width:300px; height:100%; background: linear-gradient(180deg, #0f365f, #12385f); z-index:9999; transition:0.35s ease; padding:18px; display:flex; flex-direction:column; box-shadow:4px 0 25px rgba(0,0,0,0.4); }
 .side-nav.open{ left:0; }
 .nav-header{ display:flex; justify-content:space-between; align-items:center; padding-bottom:18px; border-bottom:1px solid rgba(255,255,255,0.12); margin-bottom:12px; }
 .nav-header span{ color:white; font-weight:700; font-size:18px;}
@@ -81,6 +71,7 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
 .auth-links a{color:#004080;font-weight:600;text-decoration:none;font-size:14px}
 .auth-close{text-align:center;margin-top:12px}
 .auth-close a{color:#6b7280;font-size:13px;text-decoration:none}
+.proof-box{margin-top:16px;background:white;padding:14px;border-radius:12px;border:1.5px dashed #f59e0b}
 </style>
 </head>
 <body>
@@ -125,11 +116,27 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
         <p style="font-size:14px;color:#7c2d12">Create a free account to access Downloads, Classmates, Vacancies, Education Corner & Registration.</p>
         <button class="btn btn-primary" onclick="openFirebaseAuth()">Create Free Account</button>
       </div>
-      <div id="pendingBox" style="display:none;background:linear-gradient(135deg,#fef3c7,#fde68a);border:1.5px solid #fbbf24;padding:16px;border-radius:12px;margin-top:16px">
+      <div id="pendingBox" style="display:none;background:linear-gradient(135deg,#fef3c7,#fde68a);border:1.5px solid #fbbf24;padding:18px;border-radius:12px;margin-top:16px">
         <h3 style="margin-top:0;color:#92400e">⏳ Payment Verification Pending</h3>
-        <p style="font-size:14px;color:#78350f">Your account is created but not yet approved. Please send payment proof to Admin.</p>
+        <p style="font-size:14px;color:#78350f">Your account is created! Upload your payment proof below so Admin can approve you.</p>
+        <div class="proof-box">
+          <label style="font-weight:700;font-size:14px;">📸 Upload Payment Proof (Screenshot / Photo) *</label>
+          <input type="file" id="proofFile" accept="image/*" style="margin-top:8px;">
+          <label style="margin-top:12px;">Transaction ID / Reference *</label>
+          <input type="text" id="proofTxn" placeholder="e.g. Airtel Money Txn ID: 123456789">
+          <label style="margin-top:12px;">Payment Method</label>
+          <select id="proofMethod" style="width:100%;padding:12px;border-radius:10px;border:1px solid #e5e7eb;margin-top:6px;">
+            <option>Airtel Money</option><option>TNM Mpamba</option><option>Bank Transfer</option><option>Other</option>
+          </select>
+          <button class="btn btn-green" style="width:100%;margin-top:14px;" onclick="uploadProof()" id="proofBtn">📤 Upload Proof</button>
+          <p id="proofMsg" style="font-size:13px;font-weight:600;margin-top:10px;"></p>
+          <div id="myProofPreview" style="margin-top:10px;"></div>
+        </div>
+        <p style="font-size:12px;color:#78350f;margin-top:10px;">After upload, Admin will verify within 24hrs. You will be auto-logged out for security. Login again after approval.</p>
+        <button class="btn" style="background:#78350f;color:white;width:100%;margin-top:10px;" onclick="firebaseLogout()">Logout Now</button>
       </div>
     </div>
+
     <h3>Admin Portal</h3>
     <button class="btn btn-green" onclick="toggleForm('adminLoginForm')">Admin Login</button>
     <div id="adminLoginForm" class="collapsible">
@@ -150,6 +157,7 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
       <div id="donations" class="admin-content"><h3>Donation Submissions</h3><button class="btn btn-blue" onclick="exportCSV('donations')">📥 Export CSV</button><table class="admin-table" id="donationTable"><tr><th>Name</th><th>Donation</th><th>Period</th><th>Phone</th><th>Location</th></tr></table></div>
       <div id="alumni" class="admin-content"><h3>Alumni Registrations</h3><button class="btn btn-blue" onclick="exportCSV('alumni')">📥 Export CSV</button><table class="admin-table" id="alumniTable"><tr><th>Name</th><th>Grad Year</th><th>Profession</th><th>Phone</th><th>Interest</th></tr></table></div>
     </div>
+
     <div class="hero-card">
       <h3 style="margin-top:0">Help Us Grow</h3>
       <button class="btn btn-primary" onclick="toggleForm('donateForm')">Donate Now</button>
@@ -157,6 +165,7 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
         <form id="donationForm"><label>Full Name *</label><input type="text" name="fullName" required><label>Gender *</label><select name="gender" required><option value="">select</option><option value="Male">Male</option><option value="Female">Female</option></select><label>What would you like to donate? *</label><input type="text" name="donationType" required><label>Donation Period *</label><select name="donationPeriod" required><option value="">Select</option><option value="one-time">Only this time</option><option value="3months">About 3 months</option><option value="6months">About 6 months</option><option value="1year">1 year</option><option value="ongoing">More than a year</option></select><label>Phone Number *</label><input type="tel" name="phone" required><label>Email Address</label><input type="email" name="email"><label>Current Location *</label><input type="text" name="location" required><button type="submit" class="btn btn-primary">Donate Now</button><p id="donationMsg"></p></form>
       </div>
     </div>
+
     <div class="hero-card">
       <h3 style="margin-top:0">Join Alumni Team</h3>
       <button class="btn btn-primary" onclick="handleProtectedClick('signupForm')">Sign Up</button>
@@ -164,6 +173,7 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
         <form id="alumniForm"><label>Full Name *</label><input type="text" name="fullName" required><label>Gender *</label><select name="gender" required><option value="">select</option><option value="Male">Male</option><option value="Female">Female</option></select><label>Year Graduated *</label><input type="number" name="gradYear" min="1990" max="2026" required><label>Class/Stream</label><input type="text" name="class"><label>Phone Number *</label><input type="tel" name="phone" required><label>WhatsApp Number</label><input type="tel" name="whatsapp"><label>Profession *</label><input type="text" name="profession" required><label>How would you like to get involved? *</label><select name="interest" required><option value="">Select</option><option value="Membership">Membership</option><option value="Events & Reunions">Events & Reunions</option><option value="Mentorship">Mentorship</option><option value="Donations/Fundraising">Donations & Fundraising</option><option value="Networking">Networking Only</option></select><label>Short Message</label><textarea name="message" rows="3"></textarea><label style="display:flex;gap:8px;align-items:center"><input type="checkbox" name="directoryConsent" required style="width:auto"> I agree to be in the alumni directory *</label><button type="submit" class="btn btn-primary">Join Chitekesa Alumni</button><p id="alumniMsg"></p></form>
       </div>
     </div>
+
     <h3>🔒 Protected Features</h3>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
       <div class="executive"><h3>Downloads</h3><button class="btn btn-blue" onclick="requireAuth('downloads.html')">Open</button></div>
@@ -171,6 +181,7 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
       <div class="executive"><h3>Vacancies</h3><button class="btn btn-blue" onclick="requireAuth('vacancies.html')">Open</button></div>
       <div class="executive" style="border:1.5px solid #0f2e1a"><h3>Education Corner</h3><button class="btn btn-green" onclick="requireAuth('education-corner.html')">Open</button></div>
     </div>
+
     <h3>Our School</h3><div class="gallery"><img src="Chitekesa photo.jpg" alt="Chitekesa School Photo"></div>
     <h2>For Direct Help; Please Contact the Following</h2>
     <div class="executive"><img src="Kaelama photo.jpg" alt="President"><h3>President: Francisco Kaelama, Class of 2021</h3><a href="https://wa.me/265882427151" class="btn btn-whatsapp" target="_blank">WhatsApp</a></div>
@@ -178,6 +189,7 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
     <div class="executive"><img src="My image.png" alt="Treasurer"><h3>Treasurer: Francis Junior Salima, Class of 2022</h3><a href="https://wa.me/265985583319" class="btn btn-whatsapp" target="_blank">WhatsApp</a></div>
 </main>
 <footer><p><strong>Location:</strong> Along Mwanga to Maliro Road, Near Chitekesa Police Unit, Phalombe</p><p>&copy; 2026 CHITEKESA ALUMNI ASSOCIATION. All Rights Reserved.</p></footer>
+
 <div id="firebaseAuthModal">
   <div class="auth-box">
     <h2 id="authTitle">Create Account</h2>
@@ -191,9 +203,11 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
     <div class="auth-close"><a href="#" onclick="closeFirebaseAuth(); return false;">✕ Close</a></div>
   </div>
 </div>
+
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
 <script>
   const firebaseConfig = {
     apiKey: "AIzaSyARXLsQe4i59U2iWZRHpRfIM33j1l7T_eY",
@@ -206,7 +220,9 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
   const db = firebase.firestore();
+  const storage = firebase.storage();
   let fbIsLogin=false; let pendingRedirect=null;
+
   function openNav(){ document.getElementById('sideNav').classList.add('open'); document.getElementById('overlay').classList.add('show'); }
   function closeNav(){ document.getElementById('sideNav').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); }
   function openFirebaseAuth(redirectUrl=null){pendingRedirect=redirectUrl; document.getElementById('firebaseAuthModal').style.display='flex'; closeNav();}
@@ -219,6 +235,7 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
     document.getElementById('nameField').style.display=fbIsLogin?"none":"block";
     document.getElementById('fbMsg').innerText="";
   }
+
   async function handleFirebaseAuth(){
     const email=document.getElementById('fbEmail').value.trim();
     const pass=document.getElementById('fbPassword').value.trim();
@@ -235,9 +252,12 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
         const cred = await auth.signInWithEmailAndPassword(email,pass);
         const docRef = await db.collection("users").doc(cred.user.uid).get();
         if(docRef.exists && docRef.data().approved===false){
-          msg.style.color="#92400e"; msg.innerText="⏳ Your account is pending. Please send payment proof to Admin. Logging out...";
+          msg.style.color="#92400e"; msg.innerText="⏳ Pending account - showing proof upload...";
+          closeFirebaseAuth();
+          document.getElementById('pendingBox').style.display='block';
+          document.getElementById('notLoggedBox').style.display='none';
+          loadMyProof();
           btn.disabled=false; btn.innerText="Login Now";
-          setTimeout(async ()=>{ await auth.signOut(); closeFirebaseAuth(); document.getElementById('pendingBox').style.display='block'; document.getElementById('notLoggedBox').style.display='none'; location.reload(); }, 2000);
           return;
         }
         msg.style.color="green";msg.innerText="✅ Login success!";
@@ -250,21 +270,93 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
           uid: cred.user.uid, approved: false,
           createdAt: firebase.firestore.FieldValue.serverTimestamp()
         }, {merge:true});
-        msg.style.color="green"; msg.innerHTML="✅ Account created! <br>⏳ Your account is pending. Send payment proof to Admin. Logging out...";
-        btn.disabled=false; btn.innerText="Account Created";
-        setTimeout(async ()=>{ await auth.signOut(); closeFirebaseAuth(); location.reload(); }, 2500);
+        msg.style.color="green"; msg.innerHTML="✅ Account created! Please upload proof below.";
+        closeFirebaseAuth();
+        document.getElementById('pendingBox').style.display='block';
+        document.getElementById('notLoggedBox').style.display='none';
+        btn.disabled=false; btn.innerText="Create Account";
       }
     } catch(e){ 
-      if(e.code==='permission-denied' || e.message.includes('Missing or insufficient permissions')){
-        msg.style.color="#92400e";
-        msg.innerHTML="⏳ Your account is pending. Please send payment proof to Admin.";
-        setTimeout(async ()=>{ try{await auth.signOut();}catch(_){} closeFirebaseAuth(); document.getElementById('pendingBox').style.display='block'; }, 1500);
-      } else {
-        msg.style.color="red";msg.innerText="❌ "+e.message; 
-      }
+      msg.style.color="red";msg.innerText="❌ "+e.message; 
       btn.disabled=false; btn.innerText=fbIsLogin?"Login Now":"Create Account"; 
     }
   }
+
+  // NEW: UPLOAD PROOF LOGIC
+  async function uploadProof(){
+    const user = auth.currentUser;
+    const fileInput = document.getElementById('proofFile');
+    const txn = document.getElementById('proofTxn').value.trim();
+    const method = document.getElementById('proofMethod').value;
+    const msg = document.getElementById('proofMsg');
+    const btn = document.getElementById('proofBtn');
+    if(!user){ msg.style.color="red"; msg.innerText="⚠️ Please login again to upload"; openFirebaseAuth(); return; }
+    if(!fileInput.files[0]){ msg.style.color="red"; msg.innerText="⚠️ Select proof image first"; return; }
+    if(!txn){ msg.style.color="red"; msg.innerText="⚠️ Enter Transaction ID"; return; }
+    const file = fileInput.files[0];
+    if(file.size > 5*1024*1024){ msg.style.color="red"; msg.innerText="⚠️ Image too large (max 5MB)"; return; }
+    btn.disabled=true; btn.innerText="⏳ Uploading..."; msg.style.color="#003366"; msg.innerText="Uploading proof, please wait...";
+    try{
+      const ref = storage.ref().child(`payment_proofs/${user.uid}/${Date.now()}_${file.name}`);
+      const snap = await ref.put(file);
+      const url = await snap.ref.getDownloadURL();
+      await db.collection("users").doc(user.uid).update({
+        proofUrl: url,
+        proofTxn: txn,
+        proofMethod: method,
+        proofUploadedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        hasProof: true
+      });
+      msg.style.color="green"; msg.innerHTML="✅ Proof uploaded! Admin will verify soon.<br>Logging out for security...";
+      document.getElementById('myProofPreview').innerHTML=`<p style="font-size:12px;color:green;">Uploaded: ${txn}</p><a href="${url}" target="_blank" style="color:#004080;font-weight:700;">👁️ View My Proof</a>`;
+      btn.innerText="✅ Uploaded";
+      setTimeout(async()=>{ await auth.signOut(); location.reload(); }, 3000);
+    }catch(e){
+      console.log(e);
+      // FALLBACK: If Storage rules block, save as base64 in Firestore
+      if(e.code && e.code.includes('storage')){
+        try{
+          const reader = new FileReader();
+          reader.onload = async function(ev){
+            try{
+              await db.collection("users").doc(user.uid).update({
+                proofBase64: ev.target.result.substring(0, 900000),
+                proofTxn: txn,
+                proofMethod: method,
+                proofUploadedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                hasProof: true,
+                proofNote: "Base64 fallback - storage blocked"
+              });
+              msg.style.color="green"; msg.innerText="✅ Proof saved! Admin will verify. Logging out...";
+              setTimeout(async()=>{ await auth.signOut(); location.reload(); }, 2500);
+            }catch(err2){ msg.style.color="red"; msg.innerText="❌ Firestore error: "+err2.message; btn.disabled=false; btn.innerText="📤 Upload Proof"; }
+          };
+          reader.readAsDataURL(file);
+          return;
+        }catch(_){}
+      }
+      msg.style.color="red"; msg.innerText="❌ Upload failed: "+e.message + " (Check Storage Rules)";
+      btn.disabled=false; btn.innerText="📤 Upload Proof";
+    }
+  }
+
+  async function loadMyProof(){
+    try{
+      const user=auth.currentUser; if(!user) return;
+      const doc = await db.collection("users").doc(user.uid).get();
+      if(!doc.exists) return;
+      const d=doc.data();
+      if(d.proofUrl || d.proofBase64){
+        document.getElementById('myProofPreview').innerHTML = `
+          <p style="font-size:12px;color:#92400e;">You already uploaded proof: <b>${d.proofTxn||''}</b></p>
+          ${d.proofUrl? `<a href="${d.proofUrl}" target="_blank" style="color:#004080;font-weight:700;">👁️ View Uploaded Proof</a>` : '<p style="font-size:12px;">Proof saved (image stored)</p>'}
+        `;
+        document.getElementById('proofMsg').style.color="green";
+        document.getElementById('proofMsg').innerText="✅ You already uploaded. Wait for approval.";
+      }
+    }catch(e){}
+  }
+
   async function requireAuth(url){
     const user=auth.currentUser;
     if(!user){openFirebaseAuth(url); return;}
@@ -272,22 +364,13 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
       const docRef = await db.collection("users").doc(user.uid).get();
       if(docRef.exists && docRef.data().approved===false){
         document.getElementById('pendingBox').style.display='block';
-        alert("⏳ Your account is pending approval. Please send payment proof to Admin");
-        await auth.signOut();
-        location.reload();
+        loadMyProof();
         return;
       }
-    }catch(e){
-      if(e.code==='permission-denied'){
-        document.getElementById('pendingBox').style.display='block';
-        alert("⏳ Your account is pending approval. Please send payment proof to Admin");
-        await auth.signOut();
-        location.reload();
-        return;
-      }
-    }
+    }catch(e){}
     window.location.href=url;
   }
+
   async function handleProtectedClick(formId){
     const user=auth.currentUser;
     if(!user){openFirebaseAuth(); return;}
@@ -295,23 +378,15 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
       const docRef = await db.collection("users").doc(user.uid).get();
       if(docRef.exists && docRef.data().approved===false){
         document.getElementById('pendingBox').style.display='block';
-        alert("⏳ Your account is pending approval.");
-        await auth.signOut();
-        location.reload();
+        loadMyProof();
         return;
       }
-    }catch(e){
-      if(e.code==='permission-denied'){
-        document.getElementById('pendingBox').style.display='block';
-        alert("⏳ Your account is pending approval.");
-        await auth.signOut();
-        location.reload();
-        return;
-      }
-    }
+    }catch(e){}
     toggleForm(formId);
   }
+
   function firebaseLogout(){auth.signOut().then(()=>location.reload())}
+
   auth.onAuthStateChanged(async user=>{
     if(user){
       const box=document.getElementById('notLoggedBox'); if(box) box.style.display='none';
@@ -324,10 +399,9 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
         if(docRef.exists && docRef.data().approved===false){ 
           document.getElementById('pendingBox').style.display='block';
           document.getElementById('notLoggedBox').style.display='none';
+          loadMyProof();
         }
-      }catch(e){
-        if(e.code==='permission-denied'){ document.getElementById('pendingBox').style.display='block'; document.getElementById('notLoggedBox').style.display='none'; }
-      }
+      }catch(e){}
     }
   });
 </script>
@@ -343,13 +417,6 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
   });
   document.getElementById("alumniForm").addEventListener("submit", async function(e){
     e.preventDefault(); const user=firebase.auth().currentUser; if(!user){openFirebaseAuth();return}
-    try{ 
-      const docRef = await db.collection("users").doc(user.uid).get();
-      if(docRef.exists && docRef.data().approved===false){
-        document.getElementById("alumniMsg").innerHTML="⏳ Pending approval. Please send payment proof to Admin.";
-        return;
-      }
-    }catch(e){}
     const form=e.target; const msgEl=document.getElementById("alumniMsg"); msgEl.innerHTML="Submitting...";
     const data={type:"alumni",name:form.fullName.value,gender:form.gender.value,year:form.gradYear.value,class:form.class.value,phone:form.phone.value,whatsapp:form.whatsapp.value,profession:form.profession.value,interest:form.interest.value,message:form.message.value,accountEmail:user.email};
     try{
@@ -376,23 +443,20 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
   async function loadDonations(){const table=document.getElementById('donationTable');try{const res=await fetch(WEB_APP_URL+"?type=donation");const data=await res.json();table.innerHTML='<tr><th>Name</th><th>Donation</th><th>Period</th><th>Phone</th><th>Location</th></tr>';data.donations.forEach(d=>{table.innerHTML+=`<tr><td>${d.name||''}</td><td>${d.donation||''}</td><td>${d.period||''}</td><td>${d.phone||''}</td><td>${d.location||''}</td></tr>`})}catch(e){}}
   async function loadAlumni(){const table=document.getElementById('alumniTable');try{const res=await fetch(WEB_APP_URL+"?type=alumni");const data=await res.json();table.innerHTML='<tr><th>Name</th><th>Grad Year</th><th>Profession</th><th>Phone</th><th>Interest</th></tr>';data.alumni.forEach(a=>{table.innerHTML+=`<tr><td>${a.name||''}</td><td>${a.year||''}</td><td>${a.profession||''}</td><td>${a.phone||''}</td><td>${a.interest||''}</td></tr>`})}catch(e){}}
   async function loadPending(){
-    const table=document.getElementById('pendingTable'); table.innerHTML='<tr><th>Name</th><th>Email</th><th>Date</th><th>Action</th></tr>';
+    const table=document.getElementById('pendingTable'); table.innerHTML='<tr><th>Name</th><th>Email</th><th>Proof</th><th>Date</th><th>Action</th></tr>';
     try{
       const snap = await db.collection("users").where("approved","==",false).get();
-      if(snap.empty){table.innerHTML+='<tr><td colspan="4" style="text-align:center;padding:20px;color:#6b7280">No pending approvals 🎉</td></tr>'; return;}
+      if(snap.empty){table.innerHTML+='<tr><td colspan="5" style="text-align:center;padding:20px;color:#6b7280">No pending approvals 🎉</td></tr>'; return;}
       snap.forEach(doc=>{
         const d=doc.data(); const date = d.createdAt? d.createdAt.toDate().toLocaleDateString() : 'N/A';
-        table.innerHTML+=`<tr><td>${d.displayName||d.fullName||''}</td><td>${d.email||''}</td><td>${date}</td><td><button class="btn btn-green" style="padding:6px 12px;font-size:12px" onclick="approveUser('${doc.id}')">✅ Approve</button> <button class="btn" style="background:#ef4444;color:white;padding:6px 12px;font-size:12px" onclick="rejectUser('${doc.id}')">❌ Reject</button></td></tr>`;
+        const proofLink = d.proofUrl ? `<a href="${d.proofUrl}" target="_blank" style="color:#004080;font-weight:700;">👁️ ${d.proofTxn||'View Proof'}</a><br><small>${d.proofMethod||''}</small>` : (d.hasProof ? `Has proof: ${d.proofTxn||''}` : '<span style="color:red;">❌ No proof</span>');
+        table.innerHTML+=`<tr><td>${d.displayName||d.fullName||''}</td><td>${d.email||''}</td><td>${proofLink}</td><td>${date}</td><td><button class="btn btn-green" style="padding:6px 12px;font-size:12px" onclick="approveUser('${doc.id}')">✅ Approve</button> <button class="btn" style="background:#ef4444;color:white;padding:6px 12px;font-size:12px" onclick="rejectUser('${doc.id}')">❌ Reject</button></td></tr>`;
       });
     }catch(e){ 
-      if(e.code==='permission-denied'){
-        table.innerHTML+='<tr><td colspan="4" style="color:#92400e; padding:15px; text-align:center">⚠️ Update Firestore Rules → Paste BEST RULE → Publish, then Refresh</td></tr>';
-      } else {
-        table.innerHTML+='<tr><td colspan="4">Error: '+e.message+'</td></tr>'; 
-      }
+      table.innerHTML+='<tr><td colspan="5">Error: '+e.message+'</td></tr>'; 
     }
   }
-  async function approveUser(docId){ if(!confirm("Approve this user after payment?")) return; try{ await db.collection("users").doc(docId).update({approved:true, approvedAt: firebase.firestore.FieldValue.serverTimestamp()}); alert("✅ Approved!"); loadPending(); }catch(e){alert("Error: "+e.message)} }
+  async function approveUser(docId){ if(!confirm("Approve this user after checking proof?")) return; try{ await db.collection("users").doc(docId).update({approved:true, approvedAt: firebase.firestore.FieldValue.serverTimestamp()}); alert("✅ Approved!"); loadPending(); }catch(e){alert("Error: "+e.message)} }
   async function rejectUser(docId){ if(!confirm("Reject and delete this user?")) return; try{ await db.collection("users").doc(docId).delete(); alert("Deleted"); loadPending(); }catch(e){alert("Error: "+e.message)} }
   function exportCSV(type){let table,filename;if(type==='donations'){table=document.getElementById('donationTable');filename='donations.csv'}else{table=document.getElementById('alumniTable');filename='alumni.csv'}let csv=[];for(let row of table.rows){csv.push([...row.cells].map(cell=>cell.innerText).join(','))}const blob=new Blob([csv.join('\n')],{type:'text/csv'});const url=window.URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click()}
   function adminLogin(e){e.preventDefault();if(document.getElementById('adminUser').value==='chitekesa2026'&&document.getElementById('adminPass').value==='Chiteke@2026!'){localStorage.setItem('chitekesaAdmin','loggedIn');document.getElementById('adminDashboard').style.display='block';document.getElementById('adminLoginForm').classList.remove('active');document.getElementById('adminLogoutBtn').style.display='block';loadDonations();loadAlumni();loadPending();alert('Login Successful!')}else{alert('Invalid Username or Password')}}
@@ -401,4 +465,4 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
   window.onload=function(){if(localStorage.getItem('chitekesaAdmin')==='loggedIn'){document.getElementById('adminDashboard').style.display='block';document.getElementById('adminLogoutBtn').style.display='block';loadDonations();loadAlumni();loadPending();}}
 </script>
 </body>
-                                                                    </html>
+                                                                               </html>
