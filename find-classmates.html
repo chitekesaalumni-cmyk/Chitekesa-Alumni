@@ -17,7 +17,8 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Poppins',sans-serif;margin:0;background:var(--bg);color:#1f2937;}
 .header{background:linear-gradient(135deg,var(--green) 0%, var(--green-light) 100%);padding:28px 15px;text-align:center;color:white;}
-.logo{width:85px;height:85px;background:white;border-radius:50%;margin:0 auto 12px;border:4px solid rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;color:var(--green);font-weight:800;font-size:24px;}
+.logo{width:85px;height:85px;background:white;border-radius:50%;margin:0 auto 12px;border:4px solid rgba(255,255,255,0.25);overflow:hidden;display:flex;align-items:center;justify-content:center;color:var(--green);font-weight:800;font-size:24px;}
+.logo img{width:100%;height:100%;object-fit:cover;display:block;}
 .header h1{margin:0;font-size:20px;font-weight:700}
 .header h4{font-style:italic;opacity:0.9;margin-top:4px;font-size:13px}
 .navbar{background:var(--blue);padding:0 12px;position:sticky;top:0;z-index:999;box-shadow:0 2px 10px rgba(0,0,0,0.2)}
@@ -46,14 +47,14 @@ body{font-family:'Poppins',sans-serif;margin:0;background:var(--bg);color:#1f293
 .btn-connect{padding:10px 18px;border-radius:10px;border:1.5px solid var(--blue);background:white;color:var(--blue);cursor:pointer;font-weight:700;margin-top:12px;font-size:12px;transition:0.2s;width:100%;}
 .btn-connect:hover{background:var(--blue);color:white;box-shadow:0 4px 12px rgba(15,43,70,0.2);}
 footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;margin-top:50px;border-top:4px solid var(--green)}
-    .footer-social{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap}
-    .footer-social a{display:flex;align-items:center;gap:8px;color:white;text-decoration:none;font-weight:600}
-    .footer-social img{width:28px;height:28px;object-fit:contain}
+.footer-social{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap}
+.footer-social a{display:flex;align-items:center;gap:8px;color:white;text-decoration:none;font-weight:600}
+.footer-social img{width:28px;height:28px;object-fit:contain}
 </style>
 </head>
 <body>
 <header class="header">
-  <div class="logo">CDSS</div>
+  <div class="logo"><img src="Alumni logo.png" alt="CDSS Logo" onerror="this.style.display='none'; this.parentElement.textContent='CDSS'"></div>
   <h1>CHITEKESA CDSS ALUMNI GROUP</h1>
   <h4>Together We Make The Difference</h4>
 </header>
@@ -70,12 +71,10 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
   <li><a href="education-corner.html">📚 Education</a></li>
   <li><button class="logout-btn" onclick="logout()">Logout</button></li>
 </ul>
-
 <div class="find-hero">
   <h1>👥 Find Your Classmates</h1>
   <p>Reconnect with Chitekesa Alumni from all years - Professional Network</p>
 </div>
-
 <div class="search-box">
   <input type="text" id="searchName" placeholder="Search name, profession..." onkeyup="filterMates()">
   <select id="filterYear" onchange="filterMates()">
@@ -87,13 +86,10 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
     <option>Humanities</option><option>Sciences</option><option>Form 4</option><option>Form 3</option>
   </select>
 </div>
-
 <div class="classmate-grid" id="classmateGrid">
   <p style="text-align:center;width:100%;grid-column:1/-1;padding:40px">Loading classmates... ⏳</p>
 </div>
-
 <footer><p><strong>Location:</strong> Along Mwanga to Maliro Road, Near Chitekesa Police Unit, Phalombe</p><div class="footer-social"><span><strong>Facebook:</strong></span><a href="https://www.facebook.com/share/19DZppzrht/" target="_blank"><img src="Facebook icon.png" alt="Facebook">CHITEKESA CDSS ALUMNI</a></div><p>&copy; 2026 CHITEKESA ALUMNI ASSOCIATION. All Rights Reserved.</p></footer>
-
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -109,4 +105,4 @@ function renderMates(list){const grid=document.getElementById('classmateGrid');i
 window.filterMates=()=>{const name=document.getElementById('searchName').value.toLowerCase();const year=document.getElementById('filterYear').value;const cls=document.getElementById('filterClass').value.toLowerCase();const filtered=allMates.filter(u=>{const text=`${u.displayName||''} ${u.fullName||''} ${u.profession||''} ${u.career||''}`.toLowerCase();const matchName=text.includes(name);const matchYear=!year||(u.gradYear==year||u.year==year);const matchClass=!cls||(u.class||'').toLowerCase().includes(cls);return matchName&&matchYear&&matchClass;});renderMates(filtered);}
 </script>
 </body>
-                                                                                                                                                                                                                                                    </html>
+</html>
