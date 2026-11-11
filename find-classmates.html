@@ -3,36 +3,85 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Find Classmates - Chitekesa Alumni</title>
+<title>Find Classmates - Chitekesa Alumni - PROFESSIONAL</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-body{font-family:'Poppins',sans-serif;margin:0;background:#f5f7fb}
-.find-hero { background: linear-gradient(135deg, #0f2e1a, #003366); color:white; padding:50px 20px; text-align:center; }
-.search-box { max-width:900px; margin:-30px auto 30px; background:white; padding:20px; border-radius:16px; box-shadow:0 15px 30px rgba(0,0,0,0.1); display:flex; gap:10px; flex-wrap:wrap; }
-.search-box input, .search-box select { flex:1; min-width:150px; padding:14px; border-radius:10px; border:1.5px solid #e5e7eb; font-family:'Poppins'; }
-.search-box input:focus{outline:none;border-color:#004080}
-.classmate-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:20px; max-width:1100px; margin:auto; padding:20px; }
-.mate-card { background:white; border-radius:16px; padding:22px; text-align:center; box-shadow:0 8px 20px rgba(0,0,0,0.06); border:1px solid #e5e7eb; transition:.2s }
-.mate-card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(0,0,0,0.1)}
-.mate-avatar { width:80px; height:80px; border-radius:50%; background:linear-gradient(135deg,#004080,#123d21); color:white; display:flex; align-items:center; justify-content:center; font-size:32px; font-weight:bold; margin:0 auto 15px; }
-.mate-year { background:#0f2e1a; color:white; padding:4px 12px; border-radius:20px; font-size:12px; font-weight:600 }
-.mate-info{font-size:13px;color:#6b7280;margin:6px 0}
-.btn-connect{padding:9px 18px; border-radius:20px; border:1.5px solid #004080; background:white; color:#004080; cursor:pointer; font-weight:600; margin-top:10px}
-.btn-connect:hover{background:#004080;color:white}
+:root{
+  --green:#0a7a3c;
+  --green-light:#14a85a;
+  --blue:#0f2b46;
+  --blue-light:#3282b8;
+  --orange:#ff6b2d;
+  --bg:#f5f7fb;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Poppins',sans-serif;margin:0;background:var(--bg);color:#1f2937;}
+.header{background:linear-gradient(135deg,var(--green) 0%, var(--green-light) 100%);padding:28px 15px;text-align:center;color:white;}
+.logo{width:85px;height:85px;background:white;border-radius:50%;margin:0 auto 12px;border:4px solid rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;color:var(--green);font-weight:800;font-size:24px;}
+.header h1{margin:0;font-size:20px;font-weight:700}
+.header h4{font-style:italic;opacity:0.9;margin-top:4px;font-size:13px}
+.navbar{background:var(--blue);padding:0 12px;position:sticky;top:0;z-index:999;box-shadow:0 2px 10px rgba(0,0,0,0.2)}
+.navbar-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 0}
+.menu-toggle{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:white;font-size:13px;padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:600}
+#navOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.45);z-index:998;display:none}
+#navOverlay.show{display:block}
+.menu{list-style:none;position:fixed;top:0;left:-100%;width:285px;height:100vh;background:linear-gradient(180deg,#002244,#003366);z-index:999;padding:22px 18px;display:flex;flex-direction:column;gap:2px;transition:left 0.35s ease;overflow-y:auto}
+.menu.active{left:0 !important}
+.menu-header{display:flex;justify-content:space-between;align-items:center;padding-bottom:18px;border-bottom:1px solid rgba(255,255,255,0.12);margin-bottom:14px}
+.menu-header span{color:white;font-weight:700;font-size:15px}
+.close-menu-btn{background:rgba(255,255,255,0.12);border:none;color:white;width:36px;height:36px;border-radius:50%;cursor:pointer}
+.menu a{color:rgba(255,255,255,0.88);text-decoration:none;font-weight:500;font-size:14px;padding:11px 14px;display:flex;gap:10px;border-radius:10px;}
+.menu a:hover{background:rgba(255,255,255,0.10);color:white}
+.logout-btn{background:var(--orange);border:none;color:white;padding:10px 16px;border-radius:8px;font-weight:700;cursor:pointer;width:100%;margin-top:6px}
+.find-hero{background:linear-gradient(135deg,#0f2e1a,#0f4c75 60%,#3282b8);color:white;padding:70px 20px 60px;text-align:center;position:relative;}
+.search-box{max-width:900px;margin:-30px auto 30px;background:white;padding:18px;border-radius:16px;box-shadow:0 15px 30px rgba(0,0,0,0.12);display:flex;gap:10px;flex-wrap:wrap;border:1px solid #e5e7eb;}
+.search-box input,.search-box select{flex:1;min-width:150px;padding:13px 14px;border-radius:10px;border:1.5px solid #e5e7eb;font-family:'Poppins';font-size:13px;background:#f9fafb;}
+.search-box input:focus,.search-box select:focus{outline:none;border-color:var(--blue);background:white}
+.classmate-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;max-width:1100px;margin:auto;padding:20px 20px 60px;}
+.mate-card{background:white;border-radius:18px;padding:22px;text-align:center;box-shadow:0 10px 25px rgba(0,0,0,0.06);border:1px solid #e5e7eb;border-top:4px solid var(--green);transition:0.25s}
+.mate-card:hover{transform:translateY(-4px);box-shadow:0 16px 35px rgba(0,0,0,0.12);}
+.mate-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--green));color:white;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:700;margin:0 auto 14px;border:3px solid #f5f7fb;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+.mate-year{background:var(--blue);color:white;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700}
+.mate-info{font-size:12px;color:#6b7280;margin:5px 0}
+.btn-connect{padding:10px 18px;border-radius:10px;border:1.5px solid var(--blue);background:white;color:var(--blue);cursor:pointer;font-weight:700;margin-top:12px;font-size:12px;transition:0.2s;width:100%;}
+.btn-connect:hover{background:var(--blue);color:white;box-shadow:0 4px 12px rgba(15,43,70,0.2);}
+footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;margin-top:50px;border-top:4px solid var(--green)}
+    .footer-social{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap}
+    .footer-social a{display:flex;align-items:center;gap:8px;color:white;text-decoration:none;font-weight:600}
+    .footer-social img{width:28px;height:28px;object-fit:contain}
 </style>
 </head>
 <body>
+<header class="header">
+  <div class="logo">CDSS</div>
+  <h1>CHITEKESA CDSS ALUMNI GROUP</h1>
+  <h4>Together We Make The Difference</h4>
+</header>
+<nav class="navbar"><div class="navbar-inner"><button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button><div style="color:rgba(255,255,255,0.7);font-size:12px;">Find Classmates</div></div></nav>
+<div id="navOverlay" onclick="toggleMenu()"></div>
+<ul id="menu" class="menu">
+  <li class="menu-header"><span>📚 Navigation</span><button class="close-menu-btn" onclick="toggleMenu()">✕</button></li>
+  <li><a href="index.html">🏠 Home</a></li>
+  <li><a href="Chitekesa about.html">👥 About</a></li>
+  <li><a href="Chitekesa contact.html">📞 Contact</a></li>
+  <li><a href="downloads.html">📥 Downloads</a></li>
+  <li><a href="find-classmates.html">🎓 Classmates</a></li>
+  <li><a href="vacancies.html">💼 Vacancies</a></li>
+  <li><a href="education-corner.html">📚 Education</a></li>
+  <li><button class="logout-btn" onclick="logout()">Logout</button></li>
+</ul>
+
 <div class="find-hero">
   <h1>👥 Find Your Classmates</h1>
-  <p>Reconnect with Chitekesa Alumni from all years</p>
-  <a href="index.html" style="color:#fde68a;text-decoration:none;font-size:14px">← Back to Home</a>
+  <p>Reconnect with Chitekesa Alumni from all years - Professional Network</p>
 </div>
 
 <div class="search-box">
-  <input type="text" id="searchName" placeholder="Search by name, profession..." onkeyup="filterMates()">
+  <input type="text" id="searchName" placeholder="Search name, profession..." onkeyup="filterMates()">
   <select id="filterYear" onchange="filterMates()">
     <option value="">All Years</option>
-    <option>2026</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020</option></select>
+    <option>2026</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020</option><option>2019</option><option>2018</option>
+  </select>
   <select id="filterClass" onchange="filterMates()">
     <option value="">All Streams</option>
     <option>Humanities</option><option>Sciences</option><option>Form 4</option><option>Form 3</option>
@@ -40,82 +89,24 @@ body{font-family:'Poppins',sans-serif;margin:0;background:#f5f7fb}
 </div>
 
 <div class="classmate-grid" id="classmateGrid">
-  <p style="text-align:center; width:100%;grid-column:1/-1;padding:40px">Loading classmates... ⏳</p>
+  <p style="text-align:center;width:100%;grid-column:1/-1;padding:40px">Loading classmates... ⏳</p>
 </div>
+
+<footer><p><strong>Location:</strong> Along Mwanga to Maliro Road, Near Chitekesa Police Unit, Phalombe</p><div class="footer-social"><span><strong>Facebook:</strong></span><a href="https://www.facebook.com/share/19DZppzrht/" target="_blank"><img src="Facebook icon.png" alt="Facebook">CHITEKESA CDSS ALUMNI</a></div><p>&copy; 2026 CHITEKESA ALUMNI ASSOCIATION. All Rights Reserved.</p></footer>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyARXLsQe4i59U2iWZRHpRfIM33j1l7T_eY",
-  authDomain: "chitekesa-alumni-ae55c.firebaseapp.com",
-  projectId: "chitekesa-alumni-ae55c",
-  storageBucket: "chitekesa-alumni-ae55c.firebasestorage.app",
-  messagingSenderId: "943225897010",
-  appId: "1:943225897010:web:2fc300df337d333aa2fc2b"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
-
+const firebaseConfig = { apiKey: "AIzaSyARXLsQe4i59U2iWZRHpRfIM33j1l7T_eY", authDomain: "chitekesa-alumni-ae55c.firebaseapp.com", projectId: "chitekesa-alumni-ae55c", storageBucket: "chitekesa-alumni-ae55c.firebasestorage.app", messagingSenderId: "943225897010", appId: "1:943225897010:web:2fc300df337d333aa2fc2b" };
+const app = initializeApp(firebaseConfig); const db = getFirestore(app); const auth = getAuth(app);
 let allMates = [];
-
-// Protect page - redirect to login if not logged
-onAuthStateChanged(auth, (user)=>{
-  if(!user){
-    alert("Please login first to view classmates");
-    window.location.href="index.html";
-  } else {
-    loadMates();
-  }
-});
-
-async function loadMates() {
-  try{
-    const snap = await getDocs(collection(db, "users"));
-    allMates = [];
-    snap.forEach(doc => {
-      allMates.push(doc.data());
-    });
-    renderMates(allMates);
-  }catch(e){
-    document.getElementById('classmateGrid').innerHTML = `<p style="color:red">Error: ${e.message} <br>Check Firestore Rules are set to 'allow read, write: if true;'</p>`;
-    console.error(e);
-  }
-}
-
-function renderMates(list) {
-  const grid = document.getElementById('classmateGrid');
-  if(list.length==0){ grid.innerHTML="<p style='grid-column:1/-1;text-align:center;padding:40px'>No classmates found yet - be the first to register! 🎓<br><a href='index.html'>Go Register</a></p>"; return; }
-  grid.innerHTML = list.map(u => `
-    <div class="mate-card">
-      <div class="mate-avatar">${(u.displayName||u.fullName||u.email||'A')[0].toUpperCase()}</div>
-      <h3 style="margin:8px 0;color:#003366">${u.displayName||u.fullName||u.email}</h3>
-      <p class="mate-info">${u.profession||u.career||'Alumni Member'}</p>
-      <p class="mate-info">📱 ${u.phone||''} ${u.whatsapp? ' | WhatsApp: '+u.whatsapp : ''}</p>
-      <div style="margin:12px 0;"><span class="mate-year">Class of ${u.gradYear||u.year||'2020'}</span> ${u.class? `<span style="font-size:12px;color:#6b7280;margin-left:6px">${u.class}</span>`:''}</div>
-      <p style="font-size:12px;color:#6b7280;font-style:italic">${u.interest||''}</p>
-      <button class="btn-connect" onclick="window.open('https://wa.me/${(u.whatsapp||u.phone||'').replace(/[^0-9]/g,'')}','_blank')">Connect on WhatsApp</button>
-    </div>
-  `).join('');
-}
-
-window.filterMates = () => {
-  const name = document.getElementById('searchName').value.toLowerCase();
-  const year = document.getElementById('filterYear').value;
-  const cls = document.getElementById('filterClass').value.toLowerCase();
-  const filtered = allMates.filter(u => {
-    const text = `${u.displayName||''} ${u.fullName||''} ${u.profession||''} ${u.career||''}`.toLowerCase();
-    const matchName = text.includes(name);
-    const matchYear = !year || (u.gradYear==year || u.year==year);
-    const matchClass = !cls || (u.class||'').toLowerCase().includes(cls);
-    return matchName && matchYear && matchClass;
-  });
-  renderMates(filtered);
-}
+window.toggleMenu=()=>{document.getElementById('menu').classList.toggle('active');document.getElementById('navOverlay').classList.toggle('show');}
+window.logout=()=>{localStorage.clear();location.href="index.html";}
+onAuthStateChanged(auth,(user)=>{if(!user){alert("Please login first to view classmates");window.location.href="index.html";} else {loadMates();}});
+async function loadMates(){try{const snap=await getDocs(collection(db,"users"));allMates=[];snap.forEach(doc=>{allMates.push(doc.data());});renderMates(allMates);}catch(e){document.getElementById('classmateGrid').innerHTML=`<p style="color:red;text-align:center;grid-column:1/-1;padding:20px;">Error: ${e.message}<br>Check Firestore Rules allow read</p>`;}}
+function renderMates(list){const grid=document.getElementById('classmateGrid');if(list.length==0){grid.innerHTML="<p style='grid-column:1/-1;text-align:center;padding:40px'>No classmates found yet - be the first! 🎓<br><a href='index.html' style='color:#0f4c75;font-weight:700;'>Go Register</a></p>";return;}grid.innerHTML=list.map(u=>`<div class="mate-card"><div class="mate-avatar">${(u.displayName||u.fullName||u.email||'A')[0].toUpperCase()}</div><h3 style="margin:8px 0;color:#003366;font-size:15px;">${u.displayName||u.fullName||u.email}</h3><p class="mate-info" style="font-weight:600;color:#0f2e1a;">${u.profession||u.career||'Alumni Member'}</p><p class="mate-info">📱 ${u.phone||''} ${u.whatsapp? ' | WA: '+u.whatsapp : ''}</p><div style="margin:12px 0;"><span class="mate-year">Class of ${u.gradYear||u.year||'2020'}</span>${u.class? `<span style="font-size:11px;color:#6b7280;margin-left:6px;">${u.class}</span>`:''}</div><p style="font-size:11px;color:#6b7280;font-style:italic">${u.interest||''}</p><button class="btn-connect" onclick="window.open('https://wa.me/${(u.whatsapp||u.phone||'').replace(/[^0-9]/g,'')}','_blank')">💬 Connect on WhatsApp</button></div>`).join('');}
+window.filterMates=()=>{const name=document.getElementById('searchName').value.toLowerCase();const year=document.getElementById('filterYear').value;const cls=document.getElementById('filterClass').value.toLowerCase();const filtered=allMates.filter(u=>{const text=`${u.displayName||''} ${u.fullName||''} ${u.profession||''} ${u.career||''}`.toLowerCase();const matchName=text.includes(name);const matchYear=!year||(u.gradYear==year||u.year==year);const matchClass=!cls||(u.class||'').toLowerCase().includes(cls);return matchName&&matchYear&&matchClass;});renderMates(filtered);}
 </script>
 </body>
-</html>
+                                                                                                                                                                                                                                                    </html>
