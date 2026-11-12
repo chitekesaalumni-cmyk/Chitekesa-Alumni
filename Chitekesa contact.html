@@ -8,6 +8,7 @@
   <style>
     :root { --green:#0f2e1a; --green-light:#123d21; --blue:#003366; --blue-light:#004080; --orange:#FF7A00; --whatsapp:#25D366; --fb:#1877F2; --bg:#f5f7fb; --card:#ffffff; --text:#1f2937; --muted:#6b7280; --border:#e5e7eb; }
     *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
     body{background:var(--bg);font-family:'Poppins',Arial,sans-serif;color:var(--text);line-height:1.6}
     .container{padding:0 18px;max-width:1000px;margin:0 auto}
     .header{background:linear-gradient(135deg,var(--green) 0%, var(--green-light) 100%);padding:30px 15px;text-align:center;color:white;box-shadow:0 4px 20px rgba(0,0,0,0.15)}
@@ -15,8 +16,6 @@
     .logo img{width:100%;height:100%;object-fit:cover}
     .header h1{margin:0;font-size:22px;font-weight:700}
     .header h4{font-style:italic;font-weight:400;opacity:0.9;margin-top:4px;font-size:14px}
-    
-    /* SAME PROFESSIONAL NAV AS INDEX */
     .navbar{background:var(--blue);padding:0 12px;position:sticky;top:0;z-index:999;box-shadow:0 2px 10px rgba(0,0,0,0.2)}
     .navbar-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 0}
     .menu-toggle{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:white;font-size:14px;padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:600}
@@ -31,8 +30,6 @@
     .menu a{color:rgba(255,255,255,0.88);text-decoration:none;font-weight:500;font-size:14.5px;padding:11px 14px;display:flex;align-items:center;gap:10px;border-radius:10px;cursor:pointer;transition:all .2s;text-align:left;justify-content:flex-start}
     .menu a:hover{background:rgba(255,255,255,0.10);color:white;transform:translateX(4px)}
     .logout-btn{background:var(--orange);border:none;color:white;padding:9px 16px;border-radius:8px;font-weight:700;cursor:pointer;width:100%;margin-top:6px}
-    .user-badge{color:#fde68a;font-weight:700;font-size:13px;padding:8px 14px;display:block}
-
     main{padding:35px 0}
     .contact-card{background:white;padding:30px 20px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.1);text-align:center;max-width:700px;margin:0 auto}
     .contact-card h2{color:var(--blue);margin-bottom:15px;font-size:22px}
@@ -43,8 +40,12 @@
     .contact-card form{text-align:left;margin-top:10px}
     .contact-card form label{display:block;font-weight:600;margin-top:14px;margin-bottom:6px;color:var(--green);font-size:15px}
     .contact-card form input,.contact-card form select,.contact-card form textarea{width:100%;padding:12px;border:1px solid #ccc;border-radius:8px;font-family:'Poppins',sans-serif;font-size:15px;background:#fafafa}
-    .contact-card form input:focus,.contact-card form select:focus,.contact-card form textarea:focus{border:2px solid var(--blue);outline:none;background:white}
-    .contact-card form button[type="submit"]{background:var(--orange);color:white;width:100%;margin-top:18px;border:none;padding:14px;border-radius:8px;font-weight:700;font-size:16px;cursor:pointer}
+    .patron-card{background:white;padding:28px 22px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.1);max-width:700px;margin:35px auto 0;border-left:5px solid var(--orange)}
+    .patron-card h3{color:var(--blue);font-size:20px;margin-bottom:6px}
+    .patron-card p.sub{color:var(--muted);font-size:14px;margin-bottom:18px}
+    .patron-card label{display:block;font-weight:600;margin-top:14px;margin-bottom:6px;color:var(--green);font-size:15px}
+    .patron-card input,.patron-card select,.patron-card textarea{width:100%;padding:12px;border:1px solid #ccc;border-radius:8px;font-family:'Poppins',sans-serif;font-size:15px;background:#fafafa}
+    .check-row{display:flex;gap:8px;align-items:flex-start;margin-top:14px;font-size:14px}
     footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;margin-top:50px;border-top:4px solid var(--green)}
     .footer-social{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap}
     .footer-social a{display:flex;align-items:center;gap:8px;color:white;text-decoration:none;font-weight:600}
@@ -75,67 +76,53 @@
     <li><a href="education-corner.html">📚 Education</a></li>
     <li><button class="logout-btn" onclick="logout()">Logout</button></li>
   </ul>
+
   <main class="container">
     <div class="contact-card">
       <h2>Contact Us</h2>
-      <p>We’d love to hear from you. Reach us through any of these:</p>
+      <p>We'd love to hear from you. Reach us through any of these:</p>
       <div class="contact-item">📧 <a href="mailto:chitekesaalumni@gmail.com">chitekesaalumni@gmail.com</a></div>
-      <a href="https://www.facebook.com/share/19DZppzrht/" target="_blank" class="btn btn-facebook"><img src="Facebook icon.png" style="width:20px; height:20px; filter: invert(1);" alt="">Visit Facebook Page</a>
-      <a href="https://wa.me/+265882427151?text=Hello%20Chitekesa%20Alumni%20Team" target="_blank" class="btn btn-whatsapp"><img src="WhatsApp icon.png" style="width:20px; height:20px; filter: invert(1);" alt="">Chat on WhatsApp</a>
-      <hr style="margin: 30px 0; border: none; border-top: 1px solid #ddd;">
-      <h3 style="color: var(--green); margin-bottom: 15px;">Or Send Us a Message</h3>
+      <div class="contact-item">📧 <a href="mailto:salimafrancisjnr@gmail.com">salimafrancisjnr@gmail.com</a></div>
+      <a href="https://www.facebook.com/share/19DZppzrht/" target="_blank" class="btn btn-facebook">Visit Facebook Page</a>
+      <a href="https://wa.me/+265882427151?text=Hello%20Chitekesa%20Alumni%20Team" target="_blank" class="btn btn-whatsapp">Chat on WhatsApp</a>
+      <hr style="margin:30px 0;border:none;border-top:1px solid #ddd">
+      <div style="padding:16px;background:#fff8e1;border-radius:10px;border:1px dashed #FF7A00;margin-bottom:24px">
+        <p style="font-weight:600;color:#333;margin-bottom:10px">Have a confidential concern for the Patron?</p>
+        <a href="#patron-concerns" style="text-decoration:none">
+          <button type="button" style="background:#003366;color:white;border:none;padding:12px 28px;border-radius:8px;font-weight:700;font-size:15px;cursor:pointer">✉️ Forward to Patron Box →</button>
+        </a>
+        <p style="font-size:12px;color:#666;margin-top:8px">Private & only seen by the Patron</p>
+      </div>
+      <h3 style="color:var(--green);margin-bottom:15px">Or Send Us a Message</h3>
       <form action="mailto:chitekesaalumni@gmail.com" method="POST" enctype="text/plain">
         <label>Your Name *</label><input type="text" name="Name" required>
         <label>Your Email *</label><input type="email" name="Email" required>
         <label>Phone / WhatsApp</label><input type="tel" name="Phone" placeholder="+265 9XX XXX">
         <label>Subject *</label><select name="Subject" required><option value="">Select</option><option>General Inquiry</option><option>Membership</option><option>Donation</option><option>Event/Reunion</option><option>Other</option></select>
         <label>Your Message *</label><textarea name="Message" rows="5" required></textarea>
-        <button type="submit" class="btn" style="background: var(--orange); width: 100%;">Send Message</button>
+        <button type="submit" class="btn" style="background:var(--orange);width:100%;justify-content:center">Send Message</button>
       </form>
-      <p style="font-size: 13px; color: #666; margin-top: 10px;">Note: This will open your email app to send the message.</p>
     </div>
 
-    <!-- CONTACT US PAGE - BUTTON TO PATRON BOX -->
-<section id="contact-us" style="padding:40px 20px; text-align:center; font-family: sans-serif;">
-  <h2 style="color:#0f2a5e;">Contact Us</h2>
-  <p>Have a general inquiry? Reach the Executive below.</p>
-
-  <!-- THIS BUTTON REDIRECTS TO PATRON BOX -->
-  <div style="margin: 25px 0; padding: 20px; background: #fff8e1; border-left: 4px solid #ffb703; border-radius: 8px;">
-    <p style="margin:0 0 12px; color:#333; font-weight:600;">
-      Have a confidential concern for the Patron?
-    </p>
-    <a href="#patron-concerns" style="text-decoration:none;">
-      <button style="
-        background: #0f2a5e;
-        color: #ffffff;
-        border: none;
-        padding: 12px 28px;
-        border-radius: 8px;
-        font-weight: bold;
-        font-size: 15px;
-        cursor: pointer;
-      ">
-        ✉️ Forward to Patron Box →
-      </button>
-    </a>
-    <p style="font-size:12px; color:#666; margin-top:8px;">
-      Private & only seen by the Patron
-    </p>
-  </div>
-
-  <!-- YOUR NORMAL CONTACTS BELOW -->
-  <div style="margin-top:30px; text-align:left; max-width:500px; margin:auto;">
-    <p><strong>President:</strong> Kaelama - 099xxxxxxx</p>
-    <p><strong>Email:</strong> chitekesaalumni@gmail.com</p>
-  </div>
-</section>
-
-<style>
-  html { scroll-behavior: smooth; }
-</style>
+    <div id="patron-concerns" class="patron-card">
+      <h3>🔒 Patron's Confidential Box</h3>
+      <p class="sub">Alumni and the public can confidentially forward concerns directly to the Patron. Only the Patron sees this.</p>
+      <form action="https://formsubmit.co/salimafrancisjnr@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="New Patron Concern - Chitekesa Alumni">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
+        <label>Full Name *</label><input type="text" name="Full Name" required placeholder="Your full name">
+        <label>Phone / Email *</label><input type="text" name="Contact" required placeholder="Phone or Email for reply">
+        <label>Category *</label><select name="Category" required><option value="">Select Category</option><option>Academic</option><option>Welfare</option><option>Alumni Affairs</option><option>Suggestion</option><option>Complaint</option><option>Other</option></select>
+        <label>Subject *</label><input type="text" name="Subject" required placeholder="Brief subject">
+        <label>Your Concern / Message *</label><textarea name="Message" rows="5" required placeholder="Write your concern respectfully..."></textarea>
+        <div class="check-row"><input type="checkbox" name="Anonymous" value="Yes" style="width:18px;height:18px"><span>Keep my identity anonymous to executive (only Patron will see my name)</span></div>
+        <button type="submit" style="background:var(--green);color:white;width:100%;margin-top:18px;border:none;padding:14px;border-radius:8px;font-weight:700;font-size:16px;cursor:pointer">📩 Send to Patron Privately</button>
+      </form>
+    </div>
   </main>
-  <footer><p><strong>Location:</strong> Along Mwanga to Maliro Road, Near Chitekesa Police Unit, Phalombe</p><div class="footer-social"><span><strong>Facebook:</strong></span><a href="https://www.facebook.com/share/19DZppzrht/" target="_blank"><img src="Facebook icon.png" alt="Facebook">CHITEKESA CDSS ALUMNI</a></div><p>&copy; 2026 CHITEKESA ALUMNI ASSOCIATION. All Rights Reserved.</p></footer>
-  <script>function toggleMenu(){document.getElementById("menu").classList.toggle("active");document.getElementById("navOverlay").classList.toggle("show");}</script>
+
+  <footer><p><strong>Location:</strong> Along Mwanga to Maliro Road, Near Chitekesa Police Unit, Phalombe</p><p>&copy; 2026 CHITEKESA ALUMNI ASSOCIATION. All Rights Reserved.</p></footer>
+  <script>function toggleMenu(){document.getElementById("menu").classList.toggle("active");document.getElementById("navOverlay").classList.toggle("show");}function logout(){window.location.href='login.html'}</script>
 </body>
-                                                                                                      </html>
+  </html>
