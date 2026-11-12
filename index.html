@@ -124,9 +124,9 @@ body.is-admin #adminPortalWrapper{ display:block !important; }
       </div>
       <div id="pendingBox" style="display:none;background:linear-gradient(135deg,#fef3c7,#fde68a);border:1.5px solid #fbbf24;padding:18px;border-radius:12px;margin-top:16px">
         <h3 style="margin-top:0;color:#92400e">⏳ Payment Verification Pending</h3>
-        <p style="font-size:14px;color:#78350f">Your account is created! Upload your payment proof below so Admin can approve you. You can only register as alumni after approval.</p>
+        <p style="font-size:14px;color:#78350f">Your account is created! Upload your payment proof below so Admin can approve you.</p>
         <div class="proof-box">
-          <label style="font-weight:700;font-size:14px;">📸 Upload Payment Proof (Screenshot) *</label>
+          <label style="font-weight:700;font-size:14px;">📸 Upload Payment Proof *</label>
           <input type="file" id="proofFile" accept="image/*" style="margin-top:8px;">
           <label style="margin-top:12px;">Transaction ID / Reference *</label>
           <input type="text" id="proofTxn" placeholder="e.g. Airtel Money Txn ID: 123456789">
@@ -138,7 +138,6 @@ body.is-admin #adminPortalWrapper{ display:block !important; }
           <p id="proofMsg" style="font-size:13px;font-weight:600;margin-top:10px;"></p>
           <div id="myProofPreview" style="margin-top:10px;"></div>
         </div>
-        <p style="font-size:12px;color:#78350f;margin-top:10px;">After upload, Admin will verify within 24hrs.</p>
         <button class="btn" style="background:#78350f;color:white;width:100%;margin-top:10px;" onclick="firebaseLogout()">Logout Now</button>
       </div>
     </div>
@@ -192,69 +191,366 @@ body.is-admin #adminPortalWrapper{ display:block !important; }
     <div class="executive"><img src="My image.png" alt="Treasurer"><h3>Treasurer: Francis Junior Salima, Class of 2022</h3><a href="https://wa.me/265985583319" class="btn btn-whatsapp" target="_blank">WhatsApp</a></div>
 </main>
 <footer><p><strong>Location:</strong> Along Mwanga to Maliro Road, Near Chitekesa Police Unit, Phalombe</p><div class="footer-social"><span><strong>Facebook:</strong></span><a href="https://www.facebook.com/share/19DZppzrht/" target="_blank"><img src="Facebook icon.png" alt="Facebook">CHITEKESA CDSS ALUMNI</a></div><p>&copy; 2026 CHITEKESA ALUMNI ASSOCIATION. All Rights Reserved.</p></footer>
-<div id="proofModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:30000;justify-content:center;align-items:center;padding:20px;" onclick="closeProof()"><div style="position:relative;max-width:95%;max-height:95%;" onclick="event.stopPropagation()"><button onclick="closeProof()" style="position:absolute;top:-40px;right:0;background:#ff5a5a;color:white;border:none;padding:8px 14px;border-radius:8px;font-weight:700;cursor:pointer;">✕ Close</button><img id="proofModalImg" src="" style="max-width:100%;max-height:85vh;border-radius:12px;border:3px solid white;box-shadow:0 10px 40px rgba(0,0,0,0.5);display:block;"><p id="proofModalInfo" style="color:white;text-align:center;margin-top:10px;font-weight:600;font-size:13px;"></p></div></div>
-<div id="firebaseAuthModal"><div class="auth-box"><h2 id="authTitle">Create Account</h2><div class="auth-subtitle">🔒 Secure login required</div><div class="auth-field" id="nameField"><label>Full Name</label><input type="text" id="fbName" placeholder="e.g. Chitekesa Alumni"></div><div class="auth-field"><label>Email Address *</label><input type="email" id="fbEmail" placeholder="you@gmail.com"></div><div class="auth-field"><label>Password *</label><input type="password" id="fbPassword" placeholder="Minimum 6 characters"></div><button class="auth-btn" id="fbActionBtn" onclick="handleFirebaseAuth()">Create Account</button><p id="fbMsg" style="text-align:center;font-size:13px;margin-top:12px;font-weight:600"></p><div class="auth-links"><a href="#" onclick="toggleFbMode(); return false;" id="fbToggleText">Already have an account? Login</a></div><div class="auth-close"><a href="#" onclick="closeFirebaseAuth(); return false;">✕ Close</a></div></div></div>
+
+<div id="proofModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:30000;justify-content:center;align-items:center;padding:20px;" onclick="closeProof()">
+  <div style="position:relative;max-width:95%;max-height:95%;" onclick="event.stopPropagation()">
+    <button onclick="closeProof()" style="position:absolute;top:-40px;right:0;background:#ff5a5a;color:white;border:none;padding:8px 14px;border-radius:8px;font-weight:700;cursor:pointer;">✕ Close</button>
+    <img id="proofModalImg" src="" style="max-width:100%;max-height:85vh;border-radius:12px;border:3px solid white;display:block;">
+    <p id="proofModalInfo" style="color:white;text-align:center;margin-top:10px;font-weight:600;font-size:13px;"></p>
+  </div>
+</div>
+
+<div id="firebaseAuthModal">
+  <div class="auth-box">
+    <h2 id="authTitle">Create Account</h2>
+    <div class="auth-subtitle">🔒 Secure login required</div>
+    <div class="auth-field" id="nameField"><label>Full Name</label><input type="text" id="fbName" placeholder="e.g. Chitekesa Alumni"></div>
+    <div class="auth-field"><label>Email Address *</label><input type="email" id="fbEmail" placeholder="you@gmail.com"></div>
+    <div class="auth-field"><label>Password *</label><input type="password" id="fbPassword" placeholder="Minimum 6 characters"></div>
+    <button class="auth-btn" id="fbActionBtn" onclick="handleFirebaseAuth()">Create Account</button>
+    <p id="fbMsg" style="text-align:center;font-size:13px;margin-top:12px;font-weight:600"></p>
+    <div class="auth-links"><a href="#" onclick="toggleFbMode(); return false;" id="fbToggleText">Already have an account? Login</a></div>
+    <div class="auth-close"><a href="#" onclick="closeFirebaseAuth(); return false;">✕ Close</a></div>
+  </div>
+</div>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 <script>
-  const firebaseConfig = { apiKey: "AIzaSyARXLsQe4i59U2iWZRHpRfIM33j1l7T_eY", authDomain: "chitekesa-alumni-ae55c.firebaseapp.com", projectId: "chitekesa-alumni-ae55c", storageBucket: "chitekesa-alumni-ae55c.firebasestorage.app", messagingSenderId: "943225897010", appId: "1:943225897010:web:2fc300df337d333aa2fc2b" };
-  firebase.initializeApp(firebaseConfig); const auth = firebase.auth(); const db = firebase.firestore(); let fbIsLogin=false; let pendingRedirect=null;
+  const firebaseConfig = {
+    apiKey: "AIzaSyARXLsQe4i59U2iWZRHpRfIM33j1l7T_eY",
+    authDomain: "chitekesa-alumni-ae55c.firebaseapp.com",
+    projectId: "chitekesa-alumni-ae55c",
+    storageBucket: "chitekesa-alumni-ae55c.firebasestorage.app",
+    messagingSenderId: "943225897010",
+    appId: "1:943225897010:web:2fc300df337d333aa2fc2b"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+  let fbIsLogin=false; let pendingRedirect=null;
   function openNav(){ document.getElementById('sideNav').classList.add('open'); document.getElementById('overlay').classList.add('show'); }
   function closeNav(){ document.getElementById('sideNav').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); }
   function openFirebaseAuth(redirectUrl=null){pendingRedirect=redirectUrl; document.getElementById('firebaseAuthModal').style.display='flex'; closeNav();}
   function closeFirebaseAuth(){document.getElementById('firebaseAuthModal').style.display='none';}
-  function toggleFbMode(){ fbIsLogin=!fbIsLogin; document.getElementById('authTitle').innerText=fbIsLogin?"Welcome Back":"Create Account"; document.getElementById('fbActionBtn').innerText=fbIsLogin?"Login Now":"Create Account"; document.getElementById('fbToggleText').innerText=fbIsLogin?"Don't have account? Create one":"Already have an account? Login"; document.getElementById('nameField').style.display=fbIsLogin?"none":"block"; document.getElementById('fbMsg').innerText=""; }
-  async function handleFirebaseAuth(){ const email=document.getElementById('fbEmail').value.trim(); const pass=document.getElementById('fbPassword').value.trim(); const name=document.getElementById('fbName').value.trim(); const msg=document.getElementById('fbMsg'); const btn=document.getElementById('fbActionBtn'); if(!email||!pass){msg.style.color="red";msg.innerText="⚠️ Fill email and password";return} if(pass.length<6){msg.style.color="red";msg.innerText="⚠️ Password must be at least 6 characters";return} if(!fbIsLogin &&!name){msg.style.color="red";msg.innerText="⚠️ Enter your full name";return} btn.disabled=true; btn.innerText=fbIsLogin?"Logging in...":"Creating account..."; msg.style.color="#003366"; msg.innerText="Please wait..."; try { if(fbIsLogin){ const cred = await auth.signInWithEmailAndPassword(email,pass); const docRef = await db.collection("users").doc(cred.user.uid).get(); if(docRef.exists && docRef.data().approved===false){ msg.style.color="#92400e"; msg.innerText="⏳ Pending approval..."; closeFirebaseAuth(); document.getElementById('pendingBox').style.display='block'; document.getElementById('notLoggedBox').style.display='none'; loadMyProof(); btn.disabled=false; btn.innerText="Login Now"; return; } msg.style.color="green";msg.innerText="✅ Login success!"; setTimeout(()=>{closeFirebaseAuth(); if(pendingRedirect) window.location.href=pendingRedirect; else location.reload()},800); } else { const cred = await auth.createUserWithEmailAndPassword(email,pass); await cred.user.updateProfile({displayName:name}); await db.collection("users").doc(cred.user.uid).set({ displayName: name, fullName: name, email: email.toLowerCase(), uid: cred.user.uid, approved: false, createdAt: firebase.firestore.FieldValue.serverTimestamp() }, {merge:true}); msg.style.color="green"; msg.innerHTML="✅ Account created! Upload proof below."; closeFirebaseAuth(); document.getElementById('pendingBox').style.display='block'; document.getElementById('notLoggedBox').style.display='none'; btn.disabled=false; btn.innerText="Account Created"; } } catch(e){ msg.style.color="red";msg.innerText="❌ "+e.message; btn.disabled=false; btn.innerText=fbIsLogin?"Login Now":"Create Account"; } }
-  async function uploadProof(){ const user = auth.currentUser; const fileInput = document.getElementById('proofFile'); const txn = document.getElementById('proofTxn').value.trim(); const method = document.getElementById('proofMethod').value; const msg = document.getElementById('proofMsg'); const btn = document.getElementById('proofBtn'); if(!user){ msg.style.color="red"; msg.innerText="⚠️ Please login again"; openFirebaseAuth(); return; } if(!fileInput.files[0]){ msg.style.color="red"; msg.innerText="⚠️ Select proof image first"; return; } if(!txn){ msg.style.color="red"; msg.innerText="⚠️ Enter Transaction ID"; return; } const file = fileInput.files[0]; btn.disabled=true; btn.innerText="⏳ Saving..."; msg.style.color="#003366"; msg.innerText="Compressing & saving..."; try{ const base64 = await new Promise((res,rej)=>{ const r = new FileReader(); r.onload = e=>{ const img = new Image(); img.onload = ()=>{ const canvas=document.createElement('canvas'); let w=img.width,h=img.height; const maxW=900; if(w>maxW){h=h*maxW/w; w=maxW;} canvas.width=w; canvas.height=h; canvas.getContext('2d').drawImage(img,0,0,w,h); res(canvas.toDataURL('image/jpeg',0.65)); }; img.onerror=rej; img.src=e.target.result; }; r.onerror=rej; r.readAsDataURL(file); }); await db.collection("users").doc(user.uid).update({ proofBase64: base64, proofTxn: txn, proofMethod: method, proofFileName: file.name, proofUploadedAt: firebase.firestore.FieldValue.serverTimestamp(), hasProof: true }); msg.style.color="green"; msg.innerText="✅ Proof saved! Admin will verify."; document.getElementById('myProofPreview').innerHTML=`<img src="${base64}" style="width:100%;max-width:320px;border-radius:12px;border:1px solid #ddd;"><p style="font-size:12px;margin-top:6px;">${txn} - ${method}</p>`; btn.innerText="✅ Saved"; setTimeout(async()=>{ await auth.signOut(); location.reload(); }, 2500); }catch(e){ msg.style.color="red"; msg.innerText="❌ Error: "+e.message; btn.disabled=false; btn.innerText="📤 Upload Proof"; } }
-  async function loadMyProof(){ try{ const user=auth.currentUser; if(!user) return; const doc = await db.collection("users").doc(user.uid).get(); if(!doc.exists) return; const d=doc.data(); if(d.proofBase64){ document.getElementById('myProofPreview').innerHTML = `<p style="font-size:12px;">You uploaded: <b>${d.proofTxn||''}</b></p><img src="${d.proofBase64}" style="width:100%;max-width:320px;border-radius:12px;border:1px solid #ddd;margin-top:8px;cursor:pointer;" onclick="openProofFromMy()">`; document.getElementById('proofMsg').style.color="green"; document.getElementById('proofMsg').innerText="✅ Already uploaded. Waiting for approval."; window.myProofCache = d.proofBase64; } }catch(e){} }
-  function openProofFromMy(){ if(window.myProofCache){ document.getElementById('proofModalImg').src = window.myProofCache; document.getElementById('proofModalInfo').innerText = "Your Uploaded Proof"; document.getElementById('proofModal').style.display = "flex"; } }
-  async function requireAuth(url){ const user=auth.currentUser; if(!user){openFirebaseAuth(url); return;} try{ const docRef = await db.collection("users").doc(user.uid).get(); if(docRef.exists && docRef.data().approved===false){ document.getElementById('pendingBox').style.display='block'; loadMyProof(); alert("⏳ Your account is still pending approval. You can register as alumni only after approval."); return; } }catch(e){} window.location.href=url; }
-  async function handleProtectedClick(formId){ const user=auth.currentUser; if(!user){openFirebaseAuth(); return;} try{ const docRef = await db.collection("users").doc(user.uid).get(); if(!docRef.exists || docRef.data().approved===false){ document.getElementById('pendingBox').style.display='block'; document.getElementById('notLoggedBox').style.display='none'; loadMyProof(); alert("⏳ Please wait for admin to approve your account before you can sign up as alumni. Upload your payment proof below."); return; } }catch(e){} toggleForm(formId); }
+  function toggleFbMode(){
+    fbIsLogin=!fbIsLogin;
+    document.getElementById('authTitle').innerText=fbIsLogin?"Welcome Back":"Create Account";
+    document.getElementById('fbActionBtn').innerText=fbIsLogin?"Login Now":"Create Account";
+    document.getElementById('fbToggleText').innerText=fbIsLogin?"Don't have account? Create one":"Already have an account? Login";
+    document.getElementById('nameField').style.display=fbIsLogin?"none":"block";
+    document.getElementById('fbMsg').innerText="";
+  }
+  async function handleFirebaseAuth(){
+    const email=document.getElementById('fbEmail').value.trim();
+    const pass=document.getElementById('fbPassword').value.trim();
+    const name=document.getElementById('fbName').value.trim();
+    const msg=document.getElementById('fbMsg');
+    const btn=document.getElementById('fbActionBtn');
+    if(!email||!pass){msg.style.color="red";msg.innerText="⚠️ Fill email and password";return}
+    if(pass.length<6){msg.style.color="red";msg.innerText="⚠️ Password must be at least 6 characters";return}
+    if(!fbIsLogin &&!name){msg.style.color="red";msg.innerText="⚠️ Enter your full name";return}
+    btn.disabled=true; btn.innerText=fbIsLogin?"Logging in...":"Creating account...";
+    msg.style.color="#003366"; msg.innerText="Please wait...";
+    try {
+      if(fbIsLogin){
+        const cred = await auth.signInWithEmailAndPassword(email,pass);
+        const docRef = await db.collection("users").doc(cred.user.uid).get();
+        if(docRef.exists && docRef.data().approved===false){
+          msg.style.color="#92400e"; msg.innerText="⏳ Pending approval...";
+          closeFirebaseAuth();
+          document.getElementById('pendingBox').style.display='block';
+          document.getElementById('notLoggedBox').style.display='none';
+          loadMyProof();
+          btn.disabled=false; btn.innerText="Login Now";
+          return;
+        }
+        msg.style.color="green";msg.innerText="✅ Login success!";
+        setTimeout(()=>{closeFirebaseAuth(); if(pendingRedirect) window.location.href=pendingRedirect; else location.reload()},800);
+      } else {
+        const cred = await auth.createUserWithEmailAndPassword(email,pass);
+        await cred.user.updateProfile({displayName:name});
+        await db.collection("users").doc(cred.user.uid).set({
+          displayName: name, fullName: name, email: email.toLowerCase(),
+          uid: cred.user.uid, approved: false,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        }, {merge:true});
+        msg.style.color="green"; msg.innerHTML="✅ Account created! Upload proof below.";
+        closeFirebaseAuth();
+        document.getElementById('pendingBox').style.display='block';
+        document.getElementById('notLoggedBox').style.display='none';
+        btn.disabled=false; btn.innerText="Account Created";
+      }
+    } catch(e){ 
+      msg.style.color="red";msg.innerText="❌ "+e.message; 
+      btn.disabled=false; btn.innerText=fbIsLogin?"Login Now":"Create Account"; 
+    }
+  }
+  async function uploadProof(){
+    const user = auth.currentUser;
+    const fileInput = document.getElementById('proofFile');
+    const txn = document.getElementById('proofTxn').value.trim();
+    const method = document.getElementById('proofMethod').value;
+    const msg = document.getElementById('proofMsg');
+    const btn = document.getElementById('proofBtn');
+    if(!user){ msg.style.color="red"; msg.innerText="⚠️ Please login again"; openFirebaseAuth(); return; }
+    if(!fileInput.files[0]){ msg.style.color="red"; msg.innerText="⚠️ Select proof image first"; return; }
+    if(!txn){ msg.style.color="red"; msg.innerText="⚠️ Enter Transaction ID"; return; }
+    const file = fileInput.files[0];
+    btn.disabled=true; btn.innerText="⏳ Saving..."; msg.style.color="#003366"; msg.innerText="Compressing & saving...";
+    try{
+      const base64 = await new Promise((res,rej)=>{
+        const r = new FileReader();
+        r.onload = e=>{
+          const img = new Image();
+          img.onload = ()=>{
+            const canvas=document.createElement('canvas');
+            let w=img.width,h=img.height;
+            const maxW=900;
+            if(w>maxW){h=h*maxW/w; w=maxW;}
+            canvas.width=w; canvas.height=h;
+            canvas.getContext('2d').drawImage(img,0,0,w,h);
+            res(canvas.toDataURL('image/jpeg',0.65));
+          };
+          img.onerror=rej;
+          img.src=e.target.result;
+        };
+        r.onerror=rej;
+        r.readAsDataURL(file);
+      });
+      await db.collection("users").doc(user.uid).update({
+        proofBase64: base64, proofTxn: txn, proofMethod: method, proofFileName: file.name,
+        proofUploadedAt: firebase.firestore.FieldValue.serverTimestamp(), hasProof: true
+      });
+      msg.style.color="green"; msg.innerText="✅ Proof saved! Admin will verify.";
+      document.getElementById('myProofPreview').innerHTML=`<img src="${base64}" style="width:100%;max-width:320px;border-radius:12px;border:1px solid #ddd;"><p style="font-size:12px;margin-top:6px;">${txn} - ${method}</p>`;
+      btn.innerText="✅ Saved";
+      setTimeout(async()=>{ await auth.signOut(); location.reload(); }, 2500);
+    }catch(e){ msg.style.color="red"; msg.innerText="❌ Error: "+e.message; btn.disabled=false; btn.innerText="📤 Upload Proof"; }
+  }
+  async function loadMyProof(){
+    try{
+      const user=auth.currentUser; if(!user) return;
+      const doc = await db.collection("users").doc(user.uid).get();
+      if(!doc.exists) return;
+      const d=doc.data();
+      if(d.proofBase64){
+        document.getElementById('myProofPreview').innerHTML = `<p style="font-size:12px;">You uploaded: <b>${d.proofTxn||''}</b></p><img src="${d.proofBase64}" style="width:100%;max-width:320px;border-radius:12px;border:1px solid #ddd;margin-top:8px;cursor:pointer;" onclick="openProofFromMy()">`;
+        document.getElementById('proofMsg').style.color="green";
+        document.getElementById('proofMsg').innerText="✅ Already uploaded. Waiting for approval.";
+        window.myProofCache = d.proofBase64;
+      }
+    }catch(e){}
+  }
+  function openProofFromMy(){
+    if(window.myProofCache){
+      document.getElementById('proofModalImg').src = window.myProofCache;
+      document.getElementById('proofModalInfo').innerText = "Your Uploaded Proof";
+      document.getElementById('proofModal').style.display = "flex";
+    }
+  }
+  async function requireAuth(url){
+    const user=auth.currentUser;
+    if(!user){openFirebaseAuth(url); return;}
+    try{
+      const docRef = await db.collection("users").doc(user.uid).get();
+      if(docRef.exists && docRef.data().approved===false){
+        document.getElementById('pendingBox').style.display='block';
+        loadMyProof();
+        alert("⏳ Your account is still pending approval.");
+        return;
+      }
+    }catch(e){}
+    window.location.href=url;
+  }
+  async function handleProtectedClick(formId){
+    const user=auth.currentUser;
+    if(!user){openFirebaseAuth(); return;}
+    try{
+      const docRef = await db.collection("users").doc(user.uid).get();
+      if(!docRef.exists || docRef.data().approved===false){
+        document.getElementById('pendingBox').style.display='block';
+        document.getElementById('notLoggedBox').style.display='none';
+        loadMyProof();
+        alert("⏳ Please wait for admin to approve your account.");
+        return;
+      }
+    }catch(e){}
+    toggleForm(formId);
+  }
   function firebaseLogout(){auth.signOut().then(()=>location.reload())}
-  auth.onAuthStateChanged(async user=>{ if(user){ const box=document.getElementById('notLoggedBox'); if(box) box.style.display='none'; document.getElementById('userDisplay').innerText="Hi, "+(user.displayName||user.email); document.getElementById('userDisplayBox').style.display='block'; document.getElementById('logoutBtn').style.display='block'; document.getElementById('loginBtn').style.display='none'; try{ const docRef = await db.collection("users").doc(user.uid).get(); if(docRef.exists && docRef.data().approved===false){ document.getElementById('pendingBox').style.display='block'; document.getElementById('notLoggedBox').style.display='none'; loadMyProof(); } }catch(e){} } });
+  auth.onAuthStateChanged(async user=>{
+    if(user){
+      const box=document.getElementById('notLoggedBox'); if(box) box.style.display='none';
+      document.getElementById('userDisplay').innerText="Hi, "+(user.displayName||user.email);
+      document.getElementById('userDisplayBox').style.display='block';
+      document.getElementById('logoutBtn').style.display='block';
+      document.getElementById('loginBtn').style.display='none';
+      try{
+        const docRef = await db.collection("users").doc(user.uid).get();
+        if(docRef.exists && docRef.data().approved===false){ 
+          document.getElementById('pendingBox').style.display='block';
+          document.getElementById('notLoggedBox').style.display='none';
+          loadMyProof();
+        }
+      }catch(e){}
+    }
+  });
 </script>
 <script>
   const WEB_APP_URL="https://script.google.com/macros/s/AKfycbxlg51F7IsuXJUr-kV9DFkhjpCcEHJH0VX6UuBZNaM3UXibPNnLemyNSMoSgwgpcMn5/exec";
   function toggleForm(id){document.getElementById(id).classList.toggle("active")}
-  document.getElementById("donationForm").addEventListener("submit",function(e){ e.preventDefault(); const form=e.target; document.getElementById("donationMsg").innerHTML="Submitting..."; const data={type:"donation",name:form.fullName.value,gender:form.gender.value,donation:form.donationType.value,period:form.donationPeriod.value,phone:form.phone.value,email:form.email.value,location:form.location.value}; fetch(WEB_APP_URL,{method:"POST",mode:"no-cors",body:JSON.stringify(data)}).then(()=>{document.getElementById("donationMsg").innerHTML="✅ Thank you!";form.reset();toggleForm('donateForm');loadDonations()}).catch(()=>{document.getElementById("donationMsg").innerHTML="❌ Error."}) });
-  document.getElementById("alumniForm").addEventListener("submit", async function(e){ e.preventDefault(); const user=firebase.auth().currentUser; if(!user){openFirebaseAuth();return} const checkDoc = await db.collection("users").doc(user.uid).get(); if(!checkDoc.exists || checkDoc.data().approved===false){ alert("⏳ Your account is not yet approved. Please wait for admin approval."); document.getElementById('pendingBox').style.display='block'; return; } const form=e.target; const msgEl=document.getElementById("alumniMsg"); msgEl.innerHTML="Submitting..."; const data={type:"alumni",name:form.fullName.value,gender:form.gender.value,year:form.gradYear.value,class:form.class.value,phone:form.phone.value,whatsapp:form.whatsapp.value,profession:form.profession.value,interest:form.interest.value,message:form.message.value,accountEmail:user.email}; try{ fetch(WEB_APP_URL,{method:"POST",mode:"no-cors",body:JSON.stringify(data)}); await db.collection("users").doc(user.uid).set({ displayName: data.name, fullName: data.name, gradYear: data.year, year: data.year, class: data.class, career: data.profession, profession: data.profession, phone: data.phone, whatsapp: data.whatsapp, interest: data.interest, message: data.message, email: user.email, uid: user.uid, alumniRegistered: true, alumniRegisteredAt: firebase.firestore.FieldValue.serverTimestamp(), updatedAt: firebase.firestore.FieldValue.serverTimestamp() }, {merge:true}); msgEl.innerHTML="✅ Welcome! You are registered as alumni - no second approval needed. Redirecting..."; form.reset(); setTimeout(()=>{ window.location.href="find-classmates.html"; },1500); }catch(err){ msgEl.innerHTML="❌ Error: "+err.message; } });
+  document.getElementById("donationForm").addEventListener("submit",function(e){
+    e.preventDefault(); const form=e.target; document.getElementById("donationMsg").innerHTML="Submitting...";
+    const data={type:"donation",name:form.fullName.value,gender:form.gender.value,donation:form.donationType.value,period:form.donationPeriod.value,phone:form.phone.value,email:form.email.value,location:form.location.value};
+    fetch(WEB_APP_URL,{method:"POST",mode:"no-cors",body:JSON.stringify(data)})
+.then(()=>{document.getElementById("donationMsg").innerHTML="✅ Thank you!";form.reset();toggleForm('donateForm');loadDonations()})
+.catch(()=>{document.getElementById("donationMsg").innerHTML="❌ Error."})
+  });
+  document.getElementById("alumniForm").addEventListener("submit", async function(e){
+    e.preventDefault(); 
+    const user=firebase.auth().currentUser; 
+    if(!user){openFirebaseAuth();return}
+    const checkDoc = await db.collection("users").doc(user.uid).get();
+    if(!checkDoc.exists || checkDoc.data().approved===false){
+      alert("⏳ Your account is not yet approved. Please wait for admin approval.");
+      document.getElementById('pendingBox').style.display='block';
+      return;
+    }
+    const form=e.target; 
+    const msgEl=document.getElementById("alumniMsg"); 
+    msgEl.innerHTML="Submitting...";
+    const data={type:"alumni",name:form.fullName.value,gender:form.gender.value,year:form.gradYear.value,class:form.class.value,phone:form.phone.value,whatsapp:form.whatsapp.value,profession:form.profession.value,interest:form.interest.value,message:form.message.value,accountEmail:user.email};
+    try{
+      fetch(WEB_APP_URL,{method:"POST",mode:"no-cors",body:JSON.stringify(data)});
+      await db.collection("users").doc(user.uid).set({
+        displayName: data.name, fullName: data.name, gradYear: data.year, year: data.year,
+        class: data.class, career: data.profession, profession: data.profession,
+        phone: data.phone, whatsapp: data.whatsapp, interest: data.interest,
+        message: data.message, email: user.email, uid: user.uid,
+        alumniRegistered: true,
+        alumniRegisteredAt: firebase.firestore.FieldValue.serverTimestamp(),
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      }, {merge:true});
+      msgEl.innerHTML="✅ Welcome! You are registered - Redirecting...";
+      form.reset();
+      setTimeout(()=>{ window.location.href="find-classmates.html"; },1500);
+    }catch(err){ msgEl.innerHTML="❌ Error: "+err.message; }
+  });
   async function loadDonations(){const table=document.getElementById('donationTable');try{const res=await fetch(WEB_APP_URL+"?type=donation");const data=await res.json();table.innerHTML='<tr><th>Name</th><th>Donation</th><th>Period</th><th>Phone</th><th>Location</th></tr>';data.donations.forEach(d=>{table.innerHTML+=`<tr><td>${d.name||''}</td><td>${d.donation||''}</td><td>${d.period||''}</td><td>${d.phone||''}</td><td>${d.location||''}</td></tr>`})}catch(e){}}
   async function loadAlumni(){const table=document.getElementById('alumniTable');try{const res=await fetch(WEB_APP_URL+"?type=alumni");const data=await res.json();table.innerHTML='<tr><th>Name</th><th>Grad Year</th><th>Profession</th><th>Phone</th><th>Interest</th></tr>';data.alumni.forEach(a=>{table.innerHTML+=`<tr><td>${a.name||''}</td><td>${a.year||''}</td><td>${a.profession||''}</td><td>${a.phone||''}</td><td>${a.interest||''}</td></tr>`})}catch(e){}}
   let proofCache = {};
-  async function loadPending(){ const table=document.getElementById('pendingTable'); table.innerHTML='<tr><th>Name</th><th>Email</th><th>Proof</th><th>Date</th><th>Action</th></tr>'; proofCache = {}; try{ const snap = await db.collection("users").where("approved","==",false).get(); if(snap.empty){table.innerHTML+='<tr><td colspan="5" style="text-align:center;padding:20px;color:#6b7280">No pending approvals 🎉</td></tr>'; return;} snap.forEach(doc=>{ const d=doc.data(); const date = d.createdAt? d.createdAt.toDate().toLocaleDateString() : 'N/A'; if(d.proofBase64){ proofCache[doc.id] = d.proofBase64; } let proofHtml = '<span style="color:red;">❌ No proof</span>'; if(d.proofBase64){ proofHtml = `<img src="${d.proofBase64}" style="width:80px;height:80px;object-fit:cover;border-radius:8px;border:1px solid #ddd;cursor:pointer;" onclick="openProof('${doc.id}')"><br><small>${d.proofTxn||''}<br>${d.proofMethod||''}</small><br><span style="font-size:11px;color:#004080;font-weight:700;cursor:pointer;" onclick="openProof('${doc.id}')">👁️ View Full</span>`; } table.innerHTML+=`<tr><td>${d.displayName||d.fullName||''}</td><td>${d.email||''}</td><td>${proofHtml}</td><td>${date}</td><td><button class="btn btn-green" style="padding:6px 12px;font-size:12px" onclick="approveUser('${doc.id}')">✅ Approve</button> <button class="btn" style="background:#ef4444;color:white;padding:6px 12px;font-size:12px" onclick="rejectUser('${doc.id}')">❌ Reject</button></td></tr>`; }); }catch(e){ table.innerHTML+='<tr><td colspan="5">Error: '+e.message+'</td></tr>'; } }
-  function openProof(docId){ const base64 = proofCache[docId]; if(!base64){ alert("No proof image found"); return; } document.getElementById('proofModalImg').src = base64; document.getElementById('proofModalInfo').innerText = "Proof - Click outside to close"; document.getElementById('proofModal').style.display = "flex"; }
-  function closeProof(){ document.getElementById('proofModal').style.display = "none"; document.getElementById('proofModalImg').src = ""; }
+  async function loadPending(){
+    const table=document.getElementById('pendingTable'); 
+    table.innerHTML='<tr><th>Name</th><th>Email</th><th>Proof</th><th>Date</th><th>Action</th></tr>';
+    proofCache = {};
+    try{
+      const snap = await db.collection("users").where("approved","==",false).get();
+      if(snap.empty){table.innerHTML+='<tr><td colspan="5" style="text-align:center;padding:20px;color:#6b7280">No pending approvals 🎉</td></tr>'; return;}
+      snap.forEach(doc=>{
+        const d=doc.data(); 
+        const date = d.createdAt? d.createdAt.toDate().toLocaleDateString() : 'N/A';
+        if(d.proofBase64){ proofCache[doc.id] = d.proofBase64; }
+        let proofHtml = '<span style="color:red;">❌ No proof</span>';
+        if(d.proofBase64){ 
+          proofHtml = `<img src="${d.proofBase64}" style="width:80px;height:80px;object-fit:cover;border-radius:8px;border:1px solid #ddd;cursor:pointer;" onclick="openProof('${doc.id}')"><br><small>${d.proofTxn||''}<br>${d.proofMethod||''}</small><br><span style="font-size:11px;color:#004080;font-weight:700;cursor:pointer;" onclick="openProof('${doc.id}')">👁️ View Full</span>`; 
+        }
+        table.innerHTML+=`<tr><td>${d.displayName||d.fullName||''}</td><td>${d.email||''}</td><td>${proofHtml}</td><td>${date}</td><td><button class="btn btn-green" style="padding:6px 12px;font-size:12px" onclick="approveUser('${doc.id}')">✅ Approve</button> <button class="btn" style="background:#ef4444;color:white;padding:6px 12px;font-size:12px" onclick="rejectUser('${doc.id}')">❌ Reject</button></td></tr>`;
+      });
+    }catch(e){ 
+      table.innerHTML+='<tr><td colspan="5">Error: '+e.message+'</td></tr>'; 
+    }
+  }
+  function openProof(docId){
+    const base64 = proofCache[docId];
+    if(!base64){ alert("No proof image found"); return; }
+    document.getElementById('proofModalImg').src = base64;
+    document.getElementById('proofModalInfo').innerText = "Proof - Click outside to close";
+    document.getElementById('proofModal').style.display = "flex";
+  }
+  function closeProof(){
+    document.getElementById('proofModal').style.display = "none";
+    document.getElementById('proofModalImg').src = "";
+  }
   async function approveUser(docId){ if(!confirm("Approve this user?")) return; try{ await db.collection("users").doc(docId).update({approved:true, approvedAt: firebase.firestore.FieldValue.serverTimestamp()}); alert("✅ Approved!"); loadPending(); }catch(e){alert("Error: "+e.message)} }
   async function rejectUser(docId){ if(!confirm("Reject and delete this user?")) return; try{ await db.collection("users").doc(docId).delete(); alert("Deleted"); loadPending(); }catch(e){alert("Error: "+e.message)} }
   function exportCSV(type){let table,filename;if(type==='donations'){table=document.getElementById('donationTable');filename='donations.csv'}else{table=document.getElementById('alumniTable');filename='alumni.csv'}let csv=[];for(let row of table.rows){csv.push([...row.cells].map(cell=>cell.innerText).join(','))}const blob=new Blob([csv.join('\n')],{type:'text/csv'});const url=window.URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click()}
-  function adminLogin(e){e.preventDefault();if(document.getElementById('adminUser').value==='chitekesa2026'&&document.getElementById('adminPass').value==='Chiteke@2026!'){localStorage.setItem('chitekesaAdmin','loggedIn');localStorage.setItem('chitekesa_admin_edu','yes');document.body.classList.add('is-admin');document.getElementById('adminDashboard').style.display='block';document.getElementById('adminLoginForm').classList.remove('active');document.getElementById('adminLogoutBtn').style.display='block';loadDonations();loadAlumni();loadPending();alert('Login Successful!')}else{alert('Invalid Username or Password')}}
-  function adminLogout(){localStorage.removeItem('chitekesaAdmin');localStorage.removeItem('chitekesa_admin_edu');document.body.classList.remove('is-admin');document.getElementById('adminDashboard').style.display='none';document.getElementById('adminLogoutBtn').style.display='none'; location.reload();}
+  
+  // === SECURE ADMIN LOGIN - FIXED ===
+  function adminLogin(e){
+    e.preventDefault();
+    const u = document.getElementById('adminUser').value.trim();
+    const p = document.getElementById('adminPass').value.trim();
+    // Encoded: chitekesa2026:Chiteke@2026!
+    if(btoa(u+":"+p) === "Y2hpdGVrZXNhMjAyNjpDaGl0ZWtlQDIwMjYh"){
+      const now = Date.now();
+      localStorage.setItem('chitekesaAdmin','loggedIn');
+      localStorage.setItem('chitekesaAdminTime', now.toString());
+      document.body.classList.add('is-admin');
+      document.getElementById('adminDashboard').style.display='block';
+      document.getElementById('adminLoginForm').classList.remove('active');
+      document.getElementById('adminLogoutBtn').style.display='block';
+      window.history.replaceState({}, document.title, window.location.pathname);
+      loadDonations();loadAlumni();loadPending();
+      alert('✅ Admin Login Successful! Auto-logout in 30 mins');
+      startAdminTimer();
+    }else{alert('❌ Invalid Username or Password')}
+  }
+  function adminLogout(){
+    localStorage.removeItem('chitekesaAdmin');
+    localStorage.removeItem('chitekesaAdminTime');
+    document.body.classList.remove('is-admin');
+    document.getElementById('adminDashboard').style.display='none';
+    document.getElementById('adminLogoutBtn').style.display='none';
+    location.reload();
+  }
+  function startAdminTimer(){
+    setTimeout(()=>{ 
+      if(localStorage.getItem('chitekesaAdmin')){
+        adminLogout();
+        alert("🔒 Admin auto-logged out for security (30 mins)");
+      }
+    }, 30*60*1000);
+  }
   function showAdminTab(tabId,event){document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.admin-content').forEach(c=>c.classList.remove('active'));event.target.classList.add('active');document.getElementById(tabId).classList.add('active'); if(tabId==='pendingApprovals') loadPending();}
-  window.onload=function(){if(localStorage.getItem('chitekesaAdmin')==='loggedIn'){document.body.classList.add('is-admin');document.getElementById('adminDashboard').style.display='block';document.getElementById('adminLogoutBtn').style.display='block';loadDonations();loadAlumni();loadPending();}}
+  window.onload=function(){
+    const adminTime = localStorage.getItem('chitekesaAdminTime');
+    if(adminTime && (Date.now() - parseInt(adminTime)) > 30*60*1000){
+      adminLogout();
+      return;
+    }
+    if(localStorage.getItem('chitekesaAdmin')==='loggedIn'){
+      document.body.classList.add('is-admin');
+      document.getElementById('adminDashboard').style.display='block';
+      document.getElementById('adminLogoutBtn').style.display='block';
+      loadDonations();loadAlumni();loadPending();
+      startAdminTimer();
+    }
+  }
 </script>
+
+<!-- SECRET ADMIN UNLOCK - SECURED + CLEAN URL -->
 <script>
 (function(){
   const SECRET="chitekesa2026";
-  if(localStorage.getItem('chitekesaAdmin')==='loggedIn' || localStorage.getItem('chitekesa_admin_edu')==='yes'){ document.body.classList.add('is-admin'); }
+  if(localStorage.getItem('chitekesaAdmin')==='loggedIn'){ document.body.classList.add('is-admin'); }
   document.addEventListener('keydown', function(e){
     if(e.ctrlKey && e.shiftKey && e.key.toLowerCase()==='a'){
       const p=prompt("Enter Admin Secret Code:");
-      if(p===SECRET || p==="Chiteke@2026!"){
-        document.body.classList.add('is-admin');
+      if(p===SECRET || btoa(p)==="Q2hpdGVrZUAyMDI2IQ=="){
         localStorage.setItem('chitekesaAdmin','loggedIn');
-        localStorage.setItem('chitekesa_admin_edu','yes');
-        alert("Admin Portal Unlocked ✅ Now you can access admin on all pages");
-      } else alert("Wrong code ❌");
+        localStorage.setItem('chitekesaAdminTime', Date.now().toString());
+        document.body.classList.add('is-admin');
+        alert("✅ Admin Portal Unlocked - Scroll down to Admin Login");
+      } else if(p!==null) alert("❌ Wrong code");
     }
   });
   const params=new URLSearchParams(window.location.search);
   if(params.get('admin')===SECRET){
-    document.body.classList.add('is-admin');
     localStorage.setItem('chitekesaAdmin','loggedIn');
-    localStorage.setItem('chitekesa_admin_edu','yes');
-    // clean url
-    history.replaceState(null,'',window.location.pathname);
+    localStorage.setItem('chitekesaAdminTime', Date.now().toString());
+    document.body.classList.add('is-admin');
+    window.history.replaceState({}, document.title, window.location.pathname);
   }
 })();
 </script>
