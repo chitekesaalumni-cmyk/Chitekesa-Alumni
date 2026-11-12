@@ -126,17 +126,25 @@
       <h3>🔒 Patron's Confidential Box</h3>
       <p class="sub">Alumni and the public can confidentially forward concerns directly to the Patron. Only the Patron sees this.</p>
       <form action="https://formsubmit.co/salimafrancisjnr@gmail.com" method="POST">
-        <input type="hidden" name="_subject" value="New Patron Concern - Chitekesa Alumni">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_template" value="table">
-        <label>Full Name *</label><input type="text" name="Full Name" required placeholder="Your full name">
-        <label>Phone / Email *</label><input type="text" name="Contact" required placeholder="Phone or Email for reply">
-        <label>Category *</label><select name="Category" required><option value="">Select Category</option><option>Academic</option><option>Welfare</option><option>Alumni Affairs</option><option>Suggestion</option><option>Complaint</option><option>Other</option></select>
-        <label>Subject *</label><input type="text" name="Subject" required placeholder="Brief subject">
-        <label>Your Concern / Message *</label><textarea name="Message" rows="5" required placeholder="Write your concern respectfully..."></textarea>
-        <div class="check-row"><input type="checkbox" name="Anonymous" value="Yes" style="width:18px;height:18px"><span>Keep my identity anonymous to executive (only Patron will see my name)</span></div>
-        <button type="submit" style="background:var(--green);color:white;width:100%;margin-top:18px;border:none;padding:14px;border-radius:8px;font-weight:700;font-size:16px;cursor:pointer">📩 Send to Patron Privately</button>
-      </form>
+  <!-- Anti-spam settings -->
+  <input type="hidden" name="_subject" value="Chitekesa Alumni - New Patron Concern">
+  <input type="hidden" name="_captcha" value="false">
+  <input type="hidden" name="_template" value="box">
+  <input type="hidden" name="_from" value="Chitekesa Patron Box">
+  <input type="text" name="_honey" style="display:none">
+  
+  <label>Full Name *</label><input type="text" name="Full Name" required>
+  <label>Phone / Email *</label><input type="text" name="Contact" required>
+  <label>Category *</label>
+  <select name="Category" required>
+    <option value="">Select Category</option>
+    <option>Academic</option><option>Welfare</option><option>Alumni Affairs</option>
+    <option>Suggestion</option><option>Complaint</option><option>Other</option>
+  </select>
+  <label>Subject *</label><input type="text" name="Subject" required>
+  <label>Your Concern *</label><textarea name="Message" rows="5" required></textarea>
+  <button type="submit" style="background:#0f2e1a;color:white;width:100%;margin-top:18px;border:none;padding:14px;border-radius:8px;font-weight:700;font-size:16px;cursor:pointer">📩 Send to Patron Privately</button>
+</form>
     </div>
   </main>
 
