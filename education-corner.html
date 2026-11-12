@@ -56,6 +56,12 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
 .footer-social{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap}
 .footer-social a{display:flex;align-items:center;gap:8px;color:white;text-decoration:none;font-weight:600}
 .footer-social img{width:28px;height:28px;object-fit:contain}
+
+/* === HIDE ADMIN - ONLY YOU SEE IT === */
+.admin-bar{ display:none !important; }
+#shareBtnMain{ display:none !important; }
+body.is-admin .admin-bar{ display:flex !important; }
+body.is-admin #shareBtnMain{ display:block !important; }
 </style>
 </head>
 <body>
@@ -101,6 +107,32 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
 <div id="uploadModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);justify-content:center;align-items:center;z-index:1000;overflow:auto;padding:20px;">
   <div style="background:white;padding:28px;border-radius:18px;width:95%;max-width:420px;"><h3>Share Resource</h3><input id="resTitle" placeholder="Title e.g. MSCE Biology" style="width:100%;padding:13px 14px;margin:8px 0;border-radius:10px;border:1px solid #ddd;background:#f9fafb;"><div style="display:flex;gap:10px;"><select id="resType" style="flex:1;padding:13px;margin:8px 0;border-radius:10px;border:1px solid #ddd;background:#f9fafb;"><option>MSCE</option><option>JCE</option><option>Study Notes</option><option>Books</option><option>Syllabus</option><option>University</option><option>Past Papers</option><option>Scholarship</option></select><select id="resSubject" style="flex:1;padding:13px;margin:8px 0;border-radius:10px;border:1px solid #ddd;background:#f9fafb;"><option>Agriculture</option><option>Biology</option><option>Bible Knowledge<option>Maths</option><option>English</option><option>Physics</option><option>Chemistry</option><option>History</option><option>Geography</option><option>Chichewa</option><option>Social Studies</option><option>Life Skills</option></select></div><div style="display:flex;gap:10px;"><input id="resYear" placeholder="Year e.g. 2023" style="flex:1;padding:13px 14px;margin:8px 0;border-radius:10px;border:1px solid #ddd;background:#f9fafb;"><input id="resUploader" placeholder="Your name & class" style="flex:1;padding:13px 14px;margin:8px 0;border-radius:10px;border:1px solid #ddd;background:#f9fafb;"></div><input id="resLink" placeholder="Google Drive / PDF link (must be public)" style="width:100%;padding:13px 14px;margin:8px 0;border-radius:10px;border:1px solid #ddd;background:#f9fafb;"><textarea id="resDesc" placeholder="Short description" style="width:100%;padding:13px 14px;margin:8px 0;border-radius:10px;border:1px solid #ddd;background:#f9fafb;height:90px;resize:none;"></textarea><button onclick="saveResource()" style="width:100%;padding:14px;background:#0f345e;color:white;border:none;border-radius:12px;font-weight:700;margin-top:10px;">Publish Resource</button><button onclick="document.getElementById('uploadModal').style.display='none'" style="width:100%;padding:12px;margin-top:10px;background:#f1f5f9;border:none;border-radius:12px;font-weight:600;">Cancel</button></div>
 </div>
+
+<!-- SECRET ADMIN UNLOCK - ONLY YOU KNOW -->
+<script>
+(function(){
+  const SECRET="chitekesa2026";
+  const params=new URLSearchParams(window.location.search);
+  if(params.get('admin')===SECRET){
+    document.body.classList.add('is-admin');
+    localStorage.setItem('chitekesa_admin_edu','yes');
+  }
+  if(localStorage.getItem('chitekesa_admin_edu')==='yes' || localStorage.getItem('chitekesaAdmin')==='loggedIn'){
+    document.body.classList.add('is-admin');
+  }
+  document.addEventListener('keydown', function(e){
+    if(e.ctrlKey && e.shiftKey && e.key.toLowerCase()==='a'){
+      let p=prompt("Enter Admin Secret:");
+      if(p===SECRET || p==="Chiteke@2026!"){
+        document.body.classList.add('is-admin');
+        localStorage.setItem('chitekesa_admin_edu','yes');
+        alert("Education Admin Unlocked ✅ - You can now see Admin Login & Share button");
+      } else alert("Wrong code");
+    }
+  });
+})();
+</script>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -117,7 +149,40 @@ window.logout=()=>{localStorage.clear();location.href="index.html";}
 window.openAdminLogin=()=>document.getElementById('adminLoginModal').style.display='flex';
 window.adminLogin=async()=>{const email=document.getElementById('adminEmail').value.trim();const pass=document.getElementById('adminPass').value;try{await signInWithEmailAndPassword(auth,email,pass);document.getElementById('adminLoginModal').style.display='none';alert("Welcome Admin! ✅");}catch(e){alert("Login failed: "+e.message);}};
 window.adminLogout=async()=>{await signOut(auth);alert("Logged out");};
-onAuthStateChanged(auth,(user)=>{const shareBtn=document.getElementById('shareBtnMain');const loginBtn=document.getElementById('adminLoginBtn');const logoutBtn=document.getElementById('adminLogoutBtn');if(user && ADMIN_EMAILS.includes(user.email.toLowerCase())){isAdmin=true;shareBtn.style.display="block";loginBtn.style.display="none";logoutBtn.style.display="inline-block";} else {isAdmin=false;shareBtn.style.display="none";loginBtn.style.display="inline-block";logoutBtn.style.display=user?"inline-block":"none";}});
+onAuthStateChanged(auth,(user)=>{
+  const shareBtn=document.getElementById('shareBtnMain');
+  const loginBtn=document.getElementById('adminLoginBtn');
+  const logoutBtn=document.getElementById('adminLogoutBtn');
+  // Only show if body is admin unlocked AND firebase admin
+  const isUnlocked = document.body.classList.contains('is-admin') || localStorage.getItem('chitekesa_admin_edu')==='yes';
+  if(user && ADMIN_EMAILS.includes(user.email.toLowerCase()) && isUnlocked){
+    isAdmin=true;
+    shareBtn.style.display="block";
+    loginBtn.style.display="none";
+    logoutBtn.style.display="inline-block";
+    document.body.classList.add('is-admin');
+  } else if(user && ADMIN_EMAILS.includes(user.email.toLowerCase())){
+    // Firebase logged but not unlocked via secret - keep hidden unless unlocked
+    if(isUnlocked){
+      isAdmin=true;
+      shareBtn.style.display="block";
+      loginBtn.style.display="none";
+      logoutBtn.style.display="inline-block";
+    }
+  } else {
+    isAdmin=false;
+    if(!isUnlocked){
+      shareBtn.style.display="none";
+      loginBtn.style.display="none";
+      logoutBtn.style.display="none";
+    } else {
+      // Unlocked but not firebase logged - show login button
+      shareBtn.style.display="none";
+      loginBtn.style.display="inline-block";
+      logoutBtn.style.display=user?"inline-block":"none";
+    }
+  }
+});
 async function loadResources(){render();try{const snap=await getDocs(collection(db,"education_resources"));allResources=[];snap.forEach(d=>allResources.push({id:d.id,...d.data()}));allResources.sort((a,b)=>{const ta=a.createdAt?.seconds||0; const tb=b.createdAt?.seconds||0; return tb-ta;});}catch(e){console.log(e);}render();}
 function render(){const grid=document.getElementById('eduGrid');const search=(document.getElementById('searchInput').value||"").toLowerCase();let html="";if(currentFilter==="University"){let list=TRUSTED_UNIVERSITIES.filter(u=>(u.title+" "+u.desc).toLowerCase().includes(search));html+=list.map(r=>renderTrustedCard(r)).join('');}if(currentFilter==="Scholarship"){let list=TRUSTED_SCHOLARSHIPS.filter(u=>(u.title+" "+u.desc).toLowerCase().includes(search));html+=list.map(r=>renderTrustedCard(r)).join('');}if(currentFilter==="All"){let uni=TRUSTED_UNIVERSITIES.filter(u=>(u.title+" "+u.desc).toLowerCase().includes(search)).slice(0,2);let sch=TRUSTED_SCHOLARSHIPS.filter(u=>(u.title+" "+u.desc).toLowerCase().includes(search)).slice(0,2);html+=uni.map(r=>renderTrustedCard(r)).join('');html+=sch.map(r=>renderTrustedCard(r)).join('');}let filtered=allResources.filter(r=>{const t=(r.type||"").toLowerCase();let match=false;if(currentFilter==="All") match=true;else if(currentFilter==="MSCE") match=t.includes("msce");else if(currentFilter==="JCE") match=t.includes("jce");else if(currentFilter==="Past Paper") match=t.includes("past paper");else if(currentFilter==="Study Notes") match=t.includes("study")||t.includes("notes");else if(currentFilter==="Book") match=t.includes("book");else if(currentFilter==="Syllabus") match=t.includes("syllabus");else if(currentFilter==="University") match=t.includes("university");else if(currentFilter==="Scholarship") match=t.includes("scholarship");const searchMatch=(r.title+" "+(r.subject||"")+" "+(r.year||"")).toLowerCase().includes(search);return match && searchMatch;});if(filtered.length>0){html+=filtered.map(r=>`<div class="edu-card"><span class="edu-tag">${r.type} • ${r.subject||'General'} ${r.year||''}</span><h3 style="margin:5px 0;">${r.title}</h3><p style="font-size:13px;color:#888;">By: ${r.uploaderName||'Alumni'}</p><p style="font-size:14px;color:#555;margin:8px 0 15px;">${r.desc||''}</p><div class="btn-row"><a href="${toDirectDownload(r.link)}" target="_blank" class="btn-download">📥 Download</a><a href="${r.link}" target="_blank" class="btn-preview">👁️ Preview</a></div></div>`).join('');}if(html===""){grid.innerHTML=`<p style="text-align:center;padding:40px;">No resources for ${currentFilter} yet. Try All.</p>`;} else {grid.innerHTML=html;}}
 window.setFilter=(type,btn)=>{currentFilter=type;document.querySelectorAll('.filter-chip').forEach(b=>b.classList.remove('active'));btn.classList.add('active');render();};
@@ -127,4 +192,4 @@ loadResources();
 </script>
 <footer><p><strong>Location:</strong> Along Mwanga to Maliro Road, Near Chitekesa Police Unit, Phalombe</p><div class="footer-social"><span><strong>Facebook:</strong></span><a href="https://www.facebook.com/share/19DZppzrht/" target="_blank"><img src="Facebook icon.png" alt="Facebook">CHITEKESA CDSS ALUMNI</a></div><p>&copy; 2026 CHITEKESA ALUMNI ASSOCIATION. All Rights Reserved.</p></footer>
 </body>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </html>
+  </html>
