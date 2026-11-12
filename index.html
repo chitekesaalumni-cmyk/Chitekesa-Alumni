@@ -76,6 +76,9 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
 .auth-close{text-align:center;margin-top:12px}
 .auth-close a{color:#6b7280;font-size:13px;text-decoration:none}
 .proof-box{margin-top:16px;background:white;padding:14px;border-radius:12px;border:1.5px dashed #f59e0b}
+/* === HIDE ADMIN FROM PUBLIC - ONLY YOU SEE IT === */
+#adminPortalWrapper{ display:none !important; }
+body.is-admin #adminPortalWrapper{ display:block !important; }
 </style>
 </head>
 <body>
@@ -140,26 +143,32 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
         <button class="btn" style="background:#78350f;color:white;width:100%;margin-top:10px;" onclick="firebaseLogout()">Logout Now</button>
       </div>
     </div>
-    <h3>Admin Portal</h3>
-    <button class="btn btn-green" onclick="toggleForm('adminLoginForm')">Admin Login</button>
-    <div id="adminLoginForm" class="collapsible">
-      <form onsubmit="adminLogin(event)"><label>Username *</label><input type="text" id="adminUser" required><label>Password *</label><input type="password" id="adminPass" required><button type="submit" class="btn btn-green">Login to Dashboard</button></form>
-    </div>
-    <div id="adminDashboard" style="display:none;">
-      <h2>Admin Dashboard</h2>
-      <div class="admin-tabs">
-        <div class="admin-tab active" onclick="showAdminTab('pendingApprovals', event)">⏳ Pending Approvals</div>
-        <div class="admin-tab" onclick="showAdminTab('donations', event)">Donations</div>
-        <div class="admin-tab" onclick="showAdminTab('alumni', event)">Alumni Members</div>
+    
+    <!-- ADMIN PORTAL - HIDDEN FROM PUBLIC, ONLY YOU SEE IT -->
+    <div id="adminPortalWrapper">
+      <h3>Admin Portal</h3>
+      <button class="btn btn-green" onclick="toggleForm('adminLoginForm')">Admin Login</button>
+      <div id="adminLoginForm" class="collapsible">
+        <form onsubmit="adminLogin(event)"><label>Username *</label><input type="text" id="adminUser" required><label>Password *</label><input type="password" id="adminPass" required><button type="submit" class="btn btn-green">Login to Dashboard</button></form>
       </div>
-      <div id="pendingApprovals" class="admin-content active">
-        <h3>⏳ Accounts Waiting For Payment Verification</h3>
-        <button class="btn btn-blue" onclick="loadPending()">🔄 Refresh</button>
-        <table class="admin-table" id="pendingTable"><tr><th>Name</th><th>Email</th><th>Proof</th><th>Date</th><th>Action</th></tr></table>
+      <div id="adminDashboard" style="display:none;">
+        <h2>Admin Dashboard</h2>
+        <div class="admin-tabs">
+          <div class="admin-tab active" onclick="showAdminTab('pendingApprovals', event)">⏳ Pending Approvals</div>
+          <div class="admin-tab" onclick="showAdminTab('donations', event)">Donations</div>
+          <div class="admin-tab" onclick="showAdminTab('alumni', event)">Alumni Members</div>
+        </div>
+        <div id="pendingApprovals" class="admin-content active">
+          <h3>⏳ Accounts Waiting For Payment Verification</h3>
+          <button class="btn btn-blue" onclick="loadPending()">🔄 Refresh</button>
+          <table class="admin-table" id="pendingTable"><tr><th>Name</th><th>Email</th><th>Proof</th><th>Date</th><th>Action</th></tr></table>
+        </div>
+        <div id="donations" class="admin-content"><h3>Donation Submissions</h3><button class="btn btn-blue" onclick="exportCSV('donations')">📥 Export CSV</button><table class="admin-table" id="donationTable"><tr><th>Name</th><th>Donation</th><th>Period</th><th>Phone</th><th>Location</th></tr></table></div>
+        <div id="alumni" class="admin-content"><h3>Alumni Registrations</h3><button class="btn btn-blue" onclick="exportCSV('alumni')">📥 Export CSV</button><table class="admin-table" id="alumniTable"><tr><th>Name</th><th>Grad Year</th><th>Profession</th><th>Phone</th><th>Interest</th></tr></table></div>
       </div>
-      <div id="donations" class="admin-content"><h3>Donation Submissions</h3><button class="btn btn-blue" onclick="exportCSV('donations')">📥 Export CSV</button><table class="admin-table" id="donationTable"><tr><th>Name</th><th>Donation</th><th>Period</th><th>Phone</th><th>Location</th></tr></table></div>
-      <div id="alumni" class="admin-content"><h3>Alumni Registrations</h3><button class="btn btn-blue" onclick="exportCSV('alumni')">📥 Export CSV</button><table class="admin-table" id="alumniTable"><tr><th>Name</th><th>Grad Year</th><th>Profession</th><th>Phone</th><th>Interest</th></tr></table></div>
     </div>
+    <!-- END ADMIN PORTAL -->
+
     <div class="hero-card">
       <h3 style="margin-top:0">Help Us Grow</h3>
       <button class="btn btn-primary" onclick="toggleForm('donateForm')">Donate Now</button>
@@ -364,7 +373,6 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
     }catch(e){}
     window.location.href=url;
   }
-  // FIXED: Sign up form should NOT open until approved
   async function handleProtectedClick(formId){
     const user=auth.currentUser;
     if(!user){openFirebaseAuth(); return;}
@@ -409,13 +417,10 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
 .then(()=>{document.getElementById("donationMsg").innerHTML="✅ Thank you!";form.reset();toggleForm('donateForm');loadDonations()})
 .catch(()=>{document.getElementById("donationMsg").innerHTML="❌ Error."})
   });
-
-  // FIXED: No second approval - once account approved, alumni registration is automatic
   document.getElementById("alumniForm").addEventListener("submit", async function(e){
     e.preventDefault(); 
     const user=firebase.auth().currentUser; 
     if(!user){openFirebaseAuth();return}
-    // Double check approval before allowing registration
     const checkDoc = await db.collection("users").doc(user.uid).get();
     if(!checkDoc.exists || checkDoc.data().approved===false){
       alert("⏳ Your account is not yet approved. Please wait for admin approval.");
@@ -437,13 +442,11 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
         alumniRegisteredAt: firebase.firestore.FieldValue.serverTimestamp(),
         updatedAt: firebase.firestore.FieldValue.serverTimestamp()
       }, {merge:true});
-      
       msgEl.innerHTML="✅ Welcome! You are registered as alumni - no second approval needed. Redirecting...";
       form.reset();
       setTimeout(()=>{ window.location.href="find-classmates.html"; },1500);
     }catch(err){ msgEl.innerHTML="❌ Error: "+err.message; }
   });
-
   async function loadDonations(){const table=document.getElementById('donationTable');try{const res=await fetch(WEB_APP_URL+"?type=donation");const data=await res.json();table.innerHTML='<tr><th>Name</th><th>Donation</th><th>Period</th><th>Phone</th><th>Location</th></tr>';data.donations.forEach(d=>{table.innerHTML+=`<tr><td>${d.name||''}</td><td>${d.donation||''}</td><td>${d.period||''}</td><td>${d.phone||''}</td><td>${d.location||''}</td></tr>`})}catch(e){}}
   async function loadAlumni(){const table=document.getElementById('alumniTable');try{const res=await fetch(WEB_APP_URL+"?type=alumni");const data=await res.json();table.innerHTML='<tr><th>Name</th><th>Grad Year</th><th>Profession</th><th>Phone</th><th>Interest</th></tr>';data.alumni.forEach(a=>{table.innerHTML+=`<tr><td>${a.name||''}</td><td>${a.year||''}</td><td>${a.profession||''}</td><td>${a.phone||''}</td><td>${a.interest||''}</td></tr>`})}catch(e){}}
   let proofCache = {};
@@ -479,13 +482,33 @@ footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;marg
     document.getElementById('proofModal').style.display = "none";
     document.getElementById('proofModalImg').src = "";
   }
-  async function approveUser(docId){ if(!confirm("Approve this user? Once approved, they can register as alumni without second approval.")) return; try{ await db.collection("users").doc(docId).update({approved:true, approvedAt: firebase.firestore.FieldValue.serverTimestamp()}); alert("✅ Approved! User can now register as alumni directly."); loadPending(); }catch(e){alert("Error: "+e.message)} }
+  async function approveUser(docId){ if(!confirm("Approve this user?")) return; try{ await db.collection("users").doc(docId).update({approved:true, approvedAt: firebase.firestore.FieldValue.serverTimestamp()}); alert("✅ Approved!"); loadPending(); }catch(e){alert("Error: "+e.message)} }
   async function rejectUser(docId){ if(!confirm("Reject and delete this user?")) return; try{ await db.collection("users").doc(docId).delete(); alert("Deleted"); loadPending(); }catch(e){alert("Error: "+e.message)} }
   function exportCSV(type){let table,filename;if(type==='donations'){table=document.getElementById('donationTable');filename='donations.csv'}else{table=document.getElementById('alumniTable');filename='alumni.csv'}let csv=[];for(let row of table.rows){csv.push([...row.cells].map(cell=>cell.innerText).join(','))}const blob=new Blob([csv.join('\n')],{type:'text/csv'});const url=window.URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click()}
-  function adminLogin(e){e.preventDefault();if(document.getElementById('adminUser').value==='chitekesa2026'&&document.getElementById('adminPass').value==='Chiteke@2026!'){localStorage.setItem('chitekesaAdmin','loggedIn');document.getElementById('adminDashboard').style.display='block';document.getElementById('adminLoginForm').classList.remove('active');document.getElementById('adminLogoutBtn').style.display='block';loadDonations();loadAlumni();loadPending();alert('Login Successful!')}else{alert('Invalid Username or Password')}}
-  function adminLogout(){localStorage.removeItem('chitekesaAdmin');document.getElementById('adminDashboard').style.display='none';document.getElementById('adminLogoutBtn').style.display='none'}
+  function adminLogin(e){e.preventDefault();if(document.getElementById('adminUser').value==='chitekesa2026'&&document.getElementById('adminPass').value==='Chiteke@2026!'){localStorage.setItem('chitekesaAdmin','loggedIn');document.body.classList.add('is-admin');document.getElementById('adminDashboard').style.display='block';document.getElementById('adminLoginForm').classList.remove('active');document.getElementById('adminLogoutBtn').style.display='block';loadDonations();loadAlumni();loadPending();alert('Login Successful!')}else{alert('Invalid Username or Password')}}
+  function adminLogout(){localStorage.removeItem('chitekesaAdmin');document.body.classList.remove('is-admin');document.getElementById('adminDashboard').style.display='none';document.getElementById('adminLogoutBtn').style.display='none'; location.reload();}
   function showAdminTab(tabId,event){document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.admin-content').forEach(c=>c.classList.remove('active'));event.target.classList.add('active');document.getElementById(tabId).classList.add('active'); if(tabId==='pendingApprovals') loadPending();}
-  window.onload=function(){if(localStorage.getItem('chitekesaAdmin')==='loggedIn'){document.getElementById('adminDashboard').style.display='block';document.getElementById('adminLogoutBtn').style.display='block';loadDonations();loadAlumni();loadPending();}}
+  window.onload=function(){if(localStorage.getItem('chitekesaAdmin')==='loggedIn'){document.body.classList.add('is-admin');document.getElementById('adminDashboard').style.display='block';document.getElementById('adminLogoutBtn').style.display='block';loadDonations();loadAlumni();loadPending();}}
 </script>
+
+<!-- SECRET ADMIN UNLOCK - ONLY YOU KNOW -->
+<script>
+(function(){
+  const SECRET="chitekesa2026";
+  if(localStorage.getItem('chitekesaAdmin')==='loggedIn'){ document.body.classList.add('is-admin'); }
+  document.addEventListener('keydown', function(e){
+    if(e.ctrlKey && e.shiftKey && e.key.toLowerCase()==='a'){
+      const p=prompt("Enter Admin Secret Code:");
+      if(p===SECRET || p==="Chiteke@2026!"){
+        document.body.classList.add('is-admin');
+        alert("Admin Portal Unlocked ✅ Scroll down to see Admin Login");
+      } else alert("Wrong code ❌");
+    }
+  });
+  const params=new URLSearchParams(window.location.search);
+  if(params.get('admin')===SECRET){ document.body.classList.add('is-admin'); }
+})();
+</script>
+
 </body>
-        </html>
+  </html>
