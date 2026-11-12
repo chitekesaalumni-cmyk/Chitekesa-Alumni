@@ -31,12 +31,13 @@
     .menu a:hover{background:rgba(255,255,255,0.10);color:white;transform:translateX(4px)}
     .logout-btn{background:var(--orange);border:none;color:white;padding:9px 16px;border-radius:8px;font-weight:700;cursor:pointer;width:100%;margin-top:6px}
     main{padding:35px 0}
-    .contact-card{background:white;padding:30px 20px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.1);text-align:center;max-width:700px;margin:0 auto}
-    .contact-card h2{color:var(--blue);margin-bottom:15px;font-size:22px}
-    .contact-item{display:flex;align-items:center;justify-content:center;gap:12px;margin:18px 0;font-size:16px}
-    .contact-item a{text-decoration:none;color:#333;font-weight:600}
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:700;font-size:16px;color:white;transition:all 0.3s ease;margin:8px 5px}
-    .btn-whatsapp{background:var(--whatsapp)} .btn-facebook{background:var(--fb)} .btn:hover{transform:scale(1.05)}
+    .contact-card{background:white;padding:30px 20px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.1);text-align:left;max-width:700px;margin:0 auto}
+    .contact-card h2{color:var(--blue);margin-bottom:6px;font-size:22px;text-align:center}
+    .contact-card p.intro{text-align:center;margin-bottom:18px;color:#555}
+    .icon-row{display:flex;justify-content:flex-start;align-items:center;gap:14px;margin:18px 0}
+    .icon-btn{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:20px;box-shadow:0 3px 8px rgba(0,0,0,0.18);transition:transform .2s}
+    .icon-btn:hover{transform:scale(1.1)}
+    .icon-email{background:var(--blue)} .icon-fb{background:var(--fb)} .icon-wa{background:var(--whatsapp)}
     .contact-card form{text-align:left;margin-top:10px}
     .contact-card form label{display:block;font-weight:600;margin-top:14px;margin-bottom:6px;color:var(--green);font-size:15px}
     .contact-card form input,.contact-card form select,.contact-card form textarea{width:100%;padding:12px;border:1px solid #ccc;border-radius:8px;font-family:'Poppins',sans-serif;font-size:15px;background:#fafafa}
@@ -47,7 +48,7 @@
     .patron-card input,.patron-card select,.patron-card textarea{width:100%;padding:12px;border:1px solid #ccc;border-radius:8px;font-family:'Poppins',sans-serif;font-size:15px;background:#fafafa}
     .check-row{display:flex;gap:8px;align-items:flex-start;margin-top:14px;font-size:14px}
     footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;margin-top:50px;border-top:4px solid var(--green)}
-    .footer-social{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap}
+    .footer-social{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;margin:10px 0}
     .footer-social a{display:flex;align-items:center;gap:8px;color:white;text-decoration:none;font-weight:600}
     .footer-social img{width:28px;height:28px;object-fit:contain}
   </style>
@@ -80,18 +81,36 @@
   <main class="container">
     <div class="contact-card">
       <h2>Contact Us</h2>
-      <p>We'd love to hear from you. Reach us through any of these:</p>
-      <div class="contact-item">📧 <a href="mailto:chitekesaalumni@gmail.com">chitekesaalumni@gmail.com</a></div>
-      <a href="https://www.facebook.com/share/19DZppzrht/" target="_blank" class="btn btn-facebook">Visit Facebook Page</a>
-      <a href="https://wa.me/+265882427151?text=Hello%20Chitekesa%20Alumni%20Team" target="_blank" class="btn btn-whatsapp">Chat on WhatsApp</a>
-      <hr style="margin:30px 0;border:none;border-top:1px solid #ddd">
-      <div style="padding:16px;background:#fff8e1;border-radius:10px;border:1px dashed #FF7A00;margin-bottom:24px">
+      <p class="intro">We'd love to hear from you. Reach us through any of these:</p>
+
+      <!-- ICONS ONLY LEFT TO RIGHT -->
+      <div class="icon-row">
+        <a href="mailto:chitekesaalumni@gmail.com" title="Email Us" style="text-decoration:none;">
+          <div class="icon-btn icon-email">📧</div>
+        </a>
+        <a href="https://www.facebook.com/share/19DZppzrht/" target="_blank" title="Facebook" style="text-decoration:none;">
+          <div class="icon-btn icon-fb">
+            <img src="Facebook icon.png" style="width:22px;height:22px;filter:invert(1)" alt="FB">
+          </div>
+        </a>
+        <a href="https://wa.me/+265882427151?text=Hello%20Chitekesa%20Alumni%20Team" target="_blank" title="WhatsApp" style="text-decoration:none;">
+          <div class="icon-btn icon-wa">
+            <img src="WhatsApp icon.png" style="width:22px;height:22px;filter:invert(1)" alt="WA">
+          </div>
+        </a>
+      </div>
+
+      <hr style="margin:24px 0;border:none;border-top:1px solid #ddd">
+
+      <!-- PATRON BUTTON - NOW WORKING -->
+      <div style="padding:16px;background:#fff8e1;border-radius:10px;border:1px dashed #FF7A00;margin-bottom:24px;text-align:center">
         <p style="font-weight:600;color:#333;margin-bottom:10px">Have a confidential concern for the Patron?</p>
         <a href="#patron-concerns" style="text-decoration:none">
           <button type="button" style="background:#003366;color:white;border:none;padding:12px 28px;border-radius:8px;font-weight:700;font-size:15px;cursor:pointer">✉️ Forward to Patron Box →</button>
         </a>
         <p style="font-size:12px;color:#666;margin-top:8px">Private & only seen by the Patron</p>
       </div>
+
       <h3 style="color:var(--green);margin-bottom:15px">Or Send Us a Message</h3>
       <form action="mailto:chitekesaalumni@gmail.com" method="POST" enctype="text/plain">
         <label>Your Name *</label><input type="text" name="Name" required>
@@ -99,7 +118,7 @@
         <label>Phone / WhatsApp</label><input type="tel" name="Phone" placeholder="+265 9XX XXX">
         <label>Subject *</label><select name="Subject" required><option value="">Select</option><option>General Inquiry</option><option>Membership</option><option>Donation</option><option>Event/Reunion</option><option>Other</option></select>
         <label>Your Message *</label><textarea name="Message" rows="5" required></textarea>
-        <button type="submit" class="btn" style="background:var(--orange);width:100%;justify-content:center">Send Message</button>
+        <button type="submit" style="background:var(--orange);color:white;width:100%;margin-top:14px;border:none;padding:14px;border-radius:8px;font-weight:700;font-size:16px;cursor:pointer">Send Message</button>
       </form>
     </div>
 
@@ -121,7 +140,8 @@
     </div>
   </main>
 
-  <footer><p><strong>Location:</strong> Along Mwanga to Maliro Road, Near Chitekesa Police Unit, Phalombe</p><p>&copy; 2026 CHITEKESA ALUMNI ASSOCIATION. All Rights Reserved.</p></footer>
+  <footer><p><strong>Location:</strong> Along Mwanga to Maliro Road, Near Chitekesa Police Unit, Phalombe</p><div class="footer-social"><span><strong>Facebook:</strong></span><a href="https://www.facebook.com/share/19DZppzrht/" target="_blank"><img src="Facebook icon.png" alt="Facebook">CHITEKESA CDSS ALUMNI</a></div><p>&copy; 2026 CHITEKESA ALUMNI ASSOCIATION. All Rights Reserved.</p></footer>
+
   <script>function toggleMenu(){document.getElementById("menu").classList.toggle("active");document.getElementById("navOverlay").classList.toggle("show");}function logout(){window.location.href='login.html'}</script>
 </body>
-  </html>
+              </html>
