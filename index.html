@@ -50,7 +50,101 @@ form input,form select,form textarea{width:100%;padding:12px 14px;border:1px sol
 form button[type="submit"]{background:#123d21;color:white;width:100%;margin-top:18px;padding:13px}
 .executive{background:#ffffff;padding:18px;border-radius:14px;text-align:center;margin:14px 0;box-shadow:0 4px 18px rgba(0,0,0,0.06);border:1px solid #e5e7eb}
 .executive img{width:92px;height:92px;border-radius:50%;object-fit:cover;border:3px solid #0f2e1a;margin-bottom:10px}
-.gallery img{width:100%;border-radius:14px;margin:10px 0;box-shadow:0 4px 18px rgba(0,0,0,0.08)}
+/* AUTO SLIDER - Right to Left - FIXED */
+.school-slider-wrapper{
+  position:relative;
+  width:100%;
+  overflow:hidden;
+  border-radius:16px;
+  box-shadow:0 6px 24px rgba(0,0,0,0.12);
+  height:420px;
+  background:#000;
+  margin:12px 0 20px
+}
+.school-slider{
+  display:flex;
+  transition:transform 0.6s ease-in-out;
+  height:100%
+}
+.slide{
+  min-width:100%;
+  position:relative;
+  height:100%
+}
+.slide img{
+  width:100%;
+  height:100%;
+  object-fit:cover
+}
+.slide-caption{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  background:linear-gradient(transparent,rgba(0,0,0,0.85));
+  color:white;
+  padding:50px 18px 18px
+}
+.slide-caption h4{
+  margin:0;
+  font-size:16px;
+  font-weight:700;
+  color:white
+}
+.slide-caption p{
+  margin:2px 0 0;
+  font-size:13px;
+  opacity:.9
+}
+.slide-arrow{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  background:rgba(0,0,0,0.5);
+  color:white;
+  border:none;
+  font-size:18px;
+  padding:10px 14px;
+  border-radius:50%;
+  cursor:pointer;
+  z-index:10
+}
+.slide-arrow:hover{
+  background:#004080
+}
+.slide-arrow.prev{
+  left:10px
+}
+.slide-arrow.next{
+  right:10px
+}
+.slide-dots{
+  position:absolute;
+  bottom:12px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:8px;
+  z-index:10
+}
+.dot{
+  width:10px;
+  height:10px;
+  background:rgba(255,255,255,.5);
+  border-radius:50%;
+  cursor:pointer;
+  transition:.3s
+}
+.dot.active{
+  background:white;
+  width:22px;
+  border-radius:10px
+}
+@media(max-width:600px){
+  .school-slider-wrapper{
+    height:280px
+  }
+}
 footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 20px;margin-top:50px;border-top:4px solid #0a7a3c}
 .footer-social{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap}
 .footer-social a{display:flex;align-items:center;gap:8px;color:white;text-decoration:none;font-weight:600}
@@ -165,7 +259,33 @@ body.is-admin-logged #adminDashboard{ display:block !important; }
       <div class="executive"><h3>Vacancies</h3><button class="btn btn-blue" onclick="requireAuth('vacancies.html')">Open</button></div>
       <div class="executive" style="border:1.5px solid #0f2e1a"><h3>Education Corner</h3><button class="btn btn-green" onclick="requireAuth('education-corner.html')">Open</button></div>
     </div>
-    <h3>Our School</h3><div class="gallery"><img src="Chitekesa photo.jpg" alt="Chitekesa School Photo"></div>
+
+    <!-- OUR SCHOOL AUTO SLIDER - FIXED -->
+    <h3>Our School - Chitekesa CDSS</h3>
+    <div class="school-slider-wrapper">
+      <div class="school-slider" id="schoolSlider">
+        <div class="slide">
+          <img src="Chitekesa photo.jpg" alt="Chitekesa CDSS Main Block">
+          <div class="slide-caption"><h4>CHITEKESA CDSS Main Block</h4><p>Together We Make The Differences</p></div>
+        </div>
+        <div class="slide">
+          <img src="school2.jpg" alt="Students">
+          <div class="slide-caption"><h4>Our Students</h4><p>Future Leaders</p></div>
+        </div>
+        <div class="slide">
+          <img src="school3.jpg" alt="Classroom Block">
+          <div class="slide-caption"><h4>Learning Environment</h4><p>Quality Education</p></div>
+        </div>
+        <div class="slide">
+          <img src="school4.jpg" alt="Alumni Event">
+          <div class="slide-caption"><h4>Alumni Support</h4><p>Giving Back To School</p></div>
+        </div>
+      </div>
+      <button class="slide-arrow prev" onclick="moveSlide(-1)">❮</button>
+      <button class="slide-arrow next" onclick="moveSlide(1)">❯</button>
+      <div class="slide-dots" id="slideDots"></div>
+    </div>
+    
     <h2>For Direct Help; Please Contact the Following</h2>
     <div class="executive"><img src="Kaelama photo.jpg" alt="President"><h3>President: Francisco Kaelama, Class of 2021</h3><a href="https://wa.me/265882427151" class="btn btn-whatsapp" target="_blank">WhatsApp</a></div>
     <div class="executive"><img src="Chibisa photo.png" alt="Secretary"><h3>Secretary: Patrick Chibisa, Class of 2023</h3><a href="https://wa.me/265897105274" class="btn btn-whatsapp" target="_blank">WhatsApp</a></div>
@@ -184,13 +304,11 @@ body.is-admin-logged #adminDashboard{ display:block !important; }
   let fbIsLogin=false; let pendingRedirect=null;
   const SUPER_ADMINS = ["chitekesaalumni@gmail.com", "salimafrancisjnr@gmail.com"];
   function isSuperAdmin(email){ if(!email) return false; return SUPER_ADMINS.includes(email.toLowerCase().trim()); }
-
   function openNav(){ document.getElementById('sideNav').classList.add('open'); document.getElementById('overlay').classList.add('show'); }
   function closeNav(){ document.getElementById('sideNav').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); }
   function openFirebaseAuth(url=null){ pendingRedirect=url; document.getElementById('firebaseAuthModal').style.display='flex'; closeNav(); }
   function closeFirebaseAuth(){ document.getElementById('firebaseAuthModal').style.display='none'; }
   function toggleFbMode(){ fbIsLogin=!fbIsLogin; document.getElementById('authTitle').innerText=fbIsLogin?"Welcome Back":"Create Account"; document.getElementById('fbActionBtn').innerText=fbIsLogin?"Login Now":"Create Account"; document.getElementById('fbToggleText').innerText=fbIsLogin?"Don't have account? Create one":"Already have an account? Login"; document.getElementById('nameField').style.display=fbIsLogin?"none":"block"; document.getElementById('fbMsg').innerText=""; }
-
   async function handleFirebaseAuth(){
     const email=document.getElementById('fbEmail').value.trim();
     const pass=document.getElementById('fbPassword').value.trim();
@@ -215,15 +333,8 @@ body.is-admin-logged #adminDashboard{ display:block !important; }
             closeFirebaseAuth(); document.getElementById('pendingBox').style.display='block'; document.getElementById('notLoggedBox').style.display='none'; loadMyProof(); btn.disabled=false; btn.innerText="Login Now"; return;
           }
           const data=docRef.data();
-          if(data.blocked===true){
-            await auth.signOut();
-            msg.style.color="red"; msg.innerText="🚫 Your account is blocked by Admin.";
-            btn.disabled=false; btn.innerText="Login Now"; return;
-          }
-          if(data.approved===false){
-            msg.style.color="#92400e"; msg.innerText="⏳ Pending approval - upload proof again for 2nd approval...";
-            closeFirebaseAuth(); document.getElementById('pendingBox').style.display='block'; document.getElementById('notLoggedBox').style.display='none'; loadMyProof(); btn.disabled=false; btn.innerText="Login Now"; return;
-          }
+          if(data.blocked===true){ await auth.signOut(); msg.style.color="red"; msg.innerText="🚫 Your account is blocked by Admin."; btn.disabled=false; btn.innerText="Login Now"; return; }
+          if(data.approved===false){ msg.style.color="#92400e"; msg.innerText="⏳ Pending approval - upload proof again for 2nd approval..."; closeFirebaseAuth(); document.getElementById('pendingBox').style.display='block'; document.getElementById('notLoggedBox').style.display='none'; loadMyProof(); btn.disabled=false; btn.innerText="Login Now"; return; }
         }
         msg.style.color="green"; msg.innerText="✅ Login success!";
         setTimeout(()=>{closeFirebaseAuth(); if(pendingRedirect) window.location.href=pendingRedirect; else location.reload()},800);
@@ -240,7 +351,6 @@ body.is-admin-logged #adminDashboard{ display:block !important; }
       }
     }catch(e){ msg.style.color="red"; msg.innerText="❌ "+e.message; btn.disabled=false; btn.innerText=fbIsLogin?"Login Now":"Create Account"; }
   }
-
   async function uploadProof(){
     const user=auth.currentUser; const fileInput=document.getElementById('proofFile'); const txn=document.getElementById('proofTxn').value.trim(); const method=document.getElementById('proofMethod').value; const msg=document.getElementById('proofMsg'); const btn=document.getElementById('proofBtn');
     if(!user){msg.style.color="red";msg.innerText="⚠️ Login again";openFirebaseAuth();return;}
@@ -260,11 +370,8 @@ body.is-admin-logged #adminDashboard{ display:block !important; }
       setTimeout(async()=>{ await auth.signOut(); location.reload(); },2500);
     }catch(e){ msg.style.color="red"; msg.innerText="❌ Error: "+e.message; btn.disabled=false; btn.innerText="📤 Upload Proof"; }
   }
-
   async function loadMyProof(){ try{ const user=auth.currentUser; if(!user) return; const doc=await db.collection("users").doc(user.uid).get(); if(!doc.exists) return; const d=doc.data(); if(d.proofBase64){ document.getElementById('myProofPreview').innerHTML=`<p style="font-size:12px;">You uploaded: <b>${d.proofTxn||''}</b></p><img src="${d.proofBase64}" style="width:100%;max-width:320px;border-radius:12px;border:1px solid #ddd;margin-top:8px;cursor:pointer;" onclick="openProofFromMy()">`; document.getElementById('proofMsg').style.color="green"; document.getElementById('proofMsg').innerText="✅ Already uploaded."; window.myProofCache=d.proofBase64; } }catch(e){} }
   function openProofFromMy(){ if(window.myProofCache){ document.getElementById('proofModalImg').src=window.myProofCache; document.getElementById('proofModalInfo').innerText="Your Uploaded Proof"; document.getElementById('proofModal').style.display="flex"; } }
-
-  // FIXED: now blocks if doc missing OR blocked OR not approved
   async function requireAuth(url){ 
     const user=auth.currentUser; 
     if(!user){openFirebaseAuth(url);return;} 
@@ -281,7 +388,6 @@ body.is-admin-logged #adminDashboard{ display:block !important; }
     }catch(e){} 
     window.location.href=url; 
   }
-
   async function handleProtectedClick(formId){ 
     const user=auth.currentUser; 
     if(!user){openFirebaseAuth();return;} 
@@ -298,9 +404,7 @@ body.is-admin-logged #adminDashboard{ display:block !important; }
     }catch(e){} 
     toggleForm(formId); 
   }
-
   function firebaseLogout(){auth.signOut().then(()=>location.reload())}
-
   auth.onAuthStateChanged(async user=>{
     if(user){
       const isSuper=isSuperAdmin(user.email);
@@ -364,6 +468,31 @@ body.is-admin-logged #adminDashboard{ display:block !important; }
     history.replaceState(null,'',window.location.pathname);
   }
 })();
+</script>
+<!-- AUTO SLIDER SCRIPT - FIXED -->
+<script>
+let currentSlide=0;
+const slider=document.getElementById('schoolSlider');
+const slides=document.querySelectorAll('.slide');
+const dotsContainer=document.getElementById('slideDots');
+slides.forEach((_,i)=>{
+  const dot=document.createElement('div'); dot.classList.add('dot'); if(i===0) dot.classList.add('active');
+  dot.onclick=()=>goToSlide(i); dotsContainer.appendChild(dot);
+});
+const dots=document.querySelectorAll('.dot');
+function updateSlider(){ slider.style.transform=`translateX(-${currentSlide*100}%)`; dots.forEach((d,i)=>d.classList.toggle('active',i===currentSlide)); }
+function moveSlide(dir){ currentSlide=(currentSlide+dir+slides.length)%slides.length; updateSlider(); }
+function goToSlide(index){ currentSlide=index; updateSlider(); }
+let autoSlide=setInterval(()=>moveSlide(1),3000);
+document.querySelector('.school-slider-wrapper').addEventListener('mouseenter',()=>clearInterval(autoSlide));
+document.querySelector('.school-slider-wrapper').addEventListener('mouseleave',()=>{ autoSlide=setInterval(()=>moveSlide(1),3000); });
+let startX=0;
+slider.addEventListener('touchstart',e=>startX=e.touches[0].clientX);
+slider.addEventListener('touchend',e=>{
+  let endX=e.changedTouches[0].clientX;
+  if(startX-endX>50) moveSlide(1);
+  if(endX-startX>50) moveSlide(-1);
+});
 </script>
 </body>
   </html>
