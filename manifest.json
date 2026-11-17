@@ -1,0 +1,16 @@
+{
+  "name": "Chitekesa Alumni",
+  "short_name": "Chitekesa",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0b3d2e",
+  "icons": [
+    {
+      "src": "Alumni logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
