@@ -334,6 +334,18 @@ body.is-admin-logged #adminDashboard{ display:block !important; }
     try{
       if(fbIsLogin){
         const cred=await auth.signInWithEmailAndPassword(email,pass);
+                // === NEW: VERIFICATION CHECK ===
+        if(!cred.user.emailVerified && !isSuperAdmin(cred.user.email)){
+          msg.style.color="orange";
+          msg.innerText="📧 Email not verified! Link resent to "+cred.user.email+" - check inbox/spam";
+          try{ await cred.user.sendEmailVerification(); }catch(e){}
+          await auth.signOut();
+          btn.disabled=false;
+          btn.innerText="Login Now";
+          window.lastUnverifiedEmail=email;
+          window.lastUnverifiedPass=pass;
+          return;
+        }
         if(isSuperAdmin(cred.user.email)){
           await db.collection("users").doc(cred.user.uid).set({approved:true,isSuperAdmin:true,blocked:false}, {merge:true});
           localStorage.setItem('chitekesaAdmin','loggedIn'); localStorage.setItem('chitekesa_admin_edu','yes');
@@ -353,6 +365,28 @@ body.is-admin-logged #adminDashboard{ display:block !important; }
         setTimeout(()=>{closeFirebaseAuth(); if(pendingRedirect) window.location.href=pendingRedirect; else location.reload()},800);
       }else{
         const cred=await auth.createUserWithEmailAndPassword(email,pass);
+        await cred.user.updateProfile({displayName:name});
+        // === NEW: SEND VERIFICATION CODE ===
+        try{
+          await cred.user.sendEmailVerification();
+        }catch(e){ console.log(e); }
+        const isSuper=isSuperAdmin(email);
+        await db.collection("users").doc(cred.user.uid).set({displayName:name,fullName:name,email:email.toLowerCase(),uid:cred.user.uid,approved:isSuper?true:false,isSuperAdmin:isSuper,blocked:false,emailVerified:false,createdAt:firebase.firestore.FieldValue.serverTimestamp()}, {merge:true});
+        if(isSuper){
+          localStorage.setItem('chitekesaAdmin','loggedIn');
+          localStorage.setItem('chitekesa_admin_edu','yes');
+          document.body.classList.add('is-admin');
+        }
+        closeFirebaseAuth();
+        if(!isSuper){
+          await auth.signOut();
+          alert("✅ Verification code sent to "+email+"! Check inbox/spam and click link before login.");
+          document.getElementById('pendingBox').style.display='none';
+          document.getElementById('notLoggedBox').style.display='block';
+        }
+        btn.disabled=false;
+        btn.innerText=isSuper?"Created":"Create Account";
+        return;
         await cred.user.updateProfile({displayName:name});
         const isSuper=isSuperAdmin(email);
         await db.collection("users").doc(cred.user.uid).set({displayName:name,fullName:name,email:email.toLowerCase(),uid:cred.user.uid,approved:isSuper?true:false,isSuperAdmin:isSuper,blocked:false,createdAt:firebase.firestore.FieldValue.serverTimestamp()}, {merge:true});
@@ -513,4 +547,4 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 </body>
-  </html>
+                                           </html>
