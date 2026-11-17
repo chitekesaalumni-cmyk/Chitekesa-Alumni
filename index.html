@@ -122,8 +122,9 @@ body.is-admin-logged #adminDashboard{ display:block !important; }
     <button id="logoutBtn" class="btn-logout-full" style="display:none;" onclick="firebaseLogout()">Logout</button>
     <button id="adminLogoutBtn" class="btn-logout-full" style="display:none; background:#34495e; margin-top:10px;" onclick="adminLogout()">Admin Logout</button>
   </div>
-</div>
-<main class="container">
+  </div>
+
+  <main class="container">
     <div class="hero-card">
       <h2>Welcome to Chitekesa Alumni Platform 🎓</h2>
       <h4>Once Chitekesa • Always Chitekesa</h4>
@@ -152,8 +153,7 @@ body.is-admin-logged #adminDashboard{ display:block !important; }
         <button class="btn" style="background:#78350f;color:white;width:100%;margin-top:10px;" onclick="firebaseLogout()">Logout Now</button>
       </div>
     </div>
-    
-        <div id="adminPortalWrapper">
+    <div id="adminPortalWrapper">
       <h3>Admin Portal</h3>
       <button class="btn btn-green" onclick="toggleForm('adminLoginForm')">Admin Login</button>
       <div id="adminLoginForm" class="collapsible">
@@ -206,7 +206,8 @@ body.is-admin-logged #adminDashboard{ display:block !important; }
 </main>
 <footer><p><strong>Location:</strong> Along Mwanga to Maliro Road, Near Chitekesa Police Unit, Phalombe</p><div class="footer-social"><span><strong>Facebook:</strong></span><a href="https://www.facebook.com/share/19DZppzrht/" target="_blank"><img src="Facebook icon.png" alt="Facebook">CHITEKESA CDSS ALUMNI</a></div><p>&copy; 2026 CHITEKESA ALUMNI ASSOCIATION. All Rights Reserved.</p></footer>
 <div id="proofModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:30000;justify-content:center;align-items:center;padding:20px;" onclick="closeProof()"><div style="position:relative;max-width:95%;max-height:95%;" onclick="event.stopPropagation()"><button onclick="closeProof()" style="position:absolute;top:-40px;right:0;background:#ff5a5a;color:white;border:none;padding:8px 14px;border-radius:8px;font-weight:700;cursor:pointer;">✕ Close</button><img id="proofModalImg" src="" style="max-width:100%;max-height:85vh;border-radius:12px;border:3px solid white;display:block;"><p id="proofModalInfo" style="color:white;text-align:center;margin-top:10px;"></p></div></div>
-<div id="firebaseAuthModal"><div class="auth-box"><h2 id="authTitle">Create Account</h2><div class="auth-subtitle">🔒 Secure login required</div><div class="auth-field" id="nameField"><label>Full Name</label><input type="text" id="fbName" placeholder="e.g. Chitekesa Alumni"></div><div class="auth-field"><label>Email *</label><input type="email" id="fbEmail" placeholder="you@gmail.com"></div><div class="auth-field"><label>Password *</label><input type="password" id="fbPassword" placeholder="Min 6 chars"></div><button class="auth-btn" id="fbActionBtn" onclick="handleFirebaseAuth()">Create Account</button><p id="fbMsg" style="text-align:center;font-size:13px;margin-top:12px;font-weight:600"></p><div class="auth-links"><a href="#" onclick="toggleFbMode(); return false;" id="fbToggleText">Already have an account? Login</a></div><div class="auth-close"><a href="#" onclick="closeFirebaseAuth(); return false;">✕ Close</a></div></div></div>
+
+  <div id="firebaseAuthModal"><div class="auth-box"><h2 id="authTitle">Create Account</h2><div class="auth-subtitle">🔒 Secure login required</div><div class="auth-field" id="nameField"><label>Full Name</label><input type="text" id="fbName" placeholder="e.g. Chitekesa Alumni"></div><div class="auth-field"><label>Email *</label><input type="email" id="fbEmail" placeholder="you@gmail.com"></div><div class="auth-field"><label>Password *</label><div style="position:relative;display:flex;align-items:center;"><input type="password" id="fbPassword" placeholder="Min 6 chars" style="padding-right:45px;"><span onclick="togglePassword()" id="eyeIcon" style="position:absolute;right:12px;cursor:pointer;font-size:18px;user-select:none;">👁️</span></div></div><div style="text-align:right;margin-top:6px;margin-bottom:8px;"><a href="#" onclick="forgotPassword(); return false;" style="color:#FF7A00;font-size:13px;font-weight:600;text-decoration:none;">Forgot password?</a></div><button class="auth-btn" id="fbActionBtn" onclick="handleFirebaseAuth()">Create Account</button><p id="fbMsg" style="text-align:center;font-size:13px;margin-top:12px;font-weight:600"></p><div class="auth-links"><a href="#" onclick="toggleFbMode(); return false;" id="fbToggleText">Already have an account? Login</a></div><div class="auth-close"><a href="#" onclick="closeFirebaseAuth(); return false;">✕ Close</a></div></div></div>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
@@ -222,6 +223,22 @@ body.is-admin-logged #adminDashboard{ display:block !important; }
   function openFirebaseAuth(url=null){ pendingRedirect=url; document.getElementById('firebaseAuthModal').style.display='flex'; closeNav(); }
   function closeFirebaseAuth(){ document.getElementById('firebaseAuthModal').style.display='none'; }
   function toggleFbMode(){ fbIsLogin=!fbIsLogin; document.getElementById('authTitle').innerText=fbIsLogin?"Welcome Back":"Create Account"; document.getElementById('fbActionBtn').innerText=fbIsLogin?"Login Now":"Create Account"; document.getElementById('fbToggleText').innerText=fbIsLogin?"Don't have account? Create one":"Already have an account? Login"; document.getElementById('nameField').style.display=fbIsLogin?"none":"block"; document.getElementById('fbMsg').innerText=""; }
+function togglePassword(){
+  const p=document.getElementById('fbPassword');
+  const eye=document.getElementById('eyeIcon');
+  if(p.type==='password'){ p.type='text'; eye.innerText='🙈'; }
+  else { p.type='password'; eye.innerText='👁️'; }
+}
+async function forgotPassword(){
+  const email=document.getElementById('fbEmail').value.trim();
+  const msg=document.getElementById('fbMsg');
+  if(!email){ msg.style.color='red'; msg.innerText='⚠️ Enter your email first to reset password'; return; }
+  msg.style.color='#003366'; msg.innerText='⏳ Sending reset link...';
+  try{
+    await auth.sendPasswordResetEmail(email);
+    msg.style.color='green'; msg.innerText='✅ Reset link sent to '+email+'! Check inbox/spam';
+  }catch(e){ msg.style.color='red'; msg.innerText='❌ '+e.message; }
+}
 async function handleFirebaseAuth(){
     const email=document.getElementById('fbEmail').value.trim();
     const pass=document.getElementById('fbPassword').value.trim();
@@ -262,7 +279,7 @@ async function handleFirebaseAuth(){
       }else{
         const cred=await auth.createUserWithEmailAndPassword(email,pass);
         await cred.user.updateProfile({displayName:name});
-        try{ await cred.user.sendEmailVerification(); }catch(e){ alert("Verification error: "+e.message); }
+        try{ await cred.user.sendEmailVerification(); }catch(e){ console.log(e); }
         const isSuper=isSuperAdmin(email);
         await db.collection("users").doc(cred.user.uid).set({displayName:name,fullName:name,email:email.toLowerCase(),uid:cred.user.uid,approved:isSuper?true:false,isSuperAdmin:isSuper,blocked:false,emailVerified:isSuper?true:false,createdAt:firebase.firestore.FieldValue.serverTimestamp()}, {merge:true});
         if(isSuper){
@@ -280,8 +297,7 @@ async function handleFirebaseAuth(){
       }
     }catch(e){ msg.style.color="red"; msg.innerText="❌ "+e.message; btn.disabled=false; btn.innerText=fbIsLogin?"Login Now":"Create Account"; }
   }
-  
-    async function uploadProof(){
+  async function uploadProof(){
     const user=auth.currentUser; const fileInput=document.getElementById('proofFile'); const txn=document.getElementById('proofTxn').value.trim(); const method=document.getElementById('proofMethod').value; const msg=document.getElementById('proofMsg'); const btn=document.getElementById('proofBtn');
     if(!user){msg.style.color="red";msg.innerText="⚠️ Login again";openFirebaseAuth();return;}
     if(!fileInput.files[0]){msg.style.color="red";msg.innerText="⚠️ Select image";return;}
@@ -399,4 +415,4 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 </body>
-                                                                                   </html>
+  </html>
