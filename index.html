@@ -412,9 +412,9 @@ async function handleFirebaseAuth(){
   document.getElementById('professionalAlertModal').addEventListener('click', e=>{ if(e.target.id==='professionalAlertModal') document.getElementById('alertOkBtn').click(); });
 
   async function approveUser(id){
-    const ok = await customConfirm({title:'Second Approval', message:'Approve this member for second approval? They will get full access.', confirmText:'Yes, Approve', confirmColor:'#123d21', icon:'✅'});
+    const ok = await customConfirm({title:'Payment Approval', message:'Approve this member after payment? They will get full access.', confirmText:'Yes, Approve', confirmColor:'#123d21', icon:'✅'});
     if(!ok) return;
-    try{ await db.collection("users").doc(id).update({approved:true,blocked:false,approvedAt:firebase.firestore.FieldValue.serverTimestamp(),secondApproval:true}); showToast("✅ Approved for 2nd time!", "success"); loadPending(); }catch(e){showToast("Error: "+e.message, "error")}
+    try{ await db.collection("users").doc(id).update({approved:true,blocked:false,approvedAt:firebase.firestore.FieldValue.serverTimestamp(),secondApproval:true}); showToast("✅ Approved after payment!", "success"); loadPending(); }catch(e){showToast("Error: "+e.message, "error")}
   }
   async function deactivateUser(id){
     const ok = await customConfirm({title:'Deactivate Member', message:'Deactivate for second approval? User must re-upload proof.', confirmText:'Deactivate', confirmColor:'#f59e0b', icon:'⏳'});
@@ -505,4 +505,4 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 </body>
-    </html>
+  </html>
